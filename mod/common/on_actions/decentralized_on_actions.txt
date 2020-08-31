@@ -1,0 +1,29 @@
+#Fired whenever a new owner is set for a planet,
+#be it after a war or through a trade
+#From = Country scope (new owner)
+#This = Planet scope
+on_planet_transfer = {
+	events = {
+		decentralized.5 # Lose planetary_nationalism
+	}
+}
+
+on_planet_transfer = {
+	events = {
+		decentralized.8 #chance for overlord to make subject release planet
+	}
+}
+
+# No scope, like on_game_start
+on_yearly_pulse = {
+	events = {
+		decentralized.6 # event for converting vassals into member states
+	}
+}
+
+# THIS = Country
+on_ruler_set = {
+	events = {
+		decentralized.201 #starts decentralized elections
+	}
+}

@@ -1,0 +1,608 @@
+namespace = regentmaker
+planet_event = {
+	id = regentmaker.1
+	title = "regentmaker.1"
+	desc = "regentmaker.1.desc"
+	picture = GFX_evt_throne_room
+	is_triggered_only = yes
+	immediate = {
+		ROOT.owner = {
+			save_event_target_as = owner_empire
+		}
+	}
+	option = {
+		name = "regentmaker.1.a"
+		hidden_effect = {
+			# set_timed_planet_flag = { flag = regentmaker_vassal days = 7 }
+			remove_planet_flag = regentmaker_tributary
+			remove_planet_flag = regentmaker_member_state
+			planet_event = { id = regentmaker.2 }
+		}
+	}
+	option = {
+		name = "regentmaker.1.b"
+		hidden_effect = {
+			set_timed_planet_flag = { flag = regentmaker_tributary days = 7 }
+			# remove_planet_flag = regentmaker_vassal
+			remove_planet_flag = regentmaker_member_state
+			planet_event = { id = regentmaker.2 }
+		}
+	}
+	option = {
+		name = "regentmaker.1.c"
+		trigger = { event_target:owner_empire = { has_modifier = decentralized_leader } }
+		hidden_effect = {
+			set_timed_planet_flag = { flag = regentmaker_member_state days = 7 }
+			# remove_planet_flag = regentmaker_vassal
+			remove_planet_flag = regentmaker_tributary
+			planet_event = { id = regentmaker.2 }
+		}
+	}
+	option = {
+		name = distar.1055.b		# "Leave it be."
+		hidden_effect = {
+			owner = {
+				every_owned_planet = {
+					limit = { has_planet_flag = regentmaker_handover }
+					remove_planet_flag = regentmaker_handover
+				}
+			}
+		}
+	}
+}
+
+planet_event = {
+	id = regentmaker.2
+	title = "regentmaker.1"
+	desc = "regentmaker.2.desc"
+	picture = GFX_evt_throne_room
+	is_triggered_only = yes
+
+	option = {
+		name = "regentmaker.2.a"
+		hidden_effect = {
+			owner_species = { save_event_target_as = vassal_species }
+			# owner = { random_owned_planet = { limit = { has_planet_flag = regentmaker_handover }
+			planet_event = { id = regentmaker.3 }
+			# 	} }
+		}
+	}
+	option = {
+		name = "regentmaker.2.b"
+		hidden_effect = {
+			if = {
+				limit = { exists = event_target:vassal_species }
+				no_scope = { save_event_target_as = vassal_species }
+			}
+			# owner = { random_owned_planet = { limit = { has_planet_flag = regentmaker_handover }
+			planet_event = { id = regentmaker.3 }
+			# } }
+		}
+	}
+	option = {
+		# "Leave it be."
+		name = distar.1055.b
+		hidden_effect = {
+			owner = {
+				every_owned_planet = { limit = { has_planet_flag = regentmaker_handover }
+					remove_planet_flag = regentmaker_handover
+				}
+			}
+		}
+	}
+}
+
+planet_event = {
+	id = regentmaker.3
+	location = ROOT
+	hide_window = yes
+	is_triggered_only = yes
+	# pre_triggers = {
+	# 	has_owner = yes
+	# 	is_ai = no
+	# }
+	# trigger = { # 	owner = { any_owned_planet = { has_planet_flag = regentmaker_handover } }
+	# }
+	immediate = {
+		if = {
+			limit = {
+				NOR = {
+					exists = event_target:vassal_species
+					is_scope_type = species
+				}
+			}
+			if = {
+				limit = { num_species > 1 }
+				random_owned_pop = {
+					limit = {
+						NOT = { is_same_species = event_target:owner_empire.owner_species }
+						OR = {
+							AND = {
+								is_majority_species = species
+								NOT = { is_same_species = event_target:owner_empire.owner_species }
+							}
+							AND = {
+								is_enslaved = no
+								is_being_purged = no
+								is_being_assimilated = no
+								# is_robot_pop = no
+								has_population_control = no
+								has_migration_control = no
+								# has_colonization_control = no
+								pop_can_live_on_planet = yes
+								PREV = {
+									habitability = { who = PREV value > 0.6 }
+								}
+								species = { NOT = { is_archetype = PRESAPIENT } }
+							}
+						}
+					}
+					species = { save_event_target_as = vassal_species }
+				}
+			}
+			# Full fallback
+			if = {
+				limit = {
+					num_unique_species > 1
+					NOT = { exists = event_target:vassal_species }
+				}
+				random_owned_species = {
+					limit = { NOT = { is_exact_same_species = event_target:owner_empire.owner_species } }
+					species = { save_event_target_as = vassal_species }
+				}
+			} else_if = {
+				limit = { NOT = { exists = event_target:vassal_species } }
+				random_owned_species = {
+					limit = { always = yes }
+					species = { save_event_target_as = vassal_species }
+				}
+			}
+		}
+
+		create_country = {
+			# name = random
+			name = "[Prev.solar_system.star.GetName]"
+			name_list = event_target:owner_empire
+			type = default
+			ship_prefix = ""
+			# government_restrictions = { # 	authority = { NOT = { value = auth_machine_intelligence value = auth_hive_mind } }
+			# }
+			authority = event_target:owner_empire
+			civics = random
+			ethos = random
+			species = event_target:vassal_species
+			flag = random
+			# origin = origin_default
+			auto_delete = yes
+			ignore_initial_colony_error = yes
+			effect = {
+				set_timed_relation_flag = { who = event_target:owner_empire flag = AbandonedRefugees days = 7 }
+				event_target:owner_empire = { set_timed_relation_flag = { who = prev flag = AbandonedRefugees days = 7 } }
+				add_resource = {
+					minerals = 500
+					energy = 1000
+					unity = 10000
+					influence = 500
+				}
+				if = {
+					limit = {
+						ROOT = { has_planet_flag = regentmaker_tributary }
+					}
+					set_subject_of = {
+						who = event_target:owner_empire
+						subject_type = tributary
+					}
+				}
+				else_if = {
+					limit = {
+						ROOT = { has_planet_flag = regentmaker_member_state }
+					}
+					set_subject_of = {
+						who = event_target:owner_empire
+						subject_type = member_state
+					}
+				}
+				else = {
+					set_subject_of = {
+						who = event_target:owner_empire
+						subject_type = vassal
+					}
+				}
+				establish_communications_no_message = event_target:owner_empire
+				establish_contact = { who = event_target:owner_empire location = event_target:owner_empire.capital_scope }
+				set_faction_hostility = {
+					set_hostile = no
+					set_neutral = no
+					set_friendly = yes
+					target = event_target:owner_empire
+				}
+				# action_open_borders
+				set_closed_borders = {
+					who = event_target:owner_empire
+					status = no
+					forced = 5
+				}
+				event_target:owner_empire = {
+					set_faction_hostility = {
+						set_hostile = no
+						set_neutral = no
+						set_friendly = yes
+						target = prev
+					}
+					establish_communications_no_message = prev
+					establish_contact = { who = prev location = root.solar_system }
+					every_relation = {
+						establish_communications_no_message = prevprev
+						establish_contact = { who = prevprev location = root.solar_system }
+					}
+					# action_open_borders
+					set_closed_borders = {
+						who = prev
+						status = no
+						forced = 5
+					}
+				}
+				copy_techs_from = { target = event_target:owner_empire }
+				if = { limit = { NOT = { is_same_species = event_target:owner_empire } }
+					# if = { limit = { is_homeworld = yes } } else = {
+					set_name = "[This.owner_species.GetName]"
+				} else = {
+					copy_ethos_and_authority = event_target:owner_empire
+					change_government = {
+						authority = auth_imperial
+						civics = random
+					}
+				}
+				if = {
+					limit = {
+						FROM = { has_planet_flag = regentmaker_handover }
+					}
+					log = "Release selected planet [From.GetName]!"
+					FROM = { planet_event = { id = regentmaker.9 } }
+				}
+				add_opinion_modifier = {
+					who = event_target:owner_empire
+					modifier = opinion_scion
+				}
+				add_opinion_modifier = {
+					who = event_target:owner_empire
+					modifier = opinion_ceded_starbase # opinion_trust
+				}
+				add_opinion_modifier = {
+					who = event_target:owner_empire
+					modifier = opinion_enlightened_us # opinion_common_ground
+				}
+			}
+		}
+		event_target:owner_empire = {
+			every_owned_planet = {
+				limit = {
+					has_planet_flag = regentmaker_handover
+					# has_owner = yes
+					# is_homeworld = no
+					# original_owner = yes
+					has_ground_combat = no
+					is_capital = no
+					is_occupied_flag = no
+				}
+				log = "Release planet [This.GetName]!"
+				planet_event = { id = regentmaker.9 }
+			}
+		}
+	}
+}
+
+country_event = {
+	id = regentmaker.4
+	title = "regentmaker.4"
+	desc = "regentmaker.4.desc"
+	picture = GFX_evt_throne_room
+	is_triggered_only = yes
+
+	option = {
+		name = "regentmaker.4.a"
+		every_subject = {
+			copy_techs_from = { target = root }
+		}
+	}
+	option = {
+		name = "regentmaker.4.b"
+		every_subject = {
+			root = { copy_techs_from = { target = prev } }
+		}
+	}
+	# "Leave it be." tech_unlocked_ratio
+	option = { name = distar.1055.b }
+}
+
+country_event = {
+	id = regentmaker.7
+	title = "regentmaker.7"
+	desc = "regentmaker.7.desc"
+	picture = GFX_evt_throne_room
+	is_triggered_only = yes
+	# immediate = {
+	# 	random_subject = {
+	# 		save_event_target_as = vassal_empire
+	# 	}
+	# }
+	option = {
+		name = "regentmaker.7.a"
+		every_subject = { clear_ethos = yes }
+	}
+	option = {
+		name = "ethic_fanatic_authoritarian"
+		every_subject = { country_add_ethic = ethic_fanatic_authoritarian }
+	}
+	option = {
+		name = "ethic_authoritarian"
+		every_subject = { country_add_ethic = ethic_authoritarian }
+	}
+	option = {
+		name = "ethic_fanatic_egalitarian"
+		every_subject = { country_add_ethic = ethic_fanatic_egalitarian }
+	}
+	option = {
+		name = "ethic_egalitarian"
+		every_subject = { country_add_ethic = ethic_egalitarian }
+	}
+	option = {
+		name = "ethic_fanatic_xenophobe"
+		every_subject = { country_add_ethic = ethic_fanatic_xenophobe }
+	}
+	option = {
+		name = "ethic_xenophobe"
+		every_subject = { country_add_ethic = ethic_xenophobe }
+	}
+	option = {
+		name = "ethic_fanatic_xenophile"
+		every_subject = { country_add_ethic = ethic_fanatic_xenophile }
+	}
+	option = {
+		name = "ethic_xenophile"
+		every_subject = { country_add_ethic = ethic_xenophile }
+	}
+	option = {
+		name = "ethic_fanatic_militarist"
+		every_subject = { country_add_ethic = ethic_fanatic_militarist }
+	}
+	option = {
+		name = "ethic_militarist"
+		every_subject = { country_add_ethic = ethic_militarist }
+	}
+	option = {
+		name = "ethic_fanatic_pacifist"
+		every_subject = { country_add_ethic = ethic_fanatic_pacifist }
+	}
+	option = {
+		name = "ethic_pacifist"
+		every_subject = { country_add_ethic = ethic_pacifist }
+	}
+	option = {
+		name = "ethic_fanatic_spiritualist"
+		every_subject = { country_add_ethic = ethic_fanatic_spiritualist }
+	}
+	option = {
+		name = "ethic_spiritualist"
+		every_subject = { country_add_ethic = ethic_spiritualist }
+	}
+	option = {
+		name = "ethic_fanatic_materialist"
+		every_subject = { country_add_ethic = ethic_fanatic_materialist }
+	}
+	option = {
+		name = "ethic_materialist"
+		every_subject = { country_add_ethic = ethic_materialist }
+	}
+	option = {
+		name = "ethic_gestalt_consciousness"
+		every_subject = { country_add_ethic = ethic_gestalt_consciousness }
+	}
+	option = {
+		name = leviathans.105.d		# Nothing for now. Goodbye.
+		# hidden_effect = {
+		# 	no_scope = {
+		# 		save_event_target_as = vassal_empire
+		# 	}
+		# }
+	}
+	# after = {
+	# 	hidden_effect = {
+	# 		if = {
+	# 			limit = {
+	# 				exists = event_target:vassal_empire
+	# 				is_scope_type = country
+	# 			}
+	# 			every_subject = {
+	# 				limit = {
+	# 					NOR = {
+	# 						is_same_empire = event_target:vassal_empire
+	# 						has_same_ethos = event_target:vassal_empire
+	# 					}
+	# 				}
+	# 				copy_ethos_and_authority = event_target:vassal_empire
+	# 				# shift_ethic = event_target:vassal_empire
+	# 			}
+	# 		}
+	# 	}
+	# }
+}
+
+country_event = {
+	id = regentmaker.8
+	title = "regentmaker.8"
+	desc = "regentmaker.8.desc"
+	picture = GFX_evt_throne_room
+	is_triggered_only = yes
+	# immediate = {
+	# 	random_subject = {
+	# 		save_event_target_as = vassal_empire
+	# 	}
+	# }
+	option = {
+		name = "auth_democratic"
+		every_subject = {
+			change_government = { authority = auth_democratic }
+		}
+	}
+	option = {
+		name = "auth_oligarchic"
+		every_subject = {
+			change_government = { authority = auth_oligarchic }
+		}
+	}
+	option = {
+		name = "auth_dictatorial"
+		every_subject = {
+			change_government = { authority = auth_dictatorial }
+		}
+	}
+	option = {
+		name = "auth_imperial"
+		every_subject = {
+			change_government = { authority = auth_imperial }
+		}
+	}
+	option = {
+		name = "auth_hive_mind"
+		every_subject = {
+			change_government = { authority = auth_hive_mind }
+		}
+	}
+	option = {
+		name = "auth_machine_intelligence"
+		every_subject = {
+			change_government = { authority = auth_machine_intelligence }
+		}
+	}
+	option = {
+		name = "auth_corporate"
+		every_subject = {
+			change_government = { authority = auth_corporate }
+		}
+	}
+	option = {
+		name = leviathans.105.d		# Nothing for now. Goodbye.
+		# hidden_effect = {
+		# 	no_scope = {
+		# 		save_event_target_as = vassal_empire
+		# 	}
+		# }
+	}
+	# after = {
+	# 	hidden_effect = {
+	# 		if = {
+	# 			limit = {
+	# 				exists = event_target:vassal_empire
+	# 				is_scope_type = country
+	# 			}
+	# 			every_subject = {
+	# 				limit = {
+	# 					NOT = {
+	# 						is_same_empire = event_target:vassal_empire
+	# 					}
+	# 				}
+	# 				copy_ethos_and_authority = event_target:vassal_empire
+	# 				# change_government = {
+	# 				# 	authority = event_target:vassal_empire
+	# 				# 	# civics = random
+	# 				# }
+	# 			}
+	# 		}
+	# 	}
+	# }
+}
+
+planet_event = {
+	id = regentmaker.9
+	is_triggered_only = yes
+	hide_window = yes
+
+	immediate = {
+		set_controller = last_created_country
+		set_owner = last_created_country
+		remove_planet_flag = regentmaker_handover
+		solar_system = {
+			if = { limit = { exists = starbase }
+				starbase = { set_owner = last_created_country }
+			}
+			every_neighbor_system = {
+				limit = {
+					exists = starbase
+					is_owned_by = event_target:owner_empire
+				}
+				if = {
+					limit = {
+						any_system_planet = {
+							# has_owner = yes
+							# owner = { is_same_empire = event_target:owner_empire }
+							is_owned_by = event_target:owner_empire
+							has_planet_flag = regentmaker_handover
+						}
+					}
+					starbase = { set_owner = last_created_country }
+					every_system_planet = {
+						limit = {
+							# has_owner = yes
+							# owner = { is_same_empire = event_target:owner_empire }
+							is_owned_by = event_target:owner_empire
+							NOT = { is_same_value = prevprev }
+						}
+						if = {
+							limit = { has_planet_flag = regentmaker_handover }
+							remove_planet_flag = regentmaker_handover
+							set_controller = last_created_country
+							set_owner = last_created_country
+						}
+						else = {
+							starbase = { set_owner = event_target:owner_empire }
+						}
+					}
+				}
+				else_if = {
+					limit = {
+						NOT = {
+							any_system_planet = {
+								is_star = no
+								is_asteroid = no
+								has_owner = yes
+							}
+						}
+					}
+					starbase = { set_owner = last_created_country }
+				}
+				# else = { }
+			}
+			every_system_planet = {
+				limit = {
+					is_star = no
+					is_asteroid = no
+					# has_owner = yes
+					is_owned_by = event_target:owner_empire
+					# owner = {
+					# 	is_same_empire = event_target:owner_empire
+					# }
+					NOT = { is_same_value = prevprev }
+				}
+				if = {
+					limit = { has_planet_flag = regentmaker_handover }
+					remove_planet_flag = regentmaker_handover
+				}
+				set_controller = last_created_country
+				set_owner = last_created_country
+			}
+		}
+		last_created_country = {
+			add_resource = {
+				minerals = 250
+				energy = 500
+			}
+			capital_scope = {
+				add_modifier = {
+					modifier = "regentmaker_colony"
+					days = -1
+				}
+			}
+		}
+	}
+}

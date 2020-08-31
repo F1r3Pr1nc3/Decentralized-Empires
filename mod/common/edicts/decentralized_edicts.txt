@@ -1,0 +1,61 @@
+request_resources = {
+	length = 3600
+	icon = "GFX_missing_resources_icon"
+	resources = {
+		category = edicts
+		cost = { influence = 320 }
+	}
+	potential = { is_overlord = yes has_modifier = decentralized_leader }
+	effect = {
+		country_event = { id = decentralized.14 }
+	}
+}
+
+regentmaker_give_tech = {
+	length = 3600
+	icon = "GFX_research_icon" # "GFX_trade_willingness"
+	resources = {
+		category = edicts
+		cost = { influence = 90 }
+	}
+	potential = { is_overlord = yes } # has_modifier = decentralized_leader
+	# modifier = { }
+	# prerequisites = {  }
+	effect = {
+		country_event = { id = regentmaker.4 }
+	}
+	# ai_weight = { weight = 0 }
+}
+
+regentmaker_choose_ethics = {
+	length = 1
+	icon = "GFX_topbar_traditions_button"
+	# icon = "GFX_species_right_citizenship"
+	resources = {
+		category = edicts
+		cost = { influence = 0 }
+	}
+	potential = { is_overlord = yes }
+	# modifier = { }
+	# prerequisites = { }
+	effect = {
+		country_event = { id = regentmaker.7 }
+	}
+	ai_weight = { weight = 0 }
+}
+
+regentmaker_choose_gov = {
+	length = 1
+	icon = "GFX_empire_capital"
+	resources = {
+		category = edicts
+		cost = { influence = 0 }
+	}
+	potential = { is_overlord = yes }
+	# modifier = { }
+	# prerequisites = { }
+	effect = {
+		country_event = { id = regentmaker.8 }
+	}
+	ai_weight = { weight = 0 }
+}

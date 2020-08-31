@@ -1,0 +1,15 @@
+cb_decentralized = {
+	show_in_diplomacy = yes
+	show_notification = no
+	potential = {
+		has_modifier = decentralized_leader	
+	}
+	is_valid = {
+		NOT = { is_overlord_to = FROM }
+		OR = {
+			is_subject = no
+			overlord = { NOT = { is_same_value = from } }
+		}
+		
+	}
+}

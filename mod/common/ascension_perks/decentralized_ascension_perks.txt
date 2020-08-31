@@ -1,0 +1,17 @@
+#DECENTRALIZED
+ap_decentralization = {
+	potential = {
+		exists = capital_scope
+		NOR= {
+			has_ascension_perk = ap_decentralization
+			has_ethic = ethic_gestalt_consciousness
+			is_ai = yes
+		}
+	}
+	on_enabled = {
+		hidden_effect = {
+			country_event = { id = decentralized.2 }
+		}
+	}
+	modifier = {}
+}
