@@ -42,7 +42,7 @@ country_event = {
 					authority = auth_imperial
 					civics = random
 					species = event_target:mainpop
-					flag = random # partial color definition not possible!?
+					flag = random # separate color definition not possible!?
 					randomize_ethos = yes
 					ethos = random
 					ignore_initial_colony_error = yes
@@ -886,7 +886,7 @@ country_event = {
 			}
 			create_country = {
 				name = random
-				type = FROM # default
+				type = default
 				name_list = FROM
 				ship_prefix = ""
 				authority = auth_imperial

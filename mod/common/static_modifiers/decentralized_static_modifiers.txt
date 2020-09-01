@@ -40,10 +40,10 @@ regentmaker_colony = {
 
 SUBJECT_member_state = {
 	icon = "gfx/interface/icons/modifiers/mod_job_noble_add.dds"
-	stations_produces_mult = 0.8
-	planet_jobs_produces_mult = 0.8
+	stations_produces_mult = 0.7
+	planet_jobs_produces_mult = 0.7
 	country_naval_cap_mult = 0.4
-	ships_upkeep_mult = -0.3
-	starbase_shipyard_build_cost_mult = -0.3
-	planet_stability_add = 15
+	ships_upkeep_mult = -0.25
+	starbase_shipyard_build_cost_mult = -0.25
+	planet_stability_add = 14
 }
