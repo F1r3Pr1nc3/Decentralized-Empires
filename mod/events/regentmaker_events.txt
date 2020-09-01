@@ -131,7 +131,7 @@ planet_event = {
 								# has_colonization_control = no
 								pop_can_live_on_planet = yes
 								PREV = {
-									habitability = { who = PREV value > 0.6 }
+									habitability = { who = PREV value > 0.65 }
 								}
 								species = { NOT = { is_archetype = PRESAPIENT } }
 							}
@@ -230,8 +230,8 @@ planet_event = {
 						set_friendly = yes
 						target = prev
 					}
-					establish_communications_no_message = prev
-					establish_contact = { who = prev location = root.solar_system }
+					# establish_communications_no_message = prev
+					# establish_contact = { who = prev location = root.solar_system }
 					every_relation = {
 						establish_communications_no_message = prevprev
 						establish_contact = { who = prevprev location = root.solar_system }
@@ -243,8 +243,8 @@ planet_event = {
 						forced = 5
 					}
 				}
-				establish_communications_no_message = event_target:owner_empire
-				establish_contact = { who = event_target:owner_empire location = event_target:owner_empire.capital_scope }
+				# establish_communications_no_message = event_target:owner_empire
+				# establish_contact = { who = event_target:owner_empire location = event_target:owner_empire.capital_scope }
 				copy_techs_from = { target = event_target:owner_empire }
 				if = { limit = { NOT = { is_same_species = event_target:owner_empire } }
 					# if = { limit = { is_homeworld = yes } } else = {
