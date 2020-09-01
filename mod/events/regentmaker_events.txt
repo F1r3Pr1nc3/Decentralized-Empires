@@ -169,13 +169,16 @@ planet_event = {
 			# }
 			authority = event_target:owner_empire
 			civics = random
+			ignore_initial_colony_error = yes
+			randomize_ethos = yes
 			ethos = random
 			species = event_target:vassal_species
-			flag = random
-			# origin = origin_default
-			auto_delete = yes
-			ignore_initial_colony_error = yes
+			flag = random # partial color definition not possible!?
+			origin = origin_default
+			# auto_delete = yes
+			day_zero_contact = no
 			effect = {
+				# change_country_flag = {  }
 				# set_timed_relation_flag = { who = event_target:owner_empire flag = AbandonedRefugees days = 5 }
 				# event_target:owner_empire = { set_timed_relation_flag = { who = prev flag = AbandonedRefugees days = 5 } }
 				add_resource = {
@@ -185,6 +188,7 @@ planet_event = {
 					influence = 500
 				}
 				set_country_flag = first_alien_life
+				set_country_flag = has_encountered_other_empire
 				if = {
 					limit = {
 						ROOT = { has_planet_flag = regentmaker_tributary }
@@ -230,7 +234,7 @@ planet_event = {
 						set_friendly = yes
 						target = prev
 					}
-					# establish_communications_no_message = prev
+					establish_communications_no_message = prev
 					# establish_contact = { who = prev location = root.solar_system }
 					every_relation = {
 						establish_communications_no_message = prevprev
@@ -243,9 +247,17 @@ planet_event = {
 						forced = 5
 					}
 				}
-				# establish_communications_no_message = event_target:owner_empire
-				# establish_contact = { who = event_target:owner_empire location = event_target:owner_empire.capital_scope }
-				copy_techs_from = { target = event_target:owner_empire }
+				establish_communications_no_message = event_target:owner_empire
+				establish_contact = { who = event_target:owner_empire location = event_target:owner_empire.capital_scope }
+				copy_techs_from = {
+					target = event_target:owner_empire
+					except = {
+						# Horizon Signal
+						tech_akx_worm_1
+						tech_akx_worm_2
+						tech_akx_worm_3
+					}
+				}
 				if = { limit = { NOT = { is_same_species = event_target:owner_empire } }
 					# if = { limit = { is_homeworld = yes } } else = {
 					set_name = "[This.owner_species.GetName]"

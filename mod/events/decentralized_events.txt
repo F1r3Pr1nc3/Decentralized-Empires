@@ -42,11 +42,17 @@ country_event = {
 					authority = auth_imperial
 					civics = random
 					species = event_target:mainpop
-					flag = random
+					flag = random # partial color definition not possible!?
+					randomize_ethos = yes
 					ethos = random
+					ignore_initial_colony_error = yes
+					day_zero_contact = no
+					origin = origin_default
 					effect = {
 						# log = "a [Root.GetName] - [From.GetName]"
 						set_country_flag = first_alien_life
+						set_country_flag = has_encountered_other_empire
+
 						copy_ethos_and_authority = ROOT
 						set_subject_of = {
 							who = ROOT
@@ -56,7 +62,7 @@ country_event = {
 						ROOT = {
 							set_country_flag = has_communications@prev
 							set_timed_country_flag = { flag = day_0 days = 10 }
-							# establish_communications_no_message = PREV
+							establish_communications_no_message = PREV
 							# establish_contact = { who = PREV location = ROOT.capital_scope }
 						}
 						country_event = {
@@ -369,7 +375,15 @@ country_event = {
 				}
 			}
 			if = { limit = { exists = this }
-				copy_techs_from = { target = FROM }
+				copy_techs_from = {
+					target = FROM
+					except = {
+						# Horizon Signal
+						tech_akx_worm_1
+						tech_akx_worm_2
+						tech_akx_worm_3
+					}
+				}
 				add_resource = { energy = 3000  minerals = 300 unity = 9000 influence = 300 }
 				create_fleet = {
 					effect = {
@@ -872,7 +886,7 @@ country_event = {
 			}
 			create_country = {
 				name = random
-				type = default
+				type = FROM # default
 				name_list = FROM
 				ship_prefix = ""
 				authority = auth_imperial
@@ -880,6 +894,7 @@ country_event = {
 				species = event_target:mainpop
 				flag = random
 				ethos = random
+				day_zero_contact = no
 				effect = {
 					copy_ethos_and_authority = ROOT
 					solar_system = {
