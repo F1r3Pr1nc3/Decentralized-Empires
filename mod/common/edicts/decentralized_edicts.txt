@@ -3,16 +3,20 @@ request_resources = {
 	icon = "GFX_missing_resources_icon"
 	resources = {
 		category = edicts
-		cost = { influence = 320 }
+		cost = { influence = 120 }
 	}
-	potential = { is_overlord = yes has_modifier = decentralized_leader }
+	potential = {
+		is_overlord = yes
+		has_modifier = decentralized_leader
+		has_resource = { type = influence amount > 150 }
+ 	}
 	effect = {
 		country_event = { id = decentralized.14 }
 	}
 }
 
 regentmaker_give_tech = {
-	length = 3600
+	length = 2100
 	icon = "GFX_research_icon" # "GFX_trade_willingness"
 	resources = {
 		category = edicts

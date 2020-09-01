@@ -42,7 +42,6 @@ country_event = {
 		}
 	}
 	immediate = {
-		print_scope_effect = yes
 		fromfrom = {
 			country_event = { id = action.13 }
 			save_event_target_as = contact_empire
