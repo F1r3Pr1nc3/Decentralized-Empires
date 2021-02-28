@@ -46,7 +46,13 @@ decision_remove_regentmaker = {
 		has_planet_flag = regentmaker_handover
 	}
 	effect = {
-		remove_planet_flag = regentmaker_handover
+		# custom_tooltip = consecrated_worlds_unsuitable
+		solar_system = {
+			every_system_planet = {
+				limit = { has_planet_flag = regentmaker_handover }
+				remove_planet_flag = regentmaker_handover
+			}
+		}
 	}
 	ai_weight = {
 		weight = 0

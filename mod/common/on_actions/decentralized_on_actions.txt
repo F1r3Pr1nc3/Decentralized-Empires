@@ -15,15 +15,23 @@ on_planet_transfer = {
 }
 
 # No scope, like on_game_start
-on_yearly_pulse = {
-	events = {
-		decentralized.6 # event for converting vassals into member states
-	}
-}
+# on_yearly_pulse = {
+# 	events = {
+# 		decentralized.6 # event for converting vassals into member states
+# 	}
+# }
 
 # THIS = Country
 on_ruler_set = {
 	events = {
 		decentralized.201 #starts decentralized elections
+	}
+}
+
+# This = subject
+# From = subject's overlord
+on_becoming_subject = {
+	events = {
+		decentralized.214 # Join Overlord's decentralization
 	}
 }

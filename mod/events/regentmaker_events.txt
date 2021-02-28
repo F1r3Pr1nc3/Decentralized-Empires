@@ -7,13 +7,31 @@ planet_event = {
 	is_triggered_only = yes
 	immediate = {
 		ROOT.owner = {
-			save_event_target_as = owner_empire
+			save_event_target_as = decentralizer
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = first_alien_life
+					}
+				}
+				set_country_flag = first_alien_life
+				set_timed_country_flag = { flag =  not_alien_life days = 10 }
+			}
+			if = {
+				limit = {
+					NOT = {
+						has_country_flag = has_encountered_other_empire
+					}
+				}
+				set_country_flag = has_encountered_other_empire
+				set_timed_country_flag = { flag =  not_encountered_other_empire days = 10 }
+			}
 		}
 	}
 	option = {
 		name = "regentmaker.1.a"
 		hidden_effect = {
-			# set_timed_planet_flag = { flag = regentmaker_vassal days = 7 }
+			# set_timed_planet_flag = { flag = regentmaker_vassal days = 10 }
 			remove_planet_flag = regentmaker_tributary
 			remove_planet_flag = regentmaker_member_state
 			planet_event = { id = regentmaker.2 }
@@ -22,7 +40,10 @@ planet_event = {
 	option = {
 		name = "regentmaker.1.b"
 		hidden_effect = {
-			set_timed_planet_flag = { flag = regentmaker_tributary days = 7 }
+			set_timed_planet_flag = {
+				flag = regentmaker_tributary
+				days = 7
+			}
 			# remove_planet_flag = regentmaker_vassal
 			remove_planet_flag = regentmaker_member_state
 			planet_event = { id = regentmaker.2 }
@@ -30,9 +51,14 @@ planet_event = {
 	}
 	option = {
 		name = "regentmaker.1.c"
-		trigger = { event_target:owner_empire = { has_modifier = decentralized_leader } }
+		trigger = {
+			event_target:decentralizer = { has_modifier = decentralized_leader }
+		}
 		hidden_effect = {
-			set_timed_planet_flag = { flag = regentmaker_member_state days = 7 }
+			set_timed_planet_flag = {
+				flag = regentmaker_member_state
+				days = 7
+			}
 			# remove_planet_flag = regentmaker_vassal
 			remove_planet_flag = regentmaker_tributary
 			planet_event = { id = regentmaker.2 }
@@ -57,7 +83,6 @@ planet_event = {
 	desc = "regentmaker.2.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
-
 	option = {
 		name = "regentmaker.2.a"
 		hidden_effect = {
@@ -84,7 +109,8 @@ planet_event = {
 		name = distar.1055.b
 		hidden_effect = {
 			owner = {
-				every_owned_planet = { limit = { has_planet_flag = regentmaker_handover }
+				every_owned_planet = {
+					limit = { has_planet_flag = regentmaker_handover }
 					remove_planet_flag = regentmaker_handover
 				}
 			}
@@ -106,20 +132,20 @@ planet_event = {
 	immediate = {
 		if = {
 			limit = {
-				NOR = {
+				NAND = {
 					exists = event_target:vassal_species
-					is_scope_type = species
+					event_target:vassal_species = { is_scope_type = species }
 				}
 			}
 			if = {
 				limit = { num_species > 1 }
 				random_owned_pop = {
 					limit = {
-						NOT = { is_same_species = event_target:owner_empire.owner_species }
+						NOT = { is_same_species = event_target:decentralizer.owner_species }
 						OR = {
 							AND = {
 								is_majority_species = species
-								NOT = { is_same_species = event_target:owner_empire.owner_species }
+								NOT = { is_same_species = event_target:decentralizer.owner_species }
 							}
 							AND = {
 								is_enslaved = no
@@ -131,9 +157,32 @@ planet_event = {
 								# has_colonization_control = no
 								pop_can_live_on_planet = yes
 								PREV = {
-									habitability = { who = PREV value > 0.65 }
+									habitability = {
+										who = PREV
+										value > 0.65
+									}
 								}
-								species = { NOT = { is_archetype = PRESAPIENT } }
+								species = {
+									# species_has_citizenship = yes
+									has_citizenship_type = { type = citizenship_full country = event_target:decentralizer }
+									species_has_happiness_with_owner = event_target:decentralizer
+									NOT = { is_archetype = PRESAPIENT }
+								}
+							}
+							PREV = {
+								is_ideal_planet_class = {
+									who = PREV
+									status = yes
+								}
+								species = {
+									OR = {
+										PREVPREV = { is_majority_species = PREV }
+										species_has_happiness_with_owner = event_target:decentralizer
+										# species_has_citizenship = yes
+										has_citizenship_type = { type = citizenship_full country = event_target:decentralizer }
+									}
+									NOT = { is_archetype = PRESAPIENT }
+								}
 							}
 						}
 					}
@@ -147,40 +196,55 @@ planet_event = {
 					NOT = { exists = event_target:vassal_species }
 				}
 				random_owned_species = {
-					limit = { NOT = { is_exact_same_species = event_target:owner_empire.owner_species } }
+					limit = {
+						NOT = { is_exact_same_species = event_target:decentralizer.owner_species }
+					}
 					species = { save_event_target_as = vassal_species }
 				}
-			} else_if = {
-				limit = { NOT = { exists = event_target:vassal_species } }
+			}
+			else_if = {
+				limit = {
+					NOT = { exists = event_target:vassal_species }
+				}
 				random_owned_species = {
 					limit = { always = yes }
 					species = { save_event_target_as = vassal_species }
 				}
 			}
+			if = {
+				limit = {
+					exists = sector
+					sector = { exists = leader }
+					is_sector_capital = yes
+				}
+				sector.leader = {
+					save_event_target_as = vassal_leader
+					unassign_leader = this
+					log="Save leader [vassal_leader.GetName]"
+				}
+			}
 		}
-
 		create_country = {
 			# name = random
 			name = "[Prev.solar_system.star.GetName]"
-			name_list = event_target:owner_empire
+			name_list = event_target:decentralizer
 			type = default
 			ship_prefix = ""
-			# government_restrictions = { # 	authority = { NOT = { value = auth_machine_intelligence value = auth_hive_mind } }
-			# }
-			authority = event_target:owner_empire
+			# government_restrictions = { authority = { NOT = { value = auth_machine_intelligence value = auth_hive_mind } } }
+			authority = event_target:decentralizer
 			civics = random
 			ignore_initial_colony_error = yes
 			randomize_ethos = yes
 			ethos = random
 			species = event_target:vassal_species
-			flag = random # separate color definition not possible!?
+			flag = random			# separate color definition not possible!?
 			origin = origin_default
 			# auto_delete = yes
 			day_zero_contact = no
 			effect = {
 				# change_country_flag = {  }
-				# set_timed_relation_flag = { who = event_target:owner_empire flag = AbandonedRefugees days = 5 }
-				# event_target:owner_empire = { set_timed_relation_flag = { who = prev flag = AbandonedRefugees days = 5 } }
+				# set_timed_relation_flag = { who = event_target:decentralizer flag = AbandonedRefugees days = 5 }
+				# event_target:decentralizer = { set_timed_relation_flag = { who = prev flag = AbandonedRefugees days = 5 } }
 				add_resource = {
 					minerals = 500
 					energy = 1000
@@ -194,7 +258,7 @@ planet_event = {
 						ROOT = { has_planet_flag = regentmaker_tributary }
 					}
 					set_subject_of = {
-						who = event_target:owner_empire
+						who = event_target:decentralizer
 						subject_type = tributary
 					}
 				}
@@ -203,30 +267,29 @@ planet_event = {
 						ROOT = { has_planet_flag = regentmaker_member_state }
 					}
 					set_subject_of = {
-						who = event_target:owner_empire
+						who = event_target:decentralizer
 						subject_type = member_state
 					}
 				}
 				else = {
 					set_subject_of = {
-						who = event_target:owner_empire
+						who = event_target:decentralizer
 						subject_type = vassal
 					}
 				}
-
 				set_faction_hostility = {
 					set_hostile = no
 					set_neutral = no
 					set_friendly = yes
-					target = event_target:owner_empire
+					target = event_target:decentralizer
 				}
 				# action_open_borders
 				set_closed_borders = {
-					who = event_target:owner_empire
+					who = event_target:decentralizer
 					status = no
 					forced = 5
 				}
-				event_target:owner_empire = {
+				event_target:decentralizer = {
 					set_country_flag = has_communications@prev
 					set_faction_hostility = {
 						set_hostile = no
@@ -234,11 +297,10 @@ planet_event = {
 						set_friendly = yes
 						target = prev
 					}
-					establish_communications_no_message = prev
-					# establish_contact = { who = prev location = root.solar_system }
+
 					every_relation = {
-						establish_communications_no_message = prevprev
-						establish_contact = { who = prevprev location = root.solar_system }
+						establish_communications_no_message = last_created_country
+						# establish_contact = { who = last_created_country location = ROOT }
 					}
 					# action_open_borders
 					set_closed_borders = {
@@ -247,10 +309,10 @@ planet_event = {
 						forced = 5
 					}
 				}
-				establish_communications_no_message = event_target:owner_empire
-				establish_contact = { who = event_target:owner_empire location = event_target:owner_empire.capital_scope }
+				establish_communications_no_message = event_target:decentralizer
+				# establish_contact = { who = event_target:decentralizer location = event_target:decentralizer.capital_scope }
 				copy_techs_from = {
-					target = event_target:owner_empire
+					target = event_target:decentralizer
 					except = {
 						# Horizon Signal
 						tech_akx_worm_1
@@ -258,11 +320,14 @@ planet_event = {
 						tech_akx_worm_3
 					}
 				}
-				if = { limit = { NOT = { is_same_species = event_target:owner_empire } }
-					# if = { limit = { is_homeworld = yes } } else = {
+				if = {
+					limit = {
+						NOT = { is_same_species = event_target:decentralizer }
+					}
+					# if = { limit = { is_homeworld = yes } }
 					set_name = "[This.owner_species.GetName]"
 				} else = {
-					copy_ethos_and_authority = event_target:owner_empire
+					copy_ethos_and_authority = event_target:decentralizer
 					change_government = {
 						authority = auth_imperial
 						civics = random
@@ -273,23 +338,42 @@ planet_event = {
 						FROM = { has_planet_flag = regentmaker_handover }
 					}
 					log = "Release selected planet [From.GetName]!"
-					FROM = { planet_event = { id = regentmaker.9 } }
+					FROM = {
+						planet_event = { id = regentmaker.9 }
+					}
 				}
 				add_opinion_modifier = {
-					who = event_target:owner_empire
+					who = event_target:decentralizer
 					modifier = opinion_scion
 				}
 				add_opinion_modifier = {
-					who = event_target:owner_empire
-					modifier = opinion_ceded_starbase # opinion_trust
+					who = event_target:decentralizer
+					modifier = opinion_ceded_starbase					# opinion_trust
 				}
 				add_opinion_modifier = {
-					who = event_target:owner_empire
-					modifier = opinion_enlightened_us # opinion_common_ground
+					who = event_target:decentralizer
+					modifier = opinion_enlightened_us					# opinion_common_ground
 				}
+				if = {
+					limit = {
+						exists = event_target:vassal_leader
+						event_target:vassal_leader = {
+							NOT = { leader_class = ruler }
+						}
+					}
+					# sector = {
+					log="New leader [vassal_leader.GetName]"
+					event_target:vassal_leader = { set_owner = prev }
+					assign_leader = event_target:vassal_leader
+					no_scope = { save_event_target_as = vassal_leader }	# remove only for sure
+				}
+				create_starting_leaders = yes
+				create_starting_fleets = yes
 			}
 		}
-		event_target:owner_empire = {
+
+		# last_created_country = {}
+		event_target:decentralizer = {
 			every_owned_planet = {
 				limit = {
 					has_planet_flag = regentmaker_handover
@@ -300,8 +384,22 @@ planet_event = {
 					is_capital = no
 					is_occupied_flag = no
 				}
-				log = "Release planet [This.GetName]!"
+				# log = "Release planet [This.GetName]!"
 				planet_event = { id = regentmaker.9 }
+			}
+			establish_communications_no_message = last_created_country
+			# establish_contact = { who = last_created_country location = ROOT }
+			if = {
+				limit = {
+					has_country_flag = not_encountered_other_empire
+				}
+				remove_country_flag = has_encountered_other_empire
+			}
+			if = {
+				limit = {
+					has_country_flag = not_alien_life
+				}
+				remove_country_flag = first_alien_life
 			}
 		}
 	}
@@ -313,7 +411,6 @@ country_event = {
 	desc = "regentmaker.4.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
-
 	option = {
 		name = "regentmaker.4.a"
 		every_subject = {
@@ -323,7 +420,9 @@ country_event = {
 	option = {
 		name = "regentmaker.4.b"
 		every_subject = {
-			root = { copy_techs_from = { target = prev } }
+			root = {
+				copy_techs_from = { target = prev }
+			}
 		}
 	}
 	# "Leave it be." tech_unlocked_ratio
@@ -532,26 +631,26 @@ planet_event = {
 	id = regentmaker.9
 	is_triggered_only = yes
 	hide_window = yes
-
 	immediate = {
 		set_controller = last_created_country
 		set_owner = last_created_country
 		remove_planet_flag = regentmaker_handover
 		solar_system = {
-			if = { limit = { exists = starbase }
+			if = {
+				limit = { exists = starbase }
 				starbase = { set_owner = last_created_country }
 			}
 			every_neighbor_system = {
 				limit = {
 					exists = starbase
-					is_owned_by = event_target:owner_empire
+					is_owned_by = event_target:decentralizer
 				}
 				if = {
 					limit = {
 						any_system_planet = {
 							# has_owner = yes
-							# owner = { is_same_empire = event_target:owner_empire }
-							is_owned_by = event_target:owner_empire
+							# owner = { is_same_empire = event_target:decentralizer }
+							is_owned_by = event_target:decentralizer
 							has_planet_flag = regentmaker_handover
 						}
 					}
@@ -559,8 +658,8 @@ planet_event = {
 					every_system_planet = {
 						limit = {
 							# has_owner = yes
-							# owner = { is_same_empire = event_target:owner_empire }
-							is_owned_by = event_target:owner_empire
+							# owner = { is_same_empire = event_target:decentralizer }
+							is_owned_by = event_target:decentralizer
 							NOT = { is_same_value = prevprev }
 						}
 						if = {
@@ -570,7 +669,7 @@ planet_event = {
 							set_owner = last_created_country
 						}
 						else = {
-							starbase = { set_owner = event_target:owner_empire }
+							starbase = { set_owner = event_target:decentralizer }
 						}
 					}
 				}
@@ -593,9 +692,9 @@ planet_event = {
 					is_star = no
 					is_asteroid = no
 					# has_owner = yes
-					is_owned_by = event_target:owner_empire
+					is_owned_by = event_target:decentralizer
 					# owner = {
-					# 	is_same_empire = event_target:owner_empire
+					# 	is_same_empire = event_target:decentralizer
 					# }
 					NOT = { is_same_value = prevprev }
 				}

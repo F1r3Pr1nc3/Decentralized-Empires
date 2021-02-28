@@ -18,35 +18,9 @@ wg_expansion_ultimatum = {
 					}
 					remove_claims = { who = root }
 				}
+				save_event_target_as = ultimatum_subject
 			}
-			event_target:new_planet = {
-				random_owned_pop = {
-					limit = { is_majority_species = species }
-					species = { save_event_target_as = mainpop }
-				}
-				create_country = {
-					name = "[new_planet.GetName]"
-					name_list = from
-					type = default
-					ship_prefix = ""
-					authority = auth_imperial
-					civics = random
-					species = event_target:mainpop
-					flag = random
-					ethos = random
-					effect = {
-						establish_communications_no_message = event_target:attacker
-						copy_ethos_and_authority = THIS
-						solar_system = {
-							starbase = { set_owner = prevprev }
-						}
-						set_subject_of = {
-							who = event_target:ultimatum_giver
-							subject_type = member_state
-						}
-					}
-				}
-			}
+			country_event = { id = decentralized.11 }
 		}
 	}
 	ai_weight = { weight = 100 }
@@ -84,14 +58,14 @@ wg_defy_ultimatum = {
 				every_subject = {
 					limit = { is_subject_type = member_state }
 					set_subject_of = {
-						who = event_target:big_member
+						who = event_target:ultimatum_subject
 						subject_type = member_state
 					}
 				}
 			}
 			from = {
 				set_subject_of = {
-					who = event_target:big_member
+					who = event_target:ultimatum_subject
 					subject_type = member_state
 				}
 			}

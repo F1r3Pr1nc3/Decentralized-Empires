@@ -19,14 +19,14 @@ country_event = {
 		every_system_within_border = {
 			limit = {
 				exists = starbase
-				any_system_planet = { is_colony = yes }
+				any_system_planet = { is_colony = yes num_pops > 4 }
 				NOT = { any_system_planet = { is_capital = yes } }
 				# NOT direct at the capital
 				NOT = { any_neighbor_system = { is_same_value = ROOT.capital_scope.solar_system } }
 			}
 			random_system_planet = {
 				limit = {
-					is_colony = yes
+					is_colony = yes num_pops > 4 is_under_colonization = no
 					is_owned_by = ROOT
 					is_capital = no
 				}
@@ -58,7 +58,7 @@ country_event = {
 							who = ROOT
 							subject_type = member_state
 						}
-						set_timed_country_flag = { flag = day_0 days = 10 }
+						set_timed_country_flag = { flag = day_0 days = 14 }
 						ROOT = {
 							set_country_flag = has_communications@prev
 							set_timed_country_flag = { flag = day_0 days = 10 }
@@ -68,6 +68,7 @@ country_event = {
 						country_event = {
 							id = decentralized.3 days = 7
 						}
+						create_starting_leaders = yes
 					}
 				}
 				solar_system = {
@@ -86,7 +87,7 @@ country_event = {
 			}
 		}
 		country_event = {
-			id = decentralized.4 days = 9
+			id = decentralized.4 days = 8
 		}
 	}
 	option = {
@@ -181,7 +182,7 @@ country_event = {
 							limit = {
 								has_owner = yes
 								is_colony = yes
-								owner = { is_country = ROOT }
+								is_owned_by = ROOT
 								has_ground_combat = no
 								is_occupied_flag = no
 							}
@@ -195,6 +196,7 @@ country_event = {
 }
 
 # Distributes remaining systems
+# Root = decentralizer
 country_event = {
 	id = decentralized.4
 	title = "decentralized.4.name"
@@ -227,6 +229,7 @@ country_event = {
 				PREV.starbase = { set_owner = PREV.space_owner }
 			}
 		}
+		# Take direct neighbor systems back
 		capital_scope = {
 			solar_system = {
 				every_neighbor_system = {
@@ -243,7 +246,7 @@ country_event = {
 					every_system_planet = {
 						limit = {
 							has_owner = yes
-							# is_colony = yes
+							# is_colony = yes num_pops > 3
 							has_ground_combat = no
 							is_occupied_flag = no
 							owner = {
@@ -264,7 +267,7 @@ country_event = {
 			ROOT = { change_variable = { which = subject_member value = 1 } }
 			if = {
 				limit = {
-					controlled_systems = 1
+					controlled_systems < 3
 					# any_system_within_border = { NOT = { is_same_value = capital_scope.solar_system } }
 				}
 				capital_scope.solar_system = {
@@ -290,7 +293,7 @@ country_event = {
 									has_owner = yes
 									has_ground_combat = no
 									is_occupied_flag = no
-									PREV.space_owner = { is_country = PREVPREVPREV.space_owner }
+									PREV.space_owner = { is_same_empire = PREVPREVPREV.space_owner }
 								}
 								set_owner = PREVPREV.space_owner
 							}
@@ -300,11 +303,11 @@ country_event = {
 			}
 		}
 		# Last check (try to give at least one extra system)
-		log = "subject_member [Root.subject_member]"
+		# log = "subject member [Root.subject_member]"
 		every_subject = {
-			if = { limit = { controlled_systems = 1 }
+			if = { limit = { controlled_systems < 3 }
 				capital_scope.solar_system = {
-					if = { limit = { ROOT = { check_variable = { which = subject_member value < 7 } } }
+					if = { limit = { ROOT = { check_variable = { which = subject_member value < 8 } } }
 						random_neighbor_system = {
 							limit = {
 								has_owner = yes
@@ -334,46 +337,115 @@ country_event = {
 											ROOT = { is_overlord_to = PREV }
 										}
 										# owner = { is_overlord_to = PREVPREVPREV.space_owner }
-										owner = { is_same_empire = ROOT }
+										is_owned_by = ROOT
 									}
 								}
 								set_owner = PREVPREV.space_owner
 							}
 						}
 					} else = {
-						# Reduce members (last attempt)
-						# log = "Reduce [Prev.GetName]"
-						random_neighbor_system = {
-							limit = {
-								has_owner = yes
-								space_owner = {
+						# log = "Reduce members [Prev.GetName]"
+						PREV = {
+							random_neighbor_country = {
+								limit = {
 									OR = {
 										AND = {
 											is_subject = yes
 											is_loyal_to = ROOT
 											ROOT = { is_overlord_to = PREV }
 										}
-										is_same_empire = ROOT
+										# is_same_empire = ROOT
 									}
 								}
-							}
-							PREV = {
-								# log = "Yes [This.GetName]"
-								starbase = { set_owner = PREVPREV.space_owner }
-								every_system_planet = {
-									limit = {
-										has_owner = yes
-										has_ground_combat = no
-										is_occupied_flag = no
-										PREV.space_owner = { is_country = PREVPREVPREV.space_owner }
+								ROOT = { change_variable = { which = subject_member value = -1 } }
+								every_owned_fleet = {
+									set_owner = PREV
+								}
+								every_owned_army = {
+									set_owner = PREV
+								}
+								every_system_within_border = {
+									limit = { exists = starbase }
+									starbase = {
+										set_owner = PREVPREV
 									}
-									set_owner = PREVPREV.space_owner
+								}
+								every_owned_planet = {
+									set_owner = PREV
+									set_controller = PREV
 								}
 							}
 						}
 					}
 				}
 			}
+			# Increase subject size
+			if = {
+				limit = {
+					controlled_systems > 2
+					controlled_systems < 5
+					ROOT = { check_variable = { which = subject_member value < 7 } }
+				}
+				random_system_within_border = {
+					limit = {
+						any_neighbor_system = {
+							has_owner = yes
+							OR = {
+								space_owner = {
+									is_subject = yes
+									is_subject_type = member_state
+									is_loyal_to = ROOT
+									ROOT = { is_overlord_to = PREV }
+								}
+								AND = {
+									space_owner = { is_same_empire = ROOT }
+									NOT = { is_same_value = ROOT.capital_scope.solar_system }
+								}
+							}
+						}
+					}
+					every_neighbor_system = {
+						limit = {
+							has_owner = yes
+							OR = {
+								space_owner = {
+									is_subject = yes
+									is_subject_type = member_state
+									is_loyal_to = ROOT
+									ROOT = { is_overlord_to = PREV }
+								}
+								AND = {
+									space_owner = { is_same_empire = ROOT }
+									NOT = { is_same_value = ROOT.capital_scope.solar_system }
+								}
+							}
+						}
+						starbase = { set_owner = PREVPREV.space_owner }
+						every_system_planet = {
+							limit = {
+								has_owner = yes
+								has_ground_combat = no
+								is_occupied_flag = no
+								OR = {
+									owner = {
+										is_subject = yes
+										is_subject_type = member_state
+										is_loyal_to = ROOT
+										ROOT = { is_overlord_to = PREV }
+									}
+									is_owned_by = ROOT
+								}
+							}
+							if = { limit = { is_capital =yes }
+								ROOT = { change_variable = { which = subject_member value = -1 } }
+							}
+							set_owner = PREVPREV.space_owner
+						}
+					}
+				}
+			}
+
+
 			if = { limit = { exists = this }
 				copy_techs_from = {
 					target = FROM
@@ -384,90 +456,9 @@ country_event = {
 						tech_akx_worm_3
 					}
 				}
-				add_resource = { energy = 3000  minerals = 300 unity = 9000 influence = 300 }
-				create_fleet = {
-					effect = {
-						set_owner = PREV
-						create_ship = {
-							name = random
-							random_existing_design = science
-							# graphical_culture =
-						}
-						set_location = {
-							target = PREV.capital_scope
-							distance = 10
-							angle = random
-						}
-						set_fleet_stance = evasive
-					}
-				}
-				create_fleet = {
-					effect = {
-						set_owner = PREV
-						create_ship = {
-							name = random
-							random_existing_design = constructor
-							# graphical_culture =
-						}
-						set_location = {
-							target = PREV.capital_scope
-							distance = 10
-							angle = random
-						}
-						set_fleet_stance = evasive
-					}
-				}
 
-				if = { limit = { ROOT = { used_naval_capacity_percent > 1 } }
-					random_system_within_border = {
-						limit = {
-							any_fleet_in_system = {
-								exists = owner
-								is_ship_class = shipclass_military
-								fleet_size > 3
-								owner = { is_country = ROOT }
-							}
-						}
-						random_fleet_in_system = {
-							limit = {
-								exists = owner
-								is_ship_class = shipclass_military
-								fleet_size > 3
-								owner = { is_country = ROOT }
-							}
-							set_owner = PREVPREV
-							if = {
-								limit = { exists = leader }
-								leader = { set_owner = PREVPREVPREV }
-							}
-						}
-					}
-				}
-				if = { limit = { ROOT = { used_naval_capacity_percent > 1.8 } used_naval_capacity_percent < 1 }
-					random_system_within_border = {
-						limit = {
-							any_fleet_in_system = {
-								exists = owner
-								is_ship_class = shipclass_military
-								fleet_size > 3
-								owner = { is_country = ROOT }
-							}
-						}
-						random_fleet_in_system = {
-							limit = {
-								exists = owner
-								is_ship_class = shipclass_military
-								fleet_size > 3
-								owner = { is_country = ROOT }
-							}
-							set_owner = PREVPREV
-							if = {
-								limit = { exists = leader }
-								leader = { set_owner = PREVPREVPREV }
-							}
-						}
-					}
-				}
+				create_starting_fleets = yes
+
 				# action_open_borders
 				set_closed_borders = {
 					who = ROOT
@@ -511,16 +502,15 @@ planet_event = {
 		}
 	}
 	immediate = {
-		This = {
-			remove_modifier = planetary_nationalism
-			add_modifier = {
-				modifier = autonomy_lost
-				days = 1800
-			}
+		remove_modifier = planetary_nationalism
+		add_modifier = {
+			modifier = autonomy_lost
+			days = 1800
 		}
 	}
 }
 
+# Deprecated
 event = {
 	id = decentralized.6
 	# title = "decentralized.6"
@@ -553,14 +543,15 @@ planet_event = {
 	hide_window = yes
 	trigger = {
 		FROM = {
+			NOT = { has_country_flag = day_0 }
 			is_subject_type = member_state
-			count_owned_starbase = { count > 5 }
+			count_owned_starbase = { count > 6 }
 		}
 	}
 	immediate = {
 		save_event_target_as = new_planet
 		FROM = {
-			save_event_target_as = big_member
+			save_event_target_as = ultimatum_subject
 			overlord = {
 				country_event = { id = decentralized.9 }
 			}
@@ -578,8 +569,15 @@ country_event = {
 	desc = "decentralized.7.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
-	immediate = {
+	trigger = {
+		exists = this
+		has_country_flag = decentralizer
+		any_subject = {
+			is_subject_type = vassal
+			NOT = { has_country_flag = day_0 }
+		}
 	}
+	immediate = {}
 	option = {
 		name = decentralized.7.a
 		every_subject = {
@@ -594,6 +592,12 @@ country_event = {
 	option = {
 		name = decentralized.7.b
 		add_resource = { influence = -20 }
+		hidden_effect = {
+			random_subject = {
+				limit = { is_subject_type = vassal }
+				set_timed_country_flag = { flag = day_0 days = 10 }
+			}
+		}
 	}
 }
 
@@ -608,9 +612,9 @@ country_event = {
 	}
 	option = {
 		name = decentralized.9.a
-		save_event_target_as = ultimatum_giver
+		save_event_target_as = decentralizer
 		add_resource = { influence = -150 }
-		event_target:big_member = {
+		event_target:ultimatum_subject = {
 			country_event = { id = decentralized.10 }
 		}
 	}
@@ -866,13 +870,13 @@ country_event = {
 			modifier = {
 				factor = 0.2
 				opinion = {
-					who = event_target:ultimatum_giver
+					who = event_target:decentralizer
 					value < -60
 				}
 			}
 			modifier = {
 				factor = 0.3
-				is_disloyal_to = event_target:ultimatum_giver
+				is_disloyal_to = event_target:decentralizer
 			}
 			modifier = {
 				factor = 0.5
@@ -880,37 +884,7 @@ country_event = {
 			}
 		}
 		add_resource = { influence = -50 }
-		event_target:new_planet = {
-			random_pop = {
-				species = { save_event_target_as = mainpop }
-			}
-			create_country = {
-				name = random
-				type = default
-				name_list = FROM
-				ship_prefix = ""
-				authority = auth_imperial
-				civics = random
-				species = event_target:mainpop
-				flag = random
-				ethos = random
-				day_zero_contact = no
-				effect = {
-					copy_ethos_and_authority = ROOT
-					solar_system = {
-						starbase = { set_owner = prevprev }
-					}
-					set_subject_of = {
-						who = event_target:ultimatum_giver
-						subject_type = member_state
-					}
-					add_modifier = {
-						modifier = "SUBJECT_member_state"
-						days = -1
-					}
-				}
-			}
-		}
+		country_event = { id = decentralized.11 }
 	}
 	option = {
 		name = decentralized.10.b
@@ -918,12 +892,12 @@ country_event = {
 			factor = 90
 			modifier = {
 				factor = 0.2
-				is_loyal_to = event_target:ultimatum_giver
+				is_loyal_to = event_target:decentralizer
 			}
 			modifier = {
 				factor = 0.2
 				opinion = {
-					who = event_target:ultimatum_giver
+					who = event_target:decentralizer
 					value > 60
 				}
 			}
@@ -933,11 +907,67 @@ country_event = {
 			}
 		}
 		declare_war = {
-			target = event_target:ultimatum_giver
+			target = event_target:decentralizer
 			attacker_war_goal = wg_defy_ultimatum
 		}
 	}
 }
+
+# ROOT = event_target:decentralizer
+# new_planet owner = ultimatum_subject
+country_event = {
+	id = decentralized.11
+	# title = "decentralized.11"
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		# has_modifier = planetary_nationalism
+		# FROM = {
+		# 	NOT = { is_subject_type = member_state }
+		# }
+	}
+	immediate = {
+		event_target:new_planet = {
+			random_owned_pop = {
+				# limit = { is_majority_species = species }
+				species = { save_event_target_as = mainpop }
+			}
+			create_country = {
+				name = "[new_planet.GetName]" #random
+				type = default
+				name_list = event_target:ultimatum_subject
+				ship_prefix = ""
+				authority = auth_imperial
+				civics = random
+				species = event_target:mainpop
+				flag = random
+				ethos = random
+				day_zero_contact = no
+				effect = {
+					establish_communications_no_message = ROOT
+					establish_communications_no_message = event_target:ultimatum_subject
+					copy_ethos_and_authority = ROOT
+					solar_system = {
+						starbase = { set_owner = prevprev }
+					}
+					set_subject_of = {
+						who = ROOT
+						subject_type = member_state
+					}
+					add_modifier = {
+						modifier = "SUBJECT_member_state"
+						days = -1
+					}
+					create_starting_leaders = yes
+					create_starting_fleets = yes
+				}
+			}
+			# set_owner = last_created_country
+		}
+	}
+}
+
+
 
 # give 200 energy
 country_event = {
@@ -1926,4 +1956,78 @@ country_event = {
 	is_triggered_only = yes
 	# immediate = {  }
 	option = { name = OK }
+}
+
+
+# This = subject
+# From = subject's overlord
+# Opportunity to join Overlord's vassals into member states
+country_event = {
+	id = decentralized.214
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		FROM = {
+			has_country_flag = decentralizer
+			has_ascension_perk = ap_decentralization
+		}
+		NOT = { is_subject_type = member_state }
+	}
+	immediate = {
+		FROM = {
+			country_event = { id = decentralized.7 days = 10 random = 3 }
+		}
+	}
+}
+
+# TODO needs TEST
+# This = Overlord
+# Decrease Subjects
+country_event = {
+	id = decentralized.215
+	hide_window = yes
+	is_triggered_only = yes
+	trigger = {
+		has_country_flag = decentralizer
+		has_ascension_perk = ap_decentralization
+		check_variable = { which = subject_member value > 9 }
+	}
+	immediate = {
+		if = { limit = { check_variable = { which = subject_member value > 9 } }
+			every_subject = {
+				limit = { is_subject_type = member_state controlled_systems < 3 }
+				# Reduce members (last attempt)
+				log = "Reduce subject member [Root.subject_member]"
+				random_neighbor_country = {
+					limit = {
+						OR = {
+							is_same_empire = ROOT
+							AND = {
+								is_subject = yes
+								is_loyal_to = ROOT
+								ROOT = { is_overlord_to = PREV }
+							}
+						}
+					}
+					ROOT = { change_variable = { which = subject_member value = -1 } }
+					every_owned_fleet = {
+						set_owner = PREV
+					}
+					every_owned_army = {
+						set_owner = PREV
+					}
+					every_system_within_border = {
+						limit = { exists = starbase }
+						starbase = {
+							set_owner = PREVPREV
+						}
+					}
+					every_owned_planet = {
+						set_owner = PREV
+						set_controller = PREV
+					}
+				}
+			}
+		}
+	}
 }
