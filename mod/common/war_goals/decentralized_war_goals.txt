@@ -486,9 +486,6 @@ wg_forced_decentralization = {
 				save_event_target_as = decentralizer
 				every_owned_planet = {
 					limit = { is_colony = yes }
-					event_target:decentralizer = {
-						owner_species = { save_event_target_as = mainpop }
-					}
 					create_country = {
 						name = "[This.GetName]"
 						name_list = from
@@ -496,7 +493,7 @@ wg_forced_decentralization = {
 						ship_prefix = ""
 						authority = auth_imperial
 						civics = random
-						species = event_target:mainpop
+						species = event_target:decentralizer.species
 						flag = random
 						ethos = random
 						effect = {
@@ -526,9 +523,6 @@ wg_forced_decentralization = {
 			}
 			every_owned_planet = {
 				limit = { is_colony = yes }
-				event_target:decentralizer = {
-					owner_species = { save_event_target_as = mainpop }
-				}
 				create_country = {
 					name = "[This.GetName]"
 					name_list = from
@@ -536,7 +530,7 @@ wg_forced_decentralization = {
 					ship_prefix = ""
 					authority = auth_imperial
 					civics = random
-					species = event_target:mainpop
+					species = event_target:decentralizer.species
 					flag = random
 					ethos = random
 					effect = {

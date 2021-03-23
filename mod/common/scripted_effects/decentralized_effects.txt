@@ -1,4 +1,83 @@
 ### Decentralized Scripted Effects
+
+## Save target species
+get_vassal_species = {
+	no_scope = { save_event_target_as = vassal_species }
+	if = {
+		limit = { num_species = 1 }
+		random_owned_pop = {
+			species = { save_event_target_as = vassal_species }
+		}
+	} else = {
+		random_owned_pop = {
+			limit = { is_decent_majority_species = yes }
+			species = { save_event_target_as = vassal_species }
+		}
+		if = {
+			limit = {
+				NAND = {
+					exists = event_target:vassal_species
+					event_target:vassal_species = { is_scope_valid = yes is_scope_type = species }
+				}
+			}
+			random_owned_pop = {
+				limit = { is_majority_species = prev } # buggy
+				species = { save_event_target_as = vassal_species }
+			}
+		}
+	}
+	# count_owned_pop = {
+	# 	count = all
+	# 	limit = {  }
+	# }
+	# Full fallback
+	if = {
+		limit = {
+			NAND = {
+				exists = event_target:vassal_species
+				event_target:vassal_species = { is_scope_valid = yes is_scope_type = species }
+			}
+		}
+		if = {
+			limit = { num_unique_species > 1 }
+			random_owned_species = {
+				limit = {
+					NOT = { is_exact_same_species = event_target:decentralizer.owner_species }
+				}
+				species = { save_event_target_as = vassal_species }
+			}
+		} else = {
+			random_owned_species = {
+				limit = { is_scope_valid = yes }
+				species = { save_event_target_as = vassal_species }
+			}
+		}
+	}
+	if = {
+		limit = {
+			exists = sector
+			sector = { exists = leader }
+			is_sector_capital = yes
+		}
+		sector.leader = {
+			save_event_target_as = vassal_leader
+			unassign_leader = this
+			log="Save leader [vassal_leader.GetName]"
+		}
+	}
+	if = {
+		limit = {
+			NAND = {
+				exists = event_target:vassal_species
+				event_target:vassal_species = { is_scope_valid = yes is_scope_type = species }
+			}
+		}
+		from = { save_event_target_as = vassal_species }
+		log="no valid vassal_species found [This.GetName]"
+	}
+}
+
+## TODO may convert this to a country event
 # This = last_created_country/subject country
 # From = planet
 # ROOT = former/overlord country

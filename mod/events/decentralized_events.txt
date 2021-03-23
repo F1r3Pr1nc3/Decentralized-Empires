@@ -21,7 +21,7 @@ country_event = {
 				exists = starbase
 				any_system_planet = { is_colony = yes num_pops > 4 }
 				NOT = { any_system_planet = { is_capital = yes } }
-				# NOT direct at the capital
+				# Not direct at the capital
 				NOT = { any_neighbor_system = { is_same_value = ROOT.capital_scope.solar_system } }
 			}
 			random_system_planet = {
@@ -30,23 +30,22 @@ country_event = {
 					is_owned_by = ROOT
 					is_capital = no
 				}
-				random_owned_pop = {
-					limit = { is_majority_species = species }
-					species = { save_event_target_as = mainpop }
-				}
+				get_vassal_species = yes
+
 				create_country = {
-					name = "[This.GetName]"
+					name = "[Prev.GetStarName]"
 					name_list = ROOT
 					type = default
 					ship_prefix = ""
 					authority = auth_imperial
 					civics = random
-					species = event_target:mainpop
+					species = event_target:vassal_species
 					flag = random # separate color definition not possible!?
 					randomize_ethos = yes
 					ethos = random
 					ignore_initial_colony_error = yes
 					day_zero_contact = no
+					exclude_day_zero_contact = root
 					origin = origin_default
 					effect = {
 						# log = "a [Root.GetName] - [From.GetName]"
@@ -65,6 +64,7 @@ country_event = {
 							establish_communications_no_message = PREV
 							# establish_contact = { who = PREV location = ROOT.capital_scope }
 						}
+						establish_communications_no_message = root
 						country_event = {
 							id = decentralized.3 days = 7
 						}
@@ -176,8 +176,8 @@ country_event = {
 					}
 					# log = "merge to [This.GetName]"
 					PREV = {
-						starbase = { set_owner = prevprev.space_owner }
-						# log = "set_owner [This.GetName] - [Prev.Prev.Prev.Owner.GetName]"
+						starbase = { set_owner = PREVPREV.space_owner }
+						# log = "set_owner [This.GetName] - [PREVPREVPREV.Owner.GetName]"
 						every_system_planet = {
 							limit = {
 								has_owner = yes
@@ -186,7 +186,7 @@ country_event = {
 								has_ground_combat = no
 								is_occupied_flag = no
 							}
-							set_owner = prevprev.space_owner
+							set_owner = PREVPREV.space_owner
 						}
 					}
 				}
@@ -271,7 +271,7 @@ country_event = {
 					# any_system_within_border = { NOT = { is_same_value = capital_scope.solar_system } }
 				}
 				capital_scope.solar_system = {
-					# log = "merge [Prev.GetName]"
+					# log = "merge [PREV.GetName]"
 					random_neighbor_system = {
 						limit = {
 							has_owner = yes
@@ -287,7 +287,7 @@ country_event = {
 						ROOT = { change_variable = { which = subject_member value = -1 } }
 						PREV = {
 							starbase = { set_owner = PREVPREV.space_owner }
-							# log = "set_owner [This.GetName] - [Prev.Prev.Prev.Owner.GetName]"
+							# log = "set_owner [This.GetName] - [PREVPREVPREV.Owner.GetName]"
 							every_system_planet = {
 								limit = {
 									has_owner = yes
@@ -344,7 +344,7 @@ country_event = {
 							}
 						}
 					} else = {
-						# log = "Reduce members [Prev.GetName]"
+						# log = "Reduce members [PREV.GetName]"
 						PREV = {
 							random_neighbor_country = {
 								limit = {
@@ -427,7 +427,7 @@ country_event = {
 								has_ground_combat = no
 								is_occupied_flag = no
 								OR = {
-									owner = {
+									planet_owner = {
 										is_subject = yes
 										is_subject_type = member_state
 										is_loyal_to = ROOT
@@ -437,9 +437,29 @@ country_event = {
 								}
 							}
 							if = { limit = { is_capital =yes }
+								# fully commit empire (otherwise systems can relegate)
 								ROOT = { change_variable = { which = subject_member value = -1 } }
+								planet_owner = {
+									every_owned_fleet = {
+										set_owner = PREVPREV.space_owner
+									}
+									every_owned_army = {
+										set_owner = PREVPREV.space_owner
+									}
+									every_system_within_border = {
+										limit = { exists = starbase }
+										starbase = {
+											set_owner = PREVPREVPREV.space_owner
+										}
+									}
+									every_owned_planet = {
+										set_owner = PREVPREV.space_owner
+										set_controller = PREVPREV.space_owner
+									}
+								}
+							} else = {
+								set_owner = PREVPREV.space_owner
 							}
-							set_owner = PREVPREV.space_owner
 						}
 					}
 				}
@@ -476,12 +496,19 @@ country_event = {
 					# every_planet_within_border = {
 					# 	surveyed = {
 					# 		set_surveyed = yes
-					# 		surveyor = prevprev
+					# 		surveyor = PREVPREV
 					# 	}
 					# }
 				}
 			}
-			FROM = { every_relation = { establish_communications_no_message = PREVPREV } }
+			FROM = {
+				every_federation_ally = {
+					establish_communications = PREVPREV
+				}
+				every_relation = {
+					establish_communications_no_message = PREVPREV
+				}
+			}
 		}
 	}
 	option = { name = OK }
@@ -503,9 +530,14 @@ planet_event = {
 	}
 	immediate = {
 		remove_modifier = planetary_nationalism
-		add_modifier = {
-			modifier = autonomy_lost
-			days = 1800
+		if = {
+			limit = {
+				FROM = { NOT = { has_country_flag = day_0 } }
+			}
+			add_modifier = {
+				modifier = autonomy_lost
+				days = 1800
+			}
 		}
 	}
 }
@@ -833,7 +865,7 @@ country_event = {
 			starbase = { set_owner = event_target:demander }
 		}
 		add_resource = { influence = -200 }
-		# notification for demander
+		# Notification for demander
 		country_event = { id = decentralized.27 }
 		ai_chance = { factor = 40 }
 	}
@@ -928,27 +960,35 @@ country_event = {
 	}
 	immediate = {
 		event_target:new_planet = {
-			random_owned_pop = {
-				# limit = { is_majority_species = species }
-				species = { save_event_target_as = mainpop }
-			}
+
+			get_vassal_species = yes
+
 			create_country = {
-				name = "[new_planet.GetName]" #random
+				name = "[Prev.GetStarName]" #random
 				type = default
 				name_list = event_target:ultimatum_subject
 				ship_prefix = ""
 				authority = auth_imperial
 				civics = random
-				species = event_target:mainpop
+				species = event_target:vassal_species
 				flag = random
+				randomize_ethos = yes
 				ethos = random
 				day_zero_contact = no
+				exclude_day_zero_contact = root
 				effect = {
+					set_country_flag = first_alien_life
+					set_country_flag = has_encountered_other_empire
+					copy_ethos_and_authority = ROOT
 					establish_communications_no_message = ROOT
 					establish_communications_no_message = event_target:ultimatum_subject
-					copy_ethos_and_authority = ROOT
+					root = {
+						every_federation_ally = {
+							establish_communications = PREVPREV
+						}
+					}
 					solar_system = {
-						starbase = { set_owner = prevprev }
+						starbase = { set_owner = PREVPREV }
 					}
 					set_subject_of = {
 						who = ROOT
@@ -1990,7 +2030,7 @@ country_event = {
 	trigger = {
 		has_country_flag = decentralizer
 		has_ascension_perk = ap_decentralization
-		check_variable = { which = subject_member value > 9 }
+		check_variable = { which = subject_member value > 8 }
 	}
 	immediate = {
 		if = { limit = { check_variable = { which = subject_member value > 9 } }
@@ -2025,6 +2065,48 @@ country_event = {
 					every_owned_planet = {
 						set_owner = PREV
 						set_controller = PREV
+					}
+				}
+			}
+		}
+		# Final fallback check
+		every_subject = {
+			limit = { is_subject_type = member_state controlled_systems = 1 }
+			capital_scope.solar_system = {
+				random_neighbor_system = {
+					limit = {
+						has_owner = yes
+						space_owner = {
+							OR = {
+								is_same_empire = ROOT
+								AND = {
+									is_subject = yes
+									is_loyal_to = ROOT
+									ROOT = { is_overlord_to = PREV }
+								}
+							}
+						}
+					}
+					ROOT = { change_variable = { which = subject_member value = -1 } }
+					space_owner = {
+						PREVPREVPREV = {
+							every_owned_fleet = {
+								set_owner = PREVPREV
+							}
+							every_owned_army = {
+								set_owner = PREVPREV
+							}
+							every_system_within_border = {
+								limit = { exists = starbase }
+								starbase = {
+									set_owner = PREVPREVPREV
+								}
+							}
+							every_owned_planet = {
+								set_owner = PREVPREV
+								set_controller = PREVPREV
+							}
+						}
 					}
 				}
 			}

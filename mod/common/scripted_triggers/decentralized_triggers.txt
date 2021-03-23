@@ -1,0 +1,53 @@
+### Decentralized Scripted Triggers
+# This = pop
+# Prev = planet
+is_decent_majority_species = {
+	OR = {
+		NOT = { is_same_species = event_target:decentralizer.species }
+		species ={ exists = home_planet home_planet = { is_planet = PREVPREVPREVPREV } }
+	}
+	PREV = { count_pops = { limit = { is_same_species = PREV.species } count > 3 } }
+	OR = {
+		species ={ exists = home_planet home_planet = { is_planet = PREVPREVPREVPREV } }
+		AND = {
+			is_enslaved = no
+			is_being_purged = no
+			is_being_assimilated = no
+			is_robot_pop = no
+			has_population_control = no
+			has_migration_control = no
+			has_colonization_control = { value = no country = event_target:decentralizer }
+			pop_can_live_on_planet = yes
+			PREV = {
+				habitability = {
+					who = PREV
+					value > 0.65
+				}
+			}
+			species = {
+				has_citizenship_type = { type = citizenship_full country = event_target:decentralizer }
+				species_has_happiness_with_owner = event_target:decentralizer
+				NOT = { is_archetype = PRESAPIENT }
+			}
+		}
+		PREV = {
+			is_ideal_planet_class = {
+				who = PREV
+				status = yes
+			}
+			species = {
+				OR = {
+					# PREVPREV = { is_majority_species = PREV } # TODO buggy
+					species_has_happiness_with_owner = event_target:decentralizer
+					# species_has_citizenship = yes
+					has_citizenship_type = { type = citizenship_full country = event_target:decentralizer }
+				}
+				NOT = { is_archetype = PRESAPIENT }
+			}
+		}
+		AND = {
+			is_majority_species = species # TODO buggy
+			NOT = { is_same_species = event_target:decentralizer.owner_species }
+		}
+	}
+}

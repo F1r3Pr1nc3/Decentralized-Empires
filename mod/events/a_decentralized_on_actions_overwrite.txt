@@ -1,5 +1,7 @@
 namespace = action
 # Communication Established
+# This = Country which established the communications
+# From = Country which communications were established with
 country_event = {
 	id = action.11
 	title = "action.11.name"
@@ -119,7 +121,7 @@ country_event = {
 		# else = { 	 }
 		hidden_effect = {
 			country_event = { id = action.1 }
-			#from = { country_event = { id = action.100 } }
+			#fromfrom = { country_event = { id = action.100 } }
 		}
 	}
 	option = {
@@ -169,7 +171,7 @@ country_event = {
 		# else = { 	 }
 		hidden_effect = {
 			country_event = { id = action.1 }
-			#from = { country_event = { id = action.100 } }
+			#fromfrom = { country_event = { id = action.100 } }
 		}
 	}
 	option = {
@@ -218,7 +220,7 @@ country_event = {
 		}
 		hidden_effect = {
 			country_event = { id = action.1 }
-			#from = { country_event = { id = action.100 } }
+			#fromfrom = { country_event = { id = action.100 } }
 		}
 	}
 }
