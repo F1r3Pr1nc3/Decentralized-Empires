@@ -7,7 +7,7 @@ planet_event = {
 	is_triggered_only = yes
 	immediate = {
 		ROOT.owner = {
-			save_event_target_as = decentralizer
+			save_global_event_target_as = decentralizer
 			if = {
 				limit = {
 					NOT = {
@@ -135,7 +135,7 @@ planet_event = {
 
 		create_country = {
 			# name = random
-			name = "[Prev.GetStarName]"
+			name = "[This.GetStarName]"
 			name_list = event_target:decentralizer
 			type = default
 			ship_prefix = ""

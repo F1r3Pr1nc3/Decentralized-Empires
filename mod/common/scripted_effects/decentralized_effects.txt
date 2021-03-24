@@ -1,5 +1,48 @@
 ### Decentralized Scripted Effects
 
+## Fully commit empire (otherwise systems can relegate)
+# This = target empire
+# Prev = dissolved empire
+fully_commit_empire = {
+	ROOT = { change_variable = { which = subject_member value = -1 } }
+	PREV = {
+		every_owned_fleet = {
+			set_owner = PREVPREV
+		}
+		every_owned_army = {
+			set_owner = PREVPREV
+		}
+		every_system_within_border = {
+			limit = { exists = starbase }
+			starbase = {
+				set_owner = PREVPREVPREV
+			}
+		}
+		every_owned_planet = {
+			limit = {
+				has_owner = yes
+				has_ground_combat = no
+				is_occupied_flag = no
+				is_capital = no
+			}
+			set_owner = PREVPREV
+			set_controller = PREVPREV
+		}
+		capital_scope = {
+			if = {
+				limit = {
+					has_ground_combat = no
+					is_occupied_flag = no
+				}
+				if = { limit = { PREVPREV = { is_same_empire = ROOT } }
+					remove_modifier = planetary_nationalism
+				}
+				set_owner = PREVPREV
+			}
+		}
+	}
+}
+
 ## Save target species
 get_vassal_species = {
 	no_scope = { save_event_target_as = vassal_species }
@@ -92,7 +135,7 @@ create_starting_fleets = {
 		limit = { NOT = { exists = event_target:decentralizer } }
 		if = {
 			limit = { ROOT = { is_scope_type = country } }
-			ROOT = { save_event_target_as = decentralizer }
+			ROOT = { save_global_event_target_as = decentralizer }
 		} else = { break = yes }
 	}
 	# Civil

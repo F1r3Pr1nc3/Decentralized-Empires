@@ -483,7 +483,7 @@ wg_forced_decentralization = {
 		hidden_effect = {
 			THIS = { save_event_target_as = attacker }
 			FROM = {
-				save_event_target_as = decentralizer
+				save_global_event_target_as = decentralizer
 				every_owned_planet = {
 					limit = { is_colony = yes }
 					create_country = {
@@ -516,7 +516,7 @@ wg_forced_decentralization = {
 	on_status_quo = {
 		THIS = { save_event_target_as = attacker }
 		last_created_country = {
-			save_event_target_as = decentralizer
+			save_global_event_target_as = decentralizer
 			set_subject_of = {
 				who = root
 				subject_type = member_state

@@ -10,7 +10,7 @@ country_event = {
 	picture = GFX_evt_city_planet
 	is_triggered_only = yes
 	immediate = {
-		save_event_target_as = decentralizer
+		save_global_event_target_as = decentralizer
 		set_country_flag = decentralizer
 		add_modifier = {
 			modifier = decentralized_leader
@@ -33,7 +33,7 @@ country_event = {
 				get_vassal_species = yes
 
 				create_country = {
-					name = "[Prev.GetStarName]"
+					name = "[This.GetStarName]"
 					name_list = ROOT
 					type = default
 					ship_prefix = ""
@@ -57,10 +57,10 @@ country_event = {
 							who = ROOT
 							subject_type = member_state
 						}
-						set_timed_country_flag = { flag = day_0 days = 18 }
+						set_timed_country_flag = { flag = day_0 days = 30 }
 						ROOT = {
 							set_country_flag = has_communications@prev
-							set_timed_country_flag = { flag = day_0 days = 24 }
+							set_timed_country_flag = { flag = day_0 days = 30 }
 							establish_communications_no_message = PREV
 							# establish_contact = { who = PREV location = ROOT.capital_scope }
 						}
@@ -68,7 +68,7 @@ country_event = {
 						country_event = {
 							id = decentralized.3 days = 7
 						}
-						create_starting_leaders = yes
+						# create_starting_leaders = yes # TODO later
 					}
 				}
 				solar_system = {
@@ -284,20 +284,12 @@ country_event = {
 							}
 						}
 						# log = "merge to [This.GetName]"
-						ROOT = { change_variable = { which = subject_member value = -1 } }
-						PREV = {
-							starbase = { set_owner = PREVPREV.space_owner }
-							# log = "set_owner [This.GetName] - [PREVPREVPREV.Owner.GetName]"
-							every_system_planet = {
-								limit = {
-									has_owner = yes
-									has_ground_combat = no
-									is_occupied_flag = no
-									PREV.space_owner = { is_same_empire = PREVPREVPREV.space_owner }
-								}
-								set_owner = PREVPREV.space_owner
-							}
+						PREVPREV = {
+							PREV.space_owner = { fully_commit_empire = yes }
 						}
+						# PREV = {
+						# 	starbase = { set_owner = PREVPREV.space_owner }
+							# log = "set_owner [This.GetName] - [PREVPREVPREV.Owner.GetName]"
 					}
 				}
 			}
@@ -343,7 +335,8 @@ country_event = {
 								set_owner = PREVPREV.space_owner
 							}
 						}
-					} else = {
+					}
+					else = {
 						# log = "Reduce members [PREV.GetName]"
 						PREV = { # subject
 							random_neighbor_country = {
@@ -357,32 +350,7 @@ country_event = {
 										# is_same_empire = ROOT
 									}
 								}
-								ROOT = { change_variable = { which = subject_member value = -1 } }
-								PREV = { # subject
-									every_owned_fleet = {
-										set_owner = PREVPREV
-									}
-									every_owned_army = {
-										set_owner = PREVPREV
-									}
-									every_system_within_border = {
-										limit = { exists = starbase }
-										starbase = {
-											set_owner = PREVPREVPREV
-										}
-									}
-									every_owned_planet = {
-										limit = { is_capital = no }
-										set_owner = PREVPREV
-										set_controller = PREVPREV
-									}
-									capital_scope = {
-										if = { limit = { PREVPREV = { is_same_empire = ROOT } }
-											remove_modifier = planetary_nationalism
-										}
-										set_owner = PREVPREV
-									}
-								}
+								fully_commit_empire = yes
 							}
 						}
 					}
@@ -447,31 +415,17 @@ country_event = {
 							}
 							if = { limit = { is_capital = yes }
 								# fully commit empire (otherwise systems can relegate)
-								ROOT = { change_variable = { which = subject_member value = -1 } }
 								planet_owner = {
-									every_owned_fleet = {
-										set_owner = PREVPREV.space_owner
-									}
-									every_owned_army = {
-										set_owner = PREVPREV.space_owner
-									}
-									every_system_within_border = {
-										limit = { exists = starbase }
-										starbase = {
-											set_owner = PREVPREVPREV.space_owner
-										}
-									}
-									every_owned_planet = {
-										limit = { is_capital = no }
-										set_owner = PREVPREV.space_owner
-										set_controller = PREVPREV.space_owner
+									PREVPREVPREV.space_owner = {
+										fully_commit_empire = yes
 									}
 								}
+							} else = {
+								if = { limit = { PREVPREV.space_owner = { is_same_empire = ROOT } }
+									remove_modifier = planetary_nationalism
+								}
+								set_owner = PREVPREV.space_owner
 							}
-							if = { limit = { PREVPREV.space_owner = { is_same_empire = ROOT } }
-								remove_modifier = planetary_nationalism
-							}
-							set_owner = PREVPREV.space_owner
 						}
 					}
 				}
@@ -489,7 +443,7 @@ country_event = {
 					}
 				}
 
-				create_starting_fleets = yes
+				# create_starting_fleets = yes # later ?
 
 				# action_open_borders
 				set_closed_borders = {
@@ -513,14 +467,14 @@ country_event = {
 					# }
 				}
 			}
-			FROM = {
-				every_federation_ally = {
-					establish_communications = PREVPREV
-				}
-				every_relation = {
-					establish_communications_no_message = PREVPREV
-				}
-			}
+			# FROM = {
+			# 	every_federation_ally = {
+			# 		establish_communications = PREVPREV
+			# 	}
+			# 	every_relation = {
+			# 		establish_communications_no_message = PREVPREV
+			# 	}
+			# }
 		}
 	}
 	option = { name = OK }
@@ -656,7 +610,7 @@ country_event = {
 	}
 	option = {
 		name = decentralized.9.a
-		save_event_target_as = decentralizer
+		save_global_event_target_as = decentralizer
 		add_resource = { influence = -150 }
 		event_target:ultimatum_subject = {
 			country_event = { id = decentralized.10 }
@@ -976,7 +930,7 @@ country_event = {
 			get_vassal_species = yes
 
 			create_country = {
-				name = "[Prev.GetStarName]" #random
+				name = "[This.GetStarName]" #random
 				type = default
 				name_list = event_target:ultimatum_subject
 				ship_prefix = ""
@@ -2040,7 +1994,7 @@ country_event = {
 	trigger = {
 		has_country_flag = decentralizer
 		has_ascension_perk = ap_decentralization
-		check_variable = { which = subject_member value > 8 }
+		# check_variable = { which = subject_member value > 8 }
 	}
 	immediate = {
 		if = { limit = { check_variable = { which = subject_member value > 9 } }
@@ -2059,32 +2013,7 @@ country_event = {
 							}
 						}
 					}
-					ROOT = { change_variable = { which = subject_member value = -1 } }
-					PREV = {
-						every_owned_fleet = {
-							set_owner = PREVPREV
-						}
-						every_owned_army = {
-							set_owner = PREVPREV
-						}
-						every_system_within_border = {
-							limit = { exists = starbase }
-							starbase = {
-								set_owner = PREVPREVPREV
-							}
-						}
-						every_owned_planet = {
-							limit = { is_capital = no }
-							set_owner = PREVPREV
-							set_controller = PREVPREV
-						}
-						capital_scope = {
-							if = { limit = { PREVPREV = { is_same_empire = ROOT } }
-								remove_modifier = planetary_nationalism
-							}
-							set_owner = PREVPREV
-						}
-					}
+					fully_commit_empire = yes
 				}
 			}
 		}
@@ -2106,32 +2035,30 @@ country_event = {
 							}
 						}
 					}
-					ROOT = { change_variable = { which = subject_member value = -1 } }
-					space_owner = {
-						PREVPREVPREV = {
-							every_owned_fleet = {
-								set_owner = PREVPREV
-							}
-							every_owned_army = {
-								set_owner = PREVPREV
-							}
-							every_system_within_border = {
-								limit = { exists = starbase }
-								starbase = {
-									set_owner = PREVPREVPREV
-								}
-							}
-							every_owned_planet = {
-								if = { limit = { PREVPREV = { is_same_empire = ROOT } }
-									remove_modifier = planetary_nationalism
-								}
-								set_owner = PREVPREV
-								set_controller = PREVPREV
-							}
+					PREVPREV = {
+						prev.space_owner = {
+							fully_commit_empire = yes
 						}
 					}
 				}
 			}
 		}
+		ROOT = {
+			every_subject = {
+				limit = {
+					has_country_flag = day_0
+					is_subject_type = member_state
+				}
+				create_starting_leaders = yes
+				create_starting_fleets = yes # TODO
+			}
+			every_federation_ally = {
+				establish_communications = PREVPREV
+			}
+			# every_relation = {
+			# 	establish_communications_no_message = PREVPREV
+			# }
+		}
+		clear_global_event_target = decentralizer
 	}
 }
