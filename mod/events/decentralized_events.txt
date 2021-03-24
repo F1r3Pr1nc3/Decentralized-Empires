@@ -7,7 +7,7 @@ country_event = {
 	id = decentralized.1
 	title = "decentralized.1.name"
 	desc = "decentralized.1.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_city_planet
 	is_triggered_only = yes
 	immediate = {
 		save_event_target_as = decentralizer
@@ -57,10 +57,10 @@ country_event = {
 							who = ROOT
 							subject_type = member_state
 						}
-						set_timed_country_flag = { flag = day_0 days = 14 }
+						set_timed_country_flag = { flag = day_0 days = 18 }
 						ROOT = {
 							set_country_flag = has_communications@prev
-							set_timed_country_flag = { flag = day_0 days = 10 }
+							set_timed_country_flag = { flag = day_0 days = 24 }
 							establish_communications_no_message = PREV
 							# establish_contact = { who = PREV location = ROOT.capital_scope }
 						}
@@ -106,7 +106,7 @@ country_event = {
 	id = decentralized.2
 	title = "decentralized.2.name"
 	desc = "decentralized.2.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_partition
 	is_triggered_only = yes
 	immediate = {
 		capital_scope = {
@@ -201,7 +201,7 @@ country_event = {
 	id = decentralized.4
 	title = "decentralized.4.name"
 	desc = "decentralized.4.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_galactic_senate
 	is_triggered_only = yes
 	immediate = {
 		every_system_within_border = {
@@ -345,7 +345,7 @@ country_event = {
 						}
 					} else = {
 						# log = "Reduce members [PREV.GetName]"
-						PREV = {
+						PREV = { # subject
 							random_neighbor_country = {
 								limit = {
 									OR = {
@@ -358,21 +358,30 @@ country_event = {
 									}
 								}
 								ROOT = { change_variable = { which = subject_member value = -1 } }
-								every_owned_fleet = {
-									set_owner = PREV
-								}
-								every_owned_army = {
-									set_owner = PREV
-								}
-								every_system_within_border = {
-									limit = { exists = starbase }
-									starbase = {
+								PREV = { # subject
+									every_owned_fleet = {
 										set_owner = PREVPREV
 									}
-								}
-								every_owned_planet = {
-									set_owner = PREV
-									set_controller = PREV
+									every_owned_army = {
+										set_owner = PREVPREV
+									}
+									every_system_within_border = {
+										limit = { exists = starbase }
+										starbase = {
+											set_owner = PREVPREVPREV
+										}
+									}
+									every_owned_planet = {
+										limit = { is_capital = no }
+										set_owner = PREVPREV
+										set_controller = PREVPREV
+									}
+									capital_scope = {
+										if = { limit = { PREVPREV = { is_same_empire = ROOT } }
+											remove_modifier = planetary_nationalism
+										}
+										set_owner = PREVPREV
+									}
 								}
 							}
 						}
@@ -436,7 +445,7 @@ country_event = {
 									is_owned_by = ROOT
 								}
 							}
-							if = { limit = { is_capital =yes }
+							if = { limit = { is_capital = yes }
 								# fully commit empire (otherwise systems can relegate)
 								ROOT = { change_variable = { which = subject_member value = -1 } }
 								planet_owner = {
@@ -453,13 +462,16 @@ country_event = {
 										}
 									}
 									every_owned_planet = {
+										limit = { is_capital = no }
 										set_owner = PREVPREV.space_owner
 										set_controller = PREVPREV.space_owner
 									}
 								}
-							} else = {
-								set_owner = PREVPREV.space_owner
 							}
+							if = { limit = { PREVPREV.space_owner = { is_same_empire = ROOT } }
+								remove_modifier = planetary_nationalism
+							}
+							set_owner = PREVPREV.space_owner
 						}
 					}
 				}
@@ -669,7 +681,7 @@ country_event = {
 	id = decentralized.14
 	title = "decentralized.14.name"
 	desc = "decentralized.14.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_financial_instruments
 	is_triggered_only = yes
 	immediate = { save_event_target_as = resource_asker }
 	# 200
@@ -706,7 +718,7 @@ country_event = {
 	id = decentralized.23
 	title = "decentralized.23.name"
 	desc = "decentralized.23.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_assembly_fight
 	is_triggered_only = yes
 	immediate = {
 	}
@@ -751,7 +763,7 @@ country_event = {
 	id = decentralized.24
 	title = "decentralized.24.name"
 	desc = "decentralized.24.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
 	}
@@ -854,7 +866,7 @@ country_event = {
 	id = decentralized.26
 	title = "decentralized.26.name"
 	desc = "decentralized.26.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_towel
 	is_triggered_only = yes
 	immediate = {
 	}
@@ -1007,14 +1019,12 @@ country_event = {
 	}
 }
 
-
-
 # give 200 energy
 country_event = {
 	id = decentralized.15
 	title = "decentralized.15.name"
 	desc = "decentralized.15.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
 		add_opinion_modifier = {
@@ -1076,7 +1086,7 @@ country_event = {
 	id = decentralized.16
 	title = "decentralized.16.name"
 	desc = "decentralized.16.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
 		add_opinion_modifier = {
@@ -1138,7 +1148,7 @@ country_event = {
 	id = decentralized.17
 	title = "decentralized.17.name"
 	desc = "decentralized.17.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
 		add_opinion_modifier = {
@@ -1200,7 +1210,7 @@ country_event = {
 	id = decentralized.21
 	title = "decentralized.21.name"
 	desc = "decentralized.21.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_sentry_guns
 	is_triggered_only = yes
 	immediate = {
 	}
@@ -1306,7 +1316,7 @@ country_event = {
 	id = decentralized.22
 	title = "decentralized.22.name"
 	desc = "decentralized.22.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_voting
 	is_triggered_only = yes
 	immediate = {
 	}
@@ -1411,7 +1421,7 @@ country_event = {
 	id = decentralized.27
 	title = "decentralized.27.name"
 	desc = "decentralized.27.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_diplomatic_visit
 	is_triggered_only = yes
 	option = { name = OK }
 }
@@ -1472,7 +1482,7 @@ country_event = {
 	id = decentralized.19
 	title = "decentralized.19.name"
 	desc = "decentralized.19.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_dark_alley
 	trigger = { has_modifier = decentralized_leader }
 	mean_time_to_happen = { months = 100 }
 	# immediate = {  }
@@ -1498,7 +1508,7 @@ country_event = {
 country_event = {
 	id = decentralized.20
 	# title = "decentralized.20"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_assembly_fight
 	hide_window = yes
 	trigger = { has_modifier = decentralized_leader }
 	mean_time_to_happen = { months = 120 }
@@ -1530,7 +1540,7 @@ country_event = {
 	id = decentralized.25
 	title = "decentralized.25.name"
 	desc = "decentralized.25.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_partition
 	trigger = {
 		is_subject_type = member_state
 		OR = {
@@ -1569,7 +1579,7 @@ country_event = {
 	id = decentralized.201
 	title = "decentralized.201.name"
 	desc = "decentralized.201.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_announcement
 	is_triggered_only = yes
 	trigger = { has_modifier = electoral }
 	immediate = {
@@ -1596,7 +1606,7 @@ country_event = {
 	id = decentralized.202
 	title = "decentralized.202.name"
 	desc = "decentralized.202.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_voting
 	is_triggered_only = yes
 	immediate = {
 		# random_playable_country = {
@@ -1914,7 +1924,7 @@ country_event = {
 	id = decentralized.204
 	title = "decentralized.204.name"
 	desc = "decentralized.204.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_announcement
 	is_triggered_only = yes
 	trigger = {
 		event_target:last_leader = {
@@ -1962,7 +1972,7 @@ country_event = {
 	id = decentralized.205
 	title = "decentralized.205.name"
 	desc = "decentralized.205.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_announcement
 	is_triggered_only = yes
 	trigger = {
 		NOT = { has_country_flag = decentralized_lost }
@@ -1992,7 +2002,7 @@ country_event = {
 	id = decentralized.207
 	title = "decentralized.207.name"
 	desc = "decentralized.207.desc"
-	picture = GFX_evt_throne_room
+	picture = GFX_evt_announcement
 	is_triggered_only = yes
 	# immediate = {  }
 	option = { name = OK }
@@ -2050,21 +2060,30 @@ country_event = {
 						}
 					}
 					ROOT = { change_variable = { which = subject_member value = -1 } }
-					every_owned_fleet = {
-						set_owner = PREV
-					}
-					every_owned_army = {
-						set_owner = PREV
-					}
-					every_system_within_border = {
-						limit = { exists = starbase }
-						starbase = {
+					PREV = {
+						every_owned_fleet = {
 							set_owner = PREVPREV
 						}
-					}
-					every_owned_planet = {
-						set_owner = PREV
-						set_controller = PREV
+						every_owned_army = {
+							set_owner = PREVPREV
+						}
+						every_system_within_border = {
+							limit = { exists = starbase }
+							starbase = {
+								set_owner = PREVPREVPREV
+							}
+						}
+						every_owned_planet = {
+							limit = { is_capital = no }
+							set_owner = PREVPREV
+							set_controller = PREVPREV
+						}
+						capital_scope = {
+							if = { limit = { PREVPREV = { is_same_empire = ROOT } }
+								remove_modifier = planetary_nationalism
+							}
+							set_owner = PREVPREV
+						}
 					}
 				}
 			}
@@ -2103,6 +2122,9 @@ country_event = {
 								}
 							}
 							every_owned_planet = {
+								if = { limit = { PREVPREV = { is_same_empire = ROOT } }
+									remove_modifier = planetary_nationalism
+								}
 								set_owner = PREVPREV
 								set_controller = PREVPREV
 							}
