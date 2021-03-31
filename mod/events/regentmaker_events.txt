@@ -283,8 +283,8 @@ planet_event = {
 					assign_leader = event_target:vassal_leader
 					no_scope = { save_event_target_as = vassal_leader }	# remove only for sure
 				}
-				create_starting_leaders = yes
-				create_starting_fleets = yes
+				# create_starting_leaders = yes
+				country_event = { id = decentralized.209 } # create_starting_fleets = yes
 			}
 		}
 
