@@ -112,6 +112,7 @@ country_event = {
 	desc = "decentralized.2.desc"
 	picture = GFX_evt_partition
 	is_triggered_only = yes
+	trigger = { has_ascension_perk = ap_decentralization }
 	immediate = {
 		capital_scope = {
 			enable_special_project = {
@@ -200,7 +201,7 @@ country_event = {
 }
 
 # Distributes remaining systems
-# Root = decentralizer
+# ROOT = decentralizer
 country_event = {
 	id = decentralized.4
 	title = "decentralized.4.name"
@@ -480,9 +481,31 @@ country_event = {
 			# 	}
 			# }
 		}
+		## Galactic Community & Intel
+		if = {
+			limit = {
+				is_galactic_community_formed = yes
+				ROOT = { is_galactic_community_member = yes }
+				# ROOT = { has_federation = yes }
+			}
+			every_subject = {
+				limit = { is_galactic_community_member = no }
+				add_to_galactic_community_no_message = yes
+				add_intel = { amount = 60 who = ROOT }
+				ROOT = {
+					add_intel = { amount = 60 who = prev }
+					every_subject = {
+						limit = { NOT = { is_same_empire = prevprev } }
+						add_intel = { amount = 40 who = prevprev }
+					}
+				}
+			}
+		}
 	}
 	option = { name = OK }
-}
+} # END PERK GENERATION
+
+
 
 ###############################
 # On action events
@@ -2282,7 +2305,8 @@ country_event = {
 		}
 
 		country_event = { id = game_start.6 days = 6 random = 2 } # advanced_empire
-		country_event = { id = game_start.9 days = 9 random = 4 } # empire_init_create_ships
+		country_event = { id = game_start.8 days = 9 random = 3 } # +tech +resources
+		country_event = { id = game_start.9 days = 12 random = 4 } # empire_init_create_ships
 		capital_scope = {
 			planet_event = { id = game_start.20 days = 80 random = 30 } # remove blockers on capital
 			planet_event = { id = game_start.21 days = 120 random = 40 } # upgrade colony shelter on additional colonies

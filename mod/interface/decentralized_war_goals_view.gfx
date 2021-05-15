@@ -33,4 +33,10 @@ spriteTypes = {
 		name = "GFX_ap_decentralization"
 		texturefile = "gfx/interface/icons/ascension_perks/ap_decentralization.dds"
 	}
+	spriteType = {
+		name = "GFX_diplomacy_status_is_member_state"
+		texturefile = "gfx/interface/icons/diplomacy/diplomacy_member_state.dds"
+		# texturefile = "gfx/interface/icons/modifiers/mod_country_subject_power_penalty.dds"
+		# texturefile = "gfx/interface/icons/modifiers/mod_country_subject_acceptance_add.dds"
+	}
 }

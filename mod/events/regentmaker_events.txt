@@ -139,7 +139,7 @@ planet_event = {
 			name_list = event_target:decentralizer
 			type = default
 			ship_prefix = ""
-			government_restrictions = { authority = { NOT = { value = auth_machine_intelligence value = auth_hive_mind } } }
+			government_restrictions = { authority = { NOR = { value = auth_machine_intelligence value = auth_hive_mind } } }
 			authority = event_target:decentralizer
 			civics = random
 			ignore_initial_colony_error = yes
@@ -155,8 +155,8 @@ planet_event = {
 				set_country_flag = first_alien_life
 				set_country_flag = has_encountered_other_empire
 				# change_country_flag = {  }
-				# set_timed_relation_flag = { who = event_target:decentralizer flag = AbandonedRefugees days = 5 }
-				# event_target:decentralizer = { set_timed_relation_flag = { who = prev flag = AbandonedRefugees days = 5 } }
+				set_timed_relation_flag = { who = event_target:decentralizer flag = AbandonedRefugees days = 5 }
+				event_target:decentralizer = { set_timed_relation_flag = { who = prev flag = AbandonedRefugees days = 5 } }
 				establish_communications_no_message = event_target:decentralizer
 				add_resource = {
 					minerals = 500

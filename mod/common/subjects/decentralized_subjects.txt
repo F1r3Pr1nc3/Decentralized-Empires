@@ -17,6 +17,9 @@ member_state = {
 	tech_cost_mult = -0.2
 	# diplo_threat = 0.8
 
+	intel_from_being_subject = 50
+	intel_from_being_overlord = 60
+
 	subject_tax_rate = {
 		minerals = 0.25
 		energy = 0.25
@@ -29,6 +32,7 @@ member_state = {
 			who = from
 			ratio >= @protectorate_tech_threshold
 		}
+		has_been_declared_crisis = no
 	}
 
 	effect = {

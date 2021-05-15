@@ -46,8 +46,10 @@ fully_commit_empire = {
 }
 
 ## Save target species
+# This = planet
+# Root = country
 get_vassal_species = {
-	no_scope = { save_event_target_as = vassal_species }
+	no_scope = { save_event_target_as = vassal_species } # clear
 	if = {
 		limit = { num_species = 1 }
 		random_owned_pop = {
@@ -122,9 +124,3 @@ get_vassal_species = {
 		log="no valid vassal_species found [This.GetName]"
 	}
 }
-
-## TODO may convert this to a country event
-# This = last_created_country/subject country
-# From = planet
-# ROOT = former/overlord country
-# create_starting_fleets = {

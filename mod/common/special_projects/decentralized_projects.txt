@@ -1,6 +1,8 @@
 # Decentralization
 special_project = {
 	key = "DECENTRALIZATION_PROJECT"
+	picture = GFX_evt_diplomatic_visit
+	icon = "gfx/interface/icons/situation_log/situation_log_federation.dds"
 	cost = {
 		base = 500
 	}
@@ -14,5 +16,7 @@ special_project = {
 				id = decentralized.1
 			}
 		}
+	}
+	on_cancel = {
 	}
 }
