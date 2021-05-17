@@ -10,21 +10,21 @@ on_planet_transfer = {
 
 on_planet_transfer = {
 	events = {
-		decentralized.8 #chance for overlord to make subject release planet
+		decentralized.8 # Chance for overlord to make subject release planet
 	}
 }
 
 # No scope, like on_game_start
 # on_yearly_pulse = {
 # 	events = {
-# 		decentralized.6 # event for converting vassals into member states
+# 		decentralized.6 # Event for converting vassals into member states
 # 	}
 # }
 
 # THIS = Country
 on_ruler_set = {
 	events = {
-		decentralized.201 #starts decentralized elections
+		decentralized.201 # Starts decentralized elections
 	}
 }
 

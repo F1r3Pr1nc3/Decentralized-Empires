@@ -61,24 +61,24 @@ get_vassal_species = {
 			limit = { is_decent_majority_species = yes }
 			species = { save_event_target_as = vassal_species }
 		}
-		# if = {
-		# 	limit = {
-		# 		NAND = {
-		# 			exists = event_target:vassal_species
-		# 			event_target:vassal_species = { is_scope_valid = yes is_scope_type = species }
-		# 		}
-		# 	}
-		# 	random_owned_pop = {
-		# 		limit = { is_majority_species = prev } # buggy
-		# 		species = { save_event_target_as = vassal_species }
-		# 	}
-		# }
+		if = {
+			limit = {
+				NAND = {
+					exists = event_target:vassal_species
+					event_target:vassal_species = { is_scope_valid = yes is_scope_type = species }
+				}
+			}
+			random_owned_pop = {
+				limit = { PREV = { is_majority_species = PREV.species } }
+				species = { save_event_target_as = vassal_species }
+			}
+		}
 	}
 	# count_owned_pop = {
 	# 	count = all
 	# 	limit = {  }
 	# }
-	# Full fallback
+	# FULL Fallback (mostly not needed)
 	if = {
 		limit = {
 			NAND = {

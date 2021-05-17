@@ -12,10 +12,7 @@ country_event = {
 	immediate = {
 		save_global_event_target_as = decentralizer
 		set_country_flag = decentralizer
-		add_modifier = {
-			modifier = decentralized_leader
-			days = -1
-		}
+		add_modifier = { modifier = decentralized_leader days = -1 }
 		every_system_within_border = {
 			limit = {
 				exists = starbase
@@ -23,9 +20,7 @@ country_event = {
 				NOT = { any_system_planet = { is_capital = yes } }
 				# Not direct at the capital
 				NOT = {
-					any_neighbor_system = {
-						is_same_value = ROOT.capital_scope.solar_system
-					}
+					any_neighbor_system = { is_same_value = ROOT.capital_scope.solar_system }
 				}
 			}
 			random_system_planet = {
@@ -69,9 +64,7 @@ country_event = {
 							# establish_contact = { who = PREV location = ROOT.capital_scope }
 						}
 						establish_communications_no_message = root
-						country_event = {
-							id = decentralized.3 days = 7
-						}
+						country_event = { id = decentralized.3 days = 7 }
 						# create_starting_leaders = yes # TODO later
 					}
 				}
@@ -90,17 +83,12 @@ country_event = {
 				}
 			}
 		}
-		country_event = {
-			id = decentralized.4 days = 8
-		}
+		country_event = { id = decentralized.4 days = 8 }
 	}
 	option = {
 		name = OK
 		capital_scope = {
-			add_modifier = {
-				modifier = "planetary_nationalism"
-				days = -1
-			}
+			add_modifier = { modifier = "planetary_nationalism" days = -1 }
 		}
 	}
 }
@@ -153,15 +141,9 @@ country_event = {
 					}
 				}
 			}
-			add_modifier = {
-				modifier = "planetary_nationalism"
-				days = -1
-			}
+			add_modifier = { modifier = "planetary_nationalism" days = -1 }
 		}
-		add_modifier = {
-			modifier = "SUBJECT_member_state"
-			days = -1
-		}
+		add_modifier = { modifier = "SUBJECT_member_state" days = -1 }
 		# Merge to small empires
 		if = {
 			limit = {
@@ -200,7 +182,7 @@ country_event = {
 	}
 }
 
-# Distributes remaining systems
+# MID PERK GENERATION - Distributes remaining systems
 # ROOT = decentralizer
 country_event = {
 	id = decentralized.4
@@ -420,9 +402,7 @@ country_event = {
 							if = { limit = { is_capital = yes }
 								# fully commit empire (otherwise systems can relegate)
 								planet_owner = {
-									PREVPREVPREV.space_owner = {
-										fully_commit_empire = yes
-									}
+									PREVPREVPREV.space_owner = { fully_commit_empire = yes }
 								}
 							} else = {
 								if = { limit = { PREVPREV.space_owner = { is_same_empire = ROOT } }
@@ -505,8 +485,6 @@ country_event = {
 	option = { name = OK }
 } # END PERK GENERATION
 
-
-
 ###############################
 # On action events
 ###############################
@@ -527,10 +505,7 @@ planet_event = {
 			limit = {
 				FROM = { NOT = { has_country_flag = day_0 } }
 			}
-			add_modifier = {
-				modifier = autonomy_lost
-				days = 1800
-			}
+			add_modifier = { modifier = autonomy_lost days = 1800 }
 		}
 	}
 }
@@ -596,19 +571,22 @@ country_event = {
 	is_triggered_only = yes
 	trigger = {
 		exists = this
+		is_scope_type = country
 		has_country_flag = decentralizer
 		any_subject = {
+			is_country_type = default
 			is_subject_type = vassal
 			NOT = { has_country_flag = day_0 }
 		}
 	}
-	immediate = {
-		clear_global_event_target = decentralizer
-	}
+	immediate = { clear_global_event_target = decentralizer }
 	option = {
 		name = decentralized.7.a
 		every_subject = {
-			limit = { is_subject_type = vassal }
+			limit = {
+				is_country_type = default
+				is_subject_type = vassal
+			}
 			set_subject_of = {
 				who = ROOT
 				subject_type = member_state
@@ -621,7 +599,10 @@ country_event = {
 		add_resource = { influence = -20 }
 		hidden_effect = {
 			random_subject = {
-				limit = { is_subject_type = vassal }
+				limit = {
+					is_country_type = default
+					is_subject_type = vassal
+				}
 				set_timed_country_flag = { flag = day_0 days = 10 }
 			}
 		}
@@ -635,8 +616,7 @@ country_event = {
 	desc = "decentralized.9.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	option = {
 		name = decentralized.9.a
 		save_global_event_target_as = decentralizer
@@ -703,8 +683,7 @@ country_event = {
 	desc = "decentralized.23.desc"
 	picture = GFX_evt_assembly_fight
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	# Make terrorizer pay a fine
 	option = {
 		name = decentralized.23.a
@@ -748,8 +727,7 @@ country_event = {
 	desc = "decentralized.24.desc"
 	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	# Intervene in favor of terrorized
 	option = {
 		name = decentralized.24.a
@@ -851,8 +829,7 @@ country_event = {
 	desc = "decentralized.26.desc"
 	picture = GFX_evt_towel
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	# accept
 	option = {
 		name = decentralized.26.a
@@ -878,7 +855,7 @@ country_event = {
 }
 
 ##############################
-# Events  for member_states
+# Events for member_states
 ##############################
 # Opportunity to Defy the Ultimatum and declare war on overlord
 country_event = {
@@ -887,8 +864,7 @@ country_event = {
 	desc = "decentralized.10.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	# Releases newly conquered system as new member_state
 	option = {
 		name = decentralized.10.a
@@ -978,9 +954,7 @@ country_event = {
 					establish_communications_no_message = ROOT
 					establish_communications_no_message = event_target:ultimatum_subject
 					root = {
-						every_federation_ally = {
-							establish_communications = PREVPREV
-						}
+						every_federation_ally = { establish_communications = PREVPREV }
 					}
 					solar_system = {
 						starbase = { set_owner = PREVPREV }
@@ -989,10 +963,7 @@ country_event = {
 						who = ROOT
 						subject_type = member_state
 					}
-					add_modifier = {
-						modifier = "SUBJECT_member_state"
-						days = -1
-					}
+					add_modifier = { modifier = "SUBJECT_member_state" days = -1 }
 					# create_starting_leaders = yes
 					# create_starting_fleets = yes
 					country_event = { id = decentralized.209 }
@@ -1196,8 +1167,7 @@ country_event = {
 	desc = "decentralized.21.desc"
 	picture = GFX_evt_sentry_guns
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	# Give 2000 energy credits to victim
 	option = {
 		name = decentralized.21.a
@@ -1302,8 +1272,7 @@ country_event = {
 	desc = "decentralized.22.desc"
 	picture = GFX_evt_voting
 	is_triggered_only = yes
-	immediate = {
-	}
+	immediate = { }
 	# report this to capital
 	option = {
 		name = decentralized.22.a
@@ -1469,7 +1438,7 @@ country_event = {
 	picture = GFX_evt_dark_alley
 	trigger = { has_modifier = decentralized_leader }
 	mean_time_to_happen = { months = 100 }
-	# immediate = {  }
+	# immediate = { }
 	# Pressure member states into searching for the deserter
 	option = {
 		name = decentralized.19.a
@@ -1568,16 +1537,10 @@ country_event = {
 	trigger = { has_modifier = electoral }
 	immediate = {
 		save_event_target_as = last_leader
-		set_variable = {
-			which = election_count
-			value = 0
-		}
+		set_variable = { which = election_count value = 0 }
 		every_subject = {
 			limit = { is_subject_type = member_state }
-			set_variable = {
-				which = election_count
-				value = 0
-			}
+			set_variable = { which = election_count value = 0 }
 			country_event = { id = decentralized.202 }
 			set_country_flag = decentralized_electing
 		}
@@ -1653,10 +1616,7 @@ country_event = {
 		# Vote for leader
 		name = decentralized.202.a
 		event_target:last_leader = {
-			change_variable = {
-				which = election_count
-				value = 1
-			}
+			change_variable = { which = election_count value = 1 }
 		}
 		ai_chance = {
 			factor = 150
@@ -1702,10 +1662,7 @@ country_event = {
 	option = {
 		# Vote for himself
 		name = decentralized.202.b
-		change_variable = {
-			which = election_count
-			value = 1
-		}
+		change_variable = { which = election_count value = 1 }
 		ai_chance = {
 			factor = 130
 			modifier = {
@@ -1725,10 +1682,7 @@ country_event = {
 	option = {
 		name = decentralized.202.c
 		event_target:election_target1 = {
-			change_variable = {
-				which = election_count
-				value = 1
-			}
+			change_variable = { which = election_count value = 1 }
 		}
 		ai_chance = {
 			factor = 100
@@ -1771,14 +1725,9 @@ country_event = {
 	}
 	option = {
 		name = decentralized.202.d
-		trigger = {
-			exists = event_target:election_target2
-		}
+		trigger = { exists = event_target:election_target2 }
 		event_target:election_target2 = {
-			change_variable = {
-				which = election_count
-				value = 1
-			}
+			change_variable = { which = election_count value = 1 }
 		}
 		ai_chance = {
 			factor = 100
@@ -1821,14 +1770,9 @@ country_event = {
 	}
 	option = {
 		name = decentralized.202.e
-		trigger = {
-			exists = event_target:election_target3
-		}
+		trigger = { exists = event_target:election_target3 }
 		event_target:election_target3 = {
-			change_variable = {
-				which = election_count
-				value = 1
-			}
+			change_variable = { which = election_count value = 1 }
 		}
 		ai_chance = {
 			factor = 100
@@ -1893,12 +1837,10 @@ country_event = {
 	immediate = {
 		event_target:last_leader = {
 			every_subject = {
+				limit = { is_subject_type = member_state }
 				country_event = { id = decentralized.204 }
 			}
-			country_event = {
-				id = decentralized.205
-				days = 3
-			}
+			country_event = { id = decentralized.205 days = 4 } # Notify
 		}
 	}
 }
@@ -1912,33 +1854,24 @@ country_event = {
 	is_triggered_only = yes
 	trigger = {
 		event_target:last_leader = {
-			check_variable = {
-				which = election_count
-				value < PREV
-			}
+			check_variable = { which = election_count value < PREV }
 		}
 	}
 	immediate = {
 		save_event_target_as = decentralized_winner
+		add_modifier = { modifier = decentralized_leader days = -1 }
+		add_modifier = { modifier = electoral days = -1 }
+		set_subject_of = { who = none }
 		event_target:last_leader = {
-			set_country_flag = decentralized_lost
-			country_event = { id = decentralized.206 }
-		}
-		add_modifier = {
-			modifier = decentralized_leader
-			days = -1
-		}
-		add_modifier = {
-			modifier = electoral
-			days = -1
-		}
-		event_target:last_leader = {
+			set_timed_country_flag = { flag = decentralized_lost days = 12 }
+			country_event = { id = decentralized.206 days = 1 } # Notify
 			every_subject = {
+				# limit = {} absolute
 				set_subject_of = {
 					who = ROOT
 					subject_type = member_state
 				}
-				country_event = { id = decentralized.207 }
+				country_event = { id = decentralized.207 } # Notify generally
 			}
 			set_subject_of = {
 				who = ROOT
@@ -1964,7 +1897,7 @@ country_event = {
 	immediate = {
 		save_event_target_as = decentralized_winner
 		every_subject = {
-			country_event = { id = decentralized.207 }
+			country_event = { id = decentralized.207 } # Notify
 		}
 	}
 	option = { name = OK }
@@ -1981,17 +1914,16 @@ country_event = {
 	option = { name = OK }
 }
 
-# Announces winner
+# Announces winner (generally)
 country_event = {
 	id = decentralized.207
 	title = "decentralized.207.name"
 	desc = "decentralized.207.desc"
 	picture = GFX_evt_announcement
 	is_triggered_only = yes
-	# immediate = {  }
+	# immediate = {}
 	option = { name = OK }
 }
-
 
 # This = subject
 # From = subject's overlord
@@ -2006,6 +1938,7 @@ country_event = {
 			has_ascension_perk = ap_decentralization
 		}
 		NOT = { is_subject_type = member_state }
+		is_country_type = default
 	}
 	immediate = {
 		FROM = {
@@ -2064,9 +1997,7 @@ country_event = {
 						}
 					}
 					PREVPREV = {
-						prev.space_owner = {
-							fully_commit_empire = yes
-						}
+						prev.space_owner = { fully_commit_empire = yes }
 					}
 				}
 			}
@@ -2080,9 +2011,7 @@ country_event = {
 			# create_starting_fleets = yes # TODO not working!?
 			# country_event = { id = decentralized.209 }
 		}
-		every_federation_ally = {
-			establish_communications = PREVPREV
-		}
+		every_federation_ally = { establish_communications = PREVPREV }
 		# every_relation = {
 		# 	establish_communications_no_message = PREVPREV
 		# }
@@ -2277,9 +2206,7 @@ country_event = {
 			}
 		}
 		if = {
-			limit = {
-				used_naval_capacity_percent < 0.2
-			}
+			limit = { used_naval_capacity_percent < 0.2 }
 			random_system_within_border = {
 				limit = {
 					any_fleet_in_system = {
