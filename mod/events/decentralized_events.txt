@@ -650,6 +650,7 @@ country_event = {
 	# 200
 	option = {
 		name = decentralized.14.a
+		trigger = { has_resource = { type = influence amount > 45 } }
 		add_resource = { influence = -45 }
 		every_subject = {
 			country_event = { id = decentralized.15 }
@@ -658,7 +659,7 @@ country_event = {
 	# 500
 	option = {
 		name = decentralized.14.b
-		trigger = { has_resource = { type = influence amount > 60 } }
+		trigger = { has_resource = { type = influence amount > 90 } }
 		add_resource = { influence = -90 }
 		every_subject = {
 			country_event = { id = decentralized.16 }
@@ -667,13 +668,14 @@ country_event = {
 	# 1000
 	option = {
 		name = decentralized.14.c
-		trigger = { has_resource = { type = influence amount > 140 } }
+		trigger = { has_resource = { type = influence amount > 180 } }
 		add_resource = { influence = -180 }
 		every_subject = {
 			country_event = { id = decentralized.17 }
 		}
 	}
-	# option = { name = distar.1055.b } needs reset edict counter
+	# option = { name = distar.1055.b } # needs reset edict counter?
+	option = { name = TRADE_OFFER_NOTHING }
 }
 
 # A member state reports another member state for harrasing their trade
