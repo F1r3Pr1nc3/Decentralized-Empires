@@ -1,6 +1,6 @@
 request_resources = {
 	length = 1080 # 1440
-	icon = "GFX_missing_resources_icon"
+	icon = "GFX_mod_country_edict_cost"
 	resources = {
 		category = edicts
 		cost = { influence = 20 }
@@ -18,7 +18,7 @@ request_resources = {
 
 regentmaker_give_tech = {
 	length = 720 # 1080
-	icon = "GFX_research_icon" # "GFX_trade_willingness"
+	icon = "GFX_research_icon"
 	resources = {
 		category = edicts
 		cost = { influence = 10 }
@@ -37,7 +37,7 @@ regentmaker_give_tech = {
 
 regentmaker_choose_ethics = {
 	length = 7
-	icon = "GFX_topbar_traditions_button" # "GFX_species_right_citizenship"
+	icon = "GFX_stability" # 27px "GFX_topbar_traditions_button" # "GFX_species_right_citizenship"
 	resources = {
 		category = edicts
 		cost = { influence = 0 }
@@ -53,7 +53,7 @@ regentmaker_choose_ethics = {
 
 regentmaker_choose_gov = {
 	length = 7
-	icon = "GFX_empire_capital"
+	icon = "GFX_embassy_their" # "gfx/interface/icons/modifiers/mod_country_government_civic_points_add.dds" "GFX_empire_capital"
 	resources = {
 		category = edicts
 		cost = { influence = 0 }

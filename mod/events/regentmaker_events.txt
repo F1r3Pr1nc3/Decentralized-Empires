@@ -686,7 +686,7 @@ country_event = {
 	#	}
 	# }
 	option = {
-		name = "auth_democratic"
+		name = "regentmaker_auth_democratic"
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_democratic }
@@ -698,7 +698,11 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_oligarchic"
+		name = SEPARATOR
+		allow = { hidden_trigger = { always = no } }
+	}
+	option = {
+		name = "regentmaker_auth_oligarchic"
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_oligarchic }
@@ -710,7 +714,11 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_dictatorial"
+		name = SEPARATOR
+		allow = { hidden_trigger = { always = no } }
+	}
+	option = {
+		name = "regentmaker_auth_dictatorial"
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_dictatorial }
@@ -722,7 +730,11 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_imperial"
+		name = SEPARATOR
+		allow = { hidden_trigger = { always = no } }
+	}
+	option = {
+		name = "regentmaker_auth_imperial"
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_imperial }
@@ -734,7 +746,11 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_corporate"
+		name = SEPARATOR
+		allow = { hidden_trigger = { always = no } }
+	}
+	option = {
+		name = "regentmaker_auth_corporate"
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_corporate }
@@ -756,6 +772,10 @@ country_event = {
 	#	every_subject = {
 	#		change_government = { authority = auth_machine_intelligence civics = random remove_invalid_civics = yes cooldown = no }
 	#	}
+	# }
+	# option = {
+	# 	name = SEPARATOR
+	# 	allow = { hidden_trigger = { always = no } }
 	# }
 	option = {
 		name = "BACK"
@@ -1625,12 +1645,12 @@ country_event = {
 	location = event_target:subject_selected
 	is_triggered_only = yes
 	option = {
-		name = "auth_democratic"
-		trigger = {
+		name = "regentmaker_auth_democratic"
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_democratic }
 			}
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_egalitarian
@@ -1648,12 +1668,12 @@ country_event = {
 	}
 	option = {
 		name = "auth_strict_democratic"
-		trigger = {
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_strict_democratic }
 			}
 			has_global_flag = gf_veru_activated
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_egalitarian
@@ -1671,12 +1691,12 @@ country_event = {
 	}
 	option = {
 		name = "auth_direct_democratic"
-		trigger = {
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_direct_democratic }
 			}
 			has_global_flag = gf_veru_activated
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_egalitarian
@@ -1693,12 +1713,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_oligarchic"
-		trigger = {
+		name = "regentmaker_auth_oligarchic"
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_oligarchic }
 			}
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_authoritarian
@@ -1715,12 +1735,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_dictatorial"
-		trigger = {
+		name = "regentmaker_auth_dictatorial"
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_dictatorial }
 			}
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_authoritarian
@@ -1737,12 +1757,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_imperial"
-		trigger = {
+		name = "regentmaker_auth_imperial"
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_imperial }
 			}
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_authoritarian
@@ -1759,12 +1779,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "auth_corporate"
-		trigger = {
+		name = "regentmaker_auth_corporate"
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_corporate }
 			}
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_capitalism
@@ -1782,12 +1802,12 @@ country_event = {
 	}
 	option = {
 		name = "auth_corporate_imperial"
-		trigger = {
+		allow = { hidden_trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_corporate_imperial }
 			}
 			has_global_flag = gf_veru_activated
-		}
+		} }
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_authoritarian
