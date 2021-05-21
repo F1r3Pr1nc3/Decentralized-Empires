@@ -4,6 +4,8 @@ tags={
 	"Gameplay"
 	"Diplomacy"
 	"Fixes"
+	"Empire"
+	"Imperium"
 }
 picture="thumbnail.png"
 supported_version="3.0.*"

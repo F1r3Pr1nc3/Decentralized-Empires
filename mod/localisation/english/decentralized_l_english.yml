@@ -81,7 +81,7 @@
  decentralized.202.a:0 "The current leader will do."
  decentralized.202.b:0 "We nominate ourselves!"
  decentralized.202.c:0 "[election_target1.GetName] should lead us."
- decentralized.202.d:0 "We vote for [election_target2.GetName]§!"
+ decentralized.202.d:0 "We vote for [election_target2.GetName]."
  decentralized.202.e:0 "We trust the [election_target3.GetName]"
  decentralized.204.name:0 "Election Won"
  decentralized.204.desc:0 "We have won the election, and we are ready to take control of the empire."
@@ -90,7 +90,7 @@
  decentralized.206.name:0 "Elections Lost"
  decentralized.206.desc:0 "The votes are in. Outrageous! We have lost the elections, one of our Member States has taken control of our empire, the transfer of power to the [decentralized_winner.GetName] has already begun."
  decentralized.207.name:0 "The Votes Are In"
- decentralized.207.desc:0 "It is done. The winner of the elections is the [decentralized_winner.GetName]§!"
+ decentralized.207.desc:0 "It is done. The winner of the elections is the [decentralized_winner.GetName]."
  # Ascension perks
  ap_decentralization:0 "Decentralization"
  ap_decentralization_desc:0 "Our species had the tendency to splinter into small communities since the beginning of our recorded history. We are destined to use this to our advantage. We shall decentralize our government and grant autonomy to our colonies."

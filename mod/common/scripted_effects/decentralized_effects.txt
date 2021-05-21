@@ -1,7 +1,7 @@
 ### Decentralized Scripted Effects
 
 ## Fully commit empire (otherwise systems can relegate)
-# This = target empire
+# This = target empire (beneficiary)
 # Prev = dissolved empire
 fully_commit_empire = {
 	PREV = {

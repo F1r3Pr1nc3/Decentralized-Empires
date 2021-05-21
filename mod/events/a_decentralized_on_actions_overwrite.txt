@@ -62,15 +62,10 @@ country_event = {
 				fromfrom = {
 					switch = {
 						trigger = has_country_flag
-						trader_enclave_country = {
-							country_event = { id = leviathans.101 }
-						}
-						artist_enclave_country = {
-							country_event = { id = leviathans.301 }
-						}
-						curator_enclave_country = {
-							country_event = { id = leviathans.501 }
-						}
+						trader_enclave_country = { country_event = { id = leviathans.101 } }
+						artist_enclave_country = { country_event = { id = leviathans.301 } }
+						curator_enclave_country = { country_event = { id = leviathans.501 } }
+						default = { log_error = "Unexpected enclave type or missing script flag" }
 					}
 				}
 			}

@@ -45,7 +45,7 @@ country_event = {
 					ignore_initial_colony_error = yes
 					day_zero_contact = no
 					exclude_day_zero_contact = root
-					origin = origin_default
+					origin = origin_hegemon_npc # origin_default
 					effect = {
 						# log = "a [Root.GetName] - [From.GetName]"
 						set_country_flag = first_alien_life
@@ -158,6 +158,7 @@ country_event = {
 						any_system_planet = { is_colony = yes }
 						space_owner = {
 							is_subject = yes
+							is_country_type = default
 							FROM = { is_overlord_to = PREV }
 						}
 					}
@@ -203,6 +204,7 @@ country_event = {
 						is_colony = yes
 						owner = {
 							is_subject = yes
+							is_country_type = default
 							is_loyal_to = ROOT
 							NOT = { is_same_empire = ROOT }
 							ROOT = { is_overlord_to = PREV }
@@ -224,6 +226,7 @@ country_event = {
 						has_owner = yes
 						space_owner = {
 							is_subject = yes
+							is_country_type = default
 							# is_subject_type = member_state
 							is_loyal_to = ROOT
 							ROOT = { is_overlord_to = PREV }
@@ -238,6 +241,7 @@ country_event = {
 							is_occupied_flag = no
 							owner = {
 								is_subject = yes
+								is_country_type = default
 								# is_subject_type = member_state
 								is_loyal_to = ROOT
 								ROOT = { is_overlord_to = PREV }
@@ -250,6 +254,7 @@ country_event = {
 		}
 
 		every_subject = {
+			limit = { is_country_type = default }
 			# Merge to small empires (default empire type only)
 			ROOT = { change_variable = { which = subject_member value = 1 } }
 			if = {
@@ -265,6 +270,7 @@ country_event = {
 							any_system_planet = { is_colony = yes }
 							space_owner = {
 								is_subject = yes
+								is_country_type = default
 								# is_subject_type = member_state
 								is_loyal_to = ROOT
 								ROOT = { is_overlord_to = PREV }
@@ -284,6 +290,7 @@ country_event = {
 		# Last check (try to give at least one extra system)
 		# log = "subject member [Root.subject_member]"
 		every_subject = {
+			limit = { is_country_type = default }
 			if = { limit = { controlled_systems < 3 }
 				capital_scope.solar_system = {
 					if = { limit = { ROOT = { check_variable = { which = subject_member value < 8 } } }
@@ -294,6 +301,7 @@ country_event = {
 								OR = {
 									space_owner = {
 										is_subject = yes
+										is_country_type = default
 										# is_subject_type = member_state
 										is_loyal_to = ROOT
 										ROOT = { is_overlord_to = PREV }
@@ -330,6 +338,7 @@ country_event = {
 									OR = {
 										AND = {
 											is_subject = yes
+											is_country_type = default
 											is_loyal_to = ROOT
 											ROOT = { is_overlord_to = PREV }
 										}
@@ -469,13 +478,13 @@ country_event = {
 				# ROOT = { has_federation = yes }
 			}
 			every_subject = {
-				limit = { is_galactic_community_member = no }
+				limit = { is_subject_type = member_state is_galactic_community_member = no }
 				add_to_galactic_community_no_message = yes
 				add_intel = { amount = 60 who = ROOT }
 				ROOT = {
 					add_intel = { amount = 60 who = prev }
 					every_subject = {
-						limit = { NOT = { is_same_empire = prevprev } }
+						limit = { is_subject_type = member_state NOT = { is_same_empire = prevprev } }
 						add_intel = { amount = 40 who = prevprev }
 					}
 				}
@@ -535,7 +544,7 @@ event = {
 	}
 }
 
-# sends event to decentralizer if a member state grows too large.
+# Sends event to decentralizer if a member state grows too large.
 planet_event = {
 	id = decentralized.8
 	# title = "decentralized.8"
@@ -653,6 +662,7 @@ country_event = {
 		trigger = { has_resource = { type = influence amount > 45 } }
 		add_resource = { influence = -45 }
 		every_subject = {
+			limit = { is_subject_type = member_state }
 			country_event = { id = decentralized.15 }
 		}
 	}
@@ -662,6 +672,7 @@ country_event = {
 		trigger = { has_resource = { type = influence amount > 90 } }
 		add_resource = { influence = -90 }
 		every_subject = {
+			limit = { is_subject_type = member_state }
 			country_event = { id = decentralized.16 }
 		}
 	}
@@ -671,6 +682,7 @@ country_event = {
 		trigger = { has_resource = { type = influence amount > 180 } }
 		add_resource = { influence = -180 }
 		every_subject = {
+			limit = { is_subject_type = member_state }
 			country_event = { id = decentralized.17 }
 		}
 	}
@@ -1394,7 +1406,15 @@ country_event = {
 	mean_time_to_happen = { months = 210 }
 	immediate = {
 		random_owned_leader = { save_event_target_as = quarreller }
-		random_subject = { save_event_target_as = insulted_state }
+		random_subject = {
+			limit = {
+				OR = {
+					is_subject_type = member_state
+					is_country_type	= default
+				}
+			}
+			save_event_target_as = insulted_state
+		}
 	}
 	option = {
 		name = decentralized.18.a
@@ -1446,6 +1466,12 @@ country_event = {
 		name = decentralized.19.a
 		add_resource = { influence = -30 }
 		every_subject = {
+			limit = {
+				OR = {
+					is_subject_type = member_state
+					is_country_type	= default
+				}
+			}
 			add_opinion_modifier = {
 				modifier = opinion_slight_insult
 				who = ROOT
@@ -1474,6 +1500,10 @@ country_event = {
 		}
 		random_subject = {
 			limit = {
+				OR = {
+					is_subject_type = member_state
+					is_country_type	= default
+				}
 				NOT = { is_same_empire = event_target:terrorizer }
 			}
 			save_event_target_as = terrorized
@@ -1582,8 +1612,8 @@ country_event = {
 		overlord = {
 			random_subject = {
 				limit = {
-					# NOR = {
-						# is_same_empire = FROM
+					is_subject_type = member_state
+					# NOR = { is_same_empire = FROM
 					NAND = {
 						exists = event_target:election_target3
 						is_same_empire = event_target:election_target3
@@ -1594,6 +1624,7 @@ country_event = {
 			}
 			random_subject = {
 				limit = {
+					is_subject_type = member_state
 					exists = event_target:election_target1
 					NOR = {
 						is_same_empire = FROM
@@ -1604,6 +1635,7 @@ country_event = {
 			}
 			random_subject = {
 				limit = {
+					is_subject_type = member_state
 					exists = event_target:election_target2
 					NOR = {
 						is_same_empire = FROM
@@ -1868,7 +1900,7 @@ country_event = {
 			set_timed_country_flag = { flag = decentralized_lost days = 12 }
 			country_event = { id = decentralized.206 days = 1 } # Notify
 			every_subject = {
-				# limit = {} absolute
+				limit = { is_subject_type = member_state } # not absolute?
 				set_subject_of = {
 					who = ROOT
 					subject_type = member_state
@@ -1973,6 +2005,10 @@ country_event = {
 								is_subject = yes
 								is_loyal_to = ROOT
 								ROOT = { is_overlord_to = PREV }
+								OR = {
+									is_subject_type = member_state
+									is_country_type	= default
+								}
 							}
 						}
 					}
@@ -1994,6 +2030,10 @@ country_event = {
 									is_subject = yes
 									is_loyal_to = ROOT
 									ROOT = { is_overlord_to = PREV }
+									OR = {
+										is_subject_type = member_state
+										is_country_type	= default
+									}
 								}
 							}
 						}

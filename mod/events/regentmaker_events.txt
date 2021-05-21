@@ -142,10 +142,7 @@ planet_event = {
 			ship_prefix = ""
 			government_restrictions = {
 				authority = {
-					NOR = {
-						value = auth_machine_intelligence
-						value = auth_hive_mind
-					}
+					NOR = { value = auth_machine_intelligence value = auth_hive_mind }
 				}
 			}
 			authority = event_target:decentralizer
@@ -155,7 +152,7 @@ planet_event = {
 			ethos = random
 			species = event_target:vassal_species
 			flag = random			# separate color definition not possible!?
-			origin = origin_default
+			origin = origin_hegemon_npc # origin_default
 			# auto_delete = yes
 			day_zero_contact = no
 			exclude_day_zero_contact = event_target:decentralizer
@@ -808,7 +805,7 @@ country_event = {
 			# count < 11
 			limit = {
 				is_country_type = default
-				NOT = { is_subject_type = devstate }				# Civil Wars mod
+				NOT = { is_subject_type = devstate }				# comp. Civil Wars mod
 			}
 			set_country_flag = subject_ethic_change
 			overlord = {
@@ -934,7 +931,7 @@ country_event = {
 		every_subject = {
 			limit = {
 				is_country_type = default
-				NOT = { is_subject_type = devstate }
+				NOT = { is_subject_type = devstate }		# comp. Civil Wars mod
 			}
 			set_country_flag = subject_gov_change
 			overlord = {
@@ -1856,16 +1853,14 @@ country_event = {
 			}
 		} else_if = { limit = { num_ethics > 0 }
 			random_list = {
-				random_list = {
-					1 = { shift_ethic = ethic_fanatic_materialist	modifier = { factor = 0 has_ethic = ethic_fanatic_materialist } }
-					1 = { shift_ethic = ethic_fanatic_spiritualist	modifier = { factor = 0 has_ethic = ethic_fanatic_spiritualist } }
-					1 = { shift_ethic = ethic_fanatic_militarist	modifier = { factor = 0 has_ethic = ethic_fanatic_militarist } }
-					1 = { shift_ethic = ethic_fanatic_pacifist		modifier = { factor = 0 has_ethic = ethic_fanatic_pacifist } }
-					1 = { shift_ethic = ethic_fanatic_xenophile		modifier = { factor = 0 has_ethic = ethic_fanatic_xenophile } }
-					1 = { shift_ethic = ethic_fanatic_xenophobe		modifier = { factor = 0 has_ethic = ethic_fanatic_xenophobe } }
-					4 = { shift_ethic = ethic_fanatic_egalitarian	modifier = { factor = 0 OR = { has_ethic = ethic_fanatic_egalitarian has_country_flag = auth_dictatorial has_country_flag = auth_oligarchic has_country_flag = auth_imperial has_country_flag = auth_corporate } } }
-					3 = { shift_ethic = ethic_fanatic_authoritarian	modifier = { factor = 0 OR = { has_ethic = ethic_fanatic_authoritarian has_country_flag = auth_democratic has_country_flag = auth_oligarchic has_country_flag = auth_corporate } } }
-				}
+				1 = { shift_ethic = ethic_fanatic_materialist	modifier = { factor = 0 has_ethic = ethic_fanatic_materialist } }
+				1 = { shift_ethic = ethic_fanatic_spiritualist	modifier = { factor = 0 has_ethic = ethic_fanatic_spiritualist } }
+				1 = { shift_ethic = ethic_fanatic_militarist	modifier = { factor = 0 has_ethic = ethic_fanatic_militarist } }
+				1 = { shift_ethic = ethic_fanatic_pacifist		modifier = { factor = 0 has_ethic = ethic_fanatic_pacifist } }
+				1 = { shift_ethic = ethic_fanatic_xenophile		modifier = { factor = 0 has_ethic = ethic_fanatic_xenophile } }
+				1 = { shift_ethic = ethic_fanatic_xenophobe		modifier = { factor = 0 has_ethic = ethic_fanatic_xenophobe } }
+				4 = { shift_ethic = ethic_fanatic_egalitarian	modifier = { factor = 0 OR = { has_ethic = ethic_fanatic_egalitarian has_country_flag = auth_dictatorial has_country_flag = auth_oligarchic has_country_flag = auth_imperial has_country_flag = auth_corporate } } }
+				3 = { shift_ethic = ethic_fanatic_authoritarian	modifier = { factor = 0 OR = { has_ethic = ethic_fanatic_authoritarian has_country_flag = auth_democratic has_country_flag = auth_oligarchic has_country_flag = auth_corporate } } }
 			}
 			random_list = {
 				1 = { shift_ethic = ethic_materialist	modifier = { factor = 0 OR = { has_ethic = ethic_fanatic_materialist has_ethic = ethic_fanatic_spiritualist		has_ethic = ethic_fanatic_materialist } } }
