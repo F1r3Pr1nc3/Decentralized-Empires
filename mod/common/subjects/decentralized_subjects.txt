@@ -21,9 +21,9 @@ member_state = {
 	intel_from_being_overlord = 60
 
 	subject_tax_rate = {
-		minerals = 0.25
-		energy = 0.25
-		alloys = 0.30
+		minerals = 0.15
+		energy = 0.15
+		alloys = 0.20
 	}
 
 	potential = {
@@ -38,13 +38,9 @@ member_state = {
 	effect = {
 		if = {
 			limit = {
-				from = {
-					is_country_type_with_subjects = no
-				}
+				from = { is_country_type_with_subjects = no }
 			}
-			set_subject_of = {
-				who = none
-			}
+			set_subject_of = { who = none }
 			break = yes
 		}
 		if = {

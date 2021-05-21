@@ -1,3 +1,13 @@
+on_game_start = {
+	events = {
+		regentmaker.10
+	}
+}
+on_single_player_save_game_load = {
+	events = {
+		regentmaker.10
+	}
+}
 #Fired whenever a new owner is set for a planet,
 #be it after a war or through a trade
 #From = Country scope (new owner)

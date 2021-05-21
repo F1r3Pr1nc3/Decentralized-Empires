@@ -346,6 +346,9 @@ country_event = {
 	is_triggered_only = yes
 	option = {
 		name = "regentmaker.4.a"
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 49 } }
+		}
 		hidden_effect = {
 			every_subject = {
 				limit = { is_country_type = default }
@@ -356,6 +359,9 @@ country_event = {
 	}
 	option = {
 		name = "regentmaker.4.b"
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 99 } }
+		}
 		hidden_effect = {
 			every_subject = {
 				limit = { is_country_type = default }
@@ -504,6 +510,16 @@ planet_event = {
 				add_modifier = { modifier = "regentmaker_colony" days = -1 }
 			}
 		}
+	}
+}
+
+# Set Mod Flag
+event = {
+	id = regentmaker.10
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		set_global_flag = gf_regentmaker_active
 	}
 }
 
@@ -772,10 +788,6 @@ country_event = {
 	#	every_subject = {
 	#		change_government = { authority = auth_machine_intelligence civics = random remove_invalid_civics = yes cooldown = no }
 	#	}
-	# }
-	# option = {
-	# 	name = SEPARATOR
-	# 	allow = { hidden_trigger = { always = no } }
 	# }
 	option = {
 		name = "BACK"
@@ -1590,7 +1602,7 @@ country_event = {
 			event_target:subject_selected = {
 				NOT = { has_ethic = ethic_fanatic_socialism }
 			}
-			has_global_flag = gf_veru_activated
+			has_global_flag = cultural_overhaul_active
 		}
 		hidden_effect = {
 			event_target:subject_selected = { shift_ethic = ethic_fanatic_socialism }
@@ -1635,7 +1647,7 @@ country_event = {
 	option = { name = rm.3.back }
 }
 
-# Change Government
+# Change Government (specific subject)
 country_event = {
 	id = regentmaker.70
 	title = regentmaker.70.name
@@ -1645,12 +1657,12 @@ country_event = {
 	location = event_target:subject_selected
 	is_triggered_only = yes
 	option = {
-		name = "regentmaker_auth_democratic"
-		allow = { hidden_trigger = {
+		name = "auth_democratic"
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_democratic }
 			}
-		} }
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_egalitarian
@@ -1668,12 +1680,12 @@ country_event = {
 	}
 	option = {
 		name = "auth_strict_democratic"
-		allow = { hidden_trigger = {
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_strict_democratic }
 			}
-			has_global_flag = gf_veru_activated
-		} }
+			has_global_flag = gf_moreauthorities_activated
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_egalitarian
@@ -1691,12 +1703,12 @@ country_event = {
 	}
 	option = {
 		name = "auth_direct_democratic"
-		allow = { hidden_trigger = {
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_direct_democratic }
 			}
 			has_global_flag = gf_veru_activated
-		} }
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_egalitarian
@@ -1713,12 +1725,36 @@ country_event = {
 		}
 	}
 	option = {
-		name = "regentmaker_auth_oligarchic"
-		allow = { hidden_trigger = {
+		name = "auth_democratic_dictatorship"
+		trigger = {
+			event_target:subject_selected = {
+				NOT = { has_authority = auth_democratic_dictatorship }
+			}
+			has_global_flag = gf_moreauthorities_activated
+		}
+		event_target:subject_selected = {
+			clear_ethos = yes
+			country_add_ethic = ethic_authoritarian
+			change_government = {
+				authority = auth_democratic_dictatorship
+				remove_invalid_civics = yes
+				cooldown = no
+				civics = {
+					civic = random
+					civic = random
+					civic = random
+				}
+			}
+			country_event = { id = regentmaker.30 }
+		}
+	}
+	option = {
+		name = "auth_oligarchic"
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_oligarchic }
 			}
-		} }
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_authoritarian
@@ -1735,12 +1771,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "regentmaker_auth_dictatorial"
-		allow = { hidden_trigger = {
+		name = "auth_dictatorial"
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_dictatorial }
 			}
-		} }
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_authoritarian
@@ -1757,12 +1793,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "regentmaker_auth_imperial"
-		allow = { hidden_trigger = {
+		name = "auth_imperial"
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_imperial }
 			}
-		} }
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_authoritarian
@@ -1779,12 +1815,12 @@ country_event = {
 		}
 	}
 	option = {
-		name = "regentmaker_auth_corporate"
-		allow = { hidden_trigger = {
+		name = "auth_corporate"
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_corporate }
 			}
-		} }
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_capitalism
@@ -1802,12 +1838,12 @@ country_event = {
 	}
 	option = {
 		name = "auth_corporate_imperial"
-		allow = { hidden_trigger = {
+		trigger = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_corporate_imperial }
 			}
-			has_global_flag = gf_veru_activated
-		} }
+			has_global_flag = gf_moreauthorities_activated
+		}
 		event_target:subject_selected = {
 			clear_ethos = yes
 			country_add_ethic = ethic_fanatic_authoritarian

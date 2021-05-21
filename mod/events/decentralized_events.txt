@@ -605,6 +605,9 @@ country_event = {
 	}
 	option = {
 		name = decentralized.7.b
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 19 } }
+		}
 		add_resource = { influence = -20 }
 		hidden_effect = {
 			random_subject = {
@@ -659,7 +662,9 @@ country_event = {
 	# 200
 	option = {
 		name = decentralized.14.a
-		trigger = { has_resource = { type = influence amount > 45 } }
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 45 } }
+		}
 		add_resource = { influence = -45 }
 		every_subject = {
 			limit = { is_subject_type = member_state }
@@ -669,7 +674,9 @@ country_event = {
 	# 500
 	option = {
 		name = decentralized.14.b
-		trigger = { has_resource = { type = influence amount > 90 } }
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 90 } }
+		}
 		add_resource = { influence = -90 }
 		every_subject = {
 			limit = { is_subject_type = member_state }
@@ -679,7 +686,10 @@ country_event = {
 	# 1000
 	option = {
 		name = decentralized.14.c
-		trigger = { has_resource = { type = influence amount > 180 } }
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 180 } }
+		}
+		trigger = {  }
 		add_resource = { influence = -180 }
 		every_subject = {
 			limit = { is_subject_type = member_state }

@@ -67,16 +67,18 @@ is_decent_majority_species = {
 			NOT = { is_same_species = event_target:decentralizer.owner_species }
 		}
 	}
-	# PREV = {
-	# 	count_owned_pop = {
-	# 		limit = {
-	# 			is_enslaved = no
-	# 			is_being_purged = no
-	# 			is_robot_pop = no
-	# 			happiness > 0.5
-	# 			is_same_species = PREVPREV.species
-	# 		}
-	# 		count > 4
-	# 	}
-	# }
+	PREV = {
+		habitability = { who = PREV value > 0.65 }
+		count_owned_pop = {
+			limit = {
+				is_enslaved = no
+				is_being_purged = no
+				is_robot_pop = no
+				happiness > 0.5
+				pop_can_live_on_planet = yes
+				is_same_species = PREVPREV.species
+			}
+			count > 4
+		}
+	}
 }

@@ -1,5 +1,5 @@
 request_resources = {
-	length = 1080 # 1440
+	length = 1080	# 1440
 	icon = "GFX_mod_country_edict_cost"
 	resources = {
 		category = edicts
@@ -9,15 +9,15 @@ request_resources = {
 		is_overlord = yes
 		has_modifier = decentralized_leader
 		has_resource = { type = influence amount > 120 }
- 	}
+	}
 	effect = {
 		country_event = { id = decentralized.14 }
 	}
-	ai_weight = { weight = 0 } # TODO
+	ai_weight = { weight = 0 }	# TODO
 }
 
 regentmaker_give_tech = {
-	length = 720 # 1080
+	length = 720	# 1080
 	icon = "GFX_research_icon"
 	resources = {
 		category = edicts
@@ -25,19 +25,19 @@ regentmaker_give_tech = {
 	}
 	potential = {
 		is_overlord = yes
-		has_resource = { type = influence amount > 100 }
+		has_resource = { type = influence amount > 40 }
 	}
 	# modifier = { }
-	# prerequisites = {  }
+	# prerequisites = { }
 	effect = {
 		country_event = { id = regentmaker.4 }
 	}
-	ai_weight = { weight = 0 } # TODO
+	ai_weight = { weight = 0 }	# TODO
 }
 
 regentmaker_choose_ethics = {
 	length = 7
-	icon = "GFX_stability" # 27px "GFX_topbar_traditions_button" # "GFX_species_right_citizenship"
+	icon = "GFX_stability"	# 27px "GFX_topbar_traditions_button" # "GFX_species_right_citizenship"
 	resources = {
 		category = edicts
 		cost = { influence = 0 }
@@ -53,7 +53,7 @@ regentmaker_choose_ethics = {
 
 regentmaker_choose_gov = {
 	length = 7
-	icon = "GFX_embassy_their" # "gfx/interface/icons/modifiers/mod_country_government_civic_points_add.dds" "GFX_empire_capital"
+	icon = "GFX_embassy_their"	# "gfx/interface/icons/modifiers/mod_country_government_civic_points_add.dds" "GFX_empire_capital"
 	resources = {
 		category = edicts
 		cost = { influence = 0 }
