@@ -395,7 +395,7 @@ country_event = {
 		country_event = { id = regentmaker.500 }
 	}
 	option = {
-		name = leviathans.105.d		#"BACK"
+		name = leviathans.105.d		# "Nothing for now. Goodbye."
 	}
 }
 
@@ -417,7 +417,7 @@ country_event = {
 		country_event = { id = regentmaker.501 }
 	}
 	option = {
-		name = leviathans.105.d		#"BACK"
+		name = leviathans.105.d		# "Nothing for now. Goodbye."
 	}
 }
 
@@ -659,12 +659,15 @@ country_event = {
 	#	every_subject = { shift_ethic = ethic_gestalt_consciousness }
 	# }
 	option = {
-		name = "BACK"
+		name = BACK
 		# hidden_effect = {
-		#	no_scope = {
-		#		save_event_target_as = vassal_empire
-		#	}
+		# 	no_scope = { save_event_target_as = vassal_empire }
 		# }
+	}
+	after = {
+		hidden_effect = {
+			country_event = { id = regentmaker.7 }
+		}
 	}
 	# after = {
 	#	hidden_effect = {
@@ -790,12 +793,15 @@ country_event = {
 	#	}
 	# }
 	option = {
-		name = "BACK"
+		name = BACK
 		# hidden_effect = {
-		#	no_scope = {
-		#		save_event_target_as = vassal_empire
-		#	}
+		# 	no_scope = { save_event_target_as = vassal_empire }
 		# }
+	}
+	after = {
+		hidden_effect = {
+			country_event = { id = regentmaker.8 }
+		}
 	}
 	# after = {
 	#	hidden_effect = {
@@ -1241,6 +1247,9 @@ country_event = {
 		trigger = {
 			check_variable = { which = rm_total_subjects value > 0 }
 		}
+		hidden_effect = {
+			country_event = { id = regentmaker.7 }
+		}
 	}
 }
 
@@ -1406,6 +1415,9 @@ country_event = {
 		name = rm.2.back
 		trigger = {
 			check_variable = { which = rm_total_subjects value > 0 }
+		}
+		hidden_effect = {
+			country_event = { id = regentmaker.8 }
 		}
 	}
 }
@@ -1644,7 +1656,14 @@ country_event = {
 			event_target:subject_selected = { shift_ethic = ethic_capitalism }
 		}
 	}
-	option = { name = rm.3.back }
+	option = {
+		name = rm.3.back # BACK
+	}
+	after = {
+		hidden_effect = {
+			country_event = { id = regentmaker.502 }
+		}
+	}
 }
 
 # Change Government (specific subject)
@@ -1861,7 +1880,14 @@ country_event = {
 			country_event = { id = regentmaker.30 }
 		}
 	}
-	option = { name = rm.3.back }
+	option = {
+		name = rm.3.back # BACK
+	}
+	after = {
+		hidden_effect = {
+			country_event = { id = regentmaker.503 }
+		}
+	}
 }
 
 # Ethic Randomizer (mainly taken from action.30)

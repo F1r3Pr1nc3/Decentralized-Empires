@@ -3,7 +3,7 @@
 ## Fully commit empire (otherwise systems can relegate)
 # This = target empire (beneficiary)
 # Prev = dissolved empire
-fully_commit_empire = {
+fully_commit_to_empire = {
 	PREV = {
 		every_owned_fleet = {
 			set_owner = PREVPREV
@@ -25,7 +25,7 @@ fully_commit_empire = {
 				is_capital = no
 			}
 			set_owner = PREVPREV
-			set_controller = PREVPREV
+			# set_controller = PREVPREV
 		}
 		# At last (otherwise systems can relegate)
 		capital_scope = {
@@ -37,11 +37,14 @@ fully_commit_empire = {
 				if = { limit = { PREVPREV = { is_same_empire = ROOT } }
 					remove_modifier = planetary_nationalism
 				}
-				log = "Reduce subject member [Prev.GetName] [Root.subject_member]"
 				set_owner = PREVPREV
 				ROOT = { change_variable = { which = subject_member value = -1 } }
+				log = "Reduce subject member to [Root.subject_member]" #  [Prev.GetName] only 1 var per log
+			} else = {
+				set_owner = ROOT
 			}
 		}
+		# destroy_country = yes
 	}
 }
 
@@ -92,12 +95,12 @@ get_vassal_species = {
 				limit = {
 					NOT = { is_exact_same_species = event_target:decentralizer.owner_species }
 				}
-				species = { save_event_target_as = vassal_species }
+				save_event_target_as = vassal_species
 			}
 		} else = {
 			random_owned_species = {
 				limit = { is_scope_valid = yes }
-				species = { save_event_target_as = vassal_species }
+				save_event_target_as = vassal_species
 			}
 		}
 	}
@@ -121,6 +124,6 @@ get_vassal_species = {
 			}
 		}
 		from = { save_event_target_as = vassal_species }
-		log="no valid vassal_species found [This.GetName]"
+		log_error ="no valid vassal_species found [This.GetName]"
 	}
 }

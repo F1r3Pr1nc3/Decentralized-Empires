@@ -3,9 +3,9 @@ ap_decentralization = {
 	potential = {
 		exists = capital_scope
 		NOR = {
+			is_ai = yes
 			has_ascension_perk = ap_decentralization
 			has_ethic = ethic_gestalt_consciousness # requires_actor_not_gestalt_consciousness
-			is_ai = yes
 		}
 	}
 	possible = {

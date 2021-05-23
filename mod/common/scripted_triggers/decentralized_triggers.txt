@@ -48,19 +48,17 @@ is_decent_majority_species = {
 			# 	is_sapient = yes # NOT = { is_archetype = PRESAPIENT }
 			# }
 		}
-		PREV = {
-			is_ideal_planet_class = { who = PREV status = yes }
-			species = {
-				OR = {
-					PREV = { is_majority_species = PREV }
-					species_has_happiness_with_owner = event_target:decentralizer
-					has_citizenship_type = {
-						type = citizenship_full
-						country = event_target:decentralizer
-					}
+		species = {
+			PREVPREV = { is_ideal_planet_class = { who = PREV status = yes } }
+			OR = {
+				PREVPREV = { is_majority_species = PREV }
+				species_has_happiness_with_owner = event_target:decentralizer
+				has_citizenship_type = {
+					type = citizenship_full
+					country = event_target:decentralizer
 				}
-				# is_sapient = yes # NOT = { is_archetype = PRESAPIENT }
 			}
+			is_sapient = yes # NOT = { is_archetype = PRESAPIENT }
 		}
 		AND = {
 			PREV = { is_majority_species = PREV.species }

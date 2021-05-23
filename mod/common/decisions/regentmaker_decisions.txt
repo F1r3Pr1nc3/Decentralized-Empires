@@ -3,47 +3,35 @@
 ##########################################################################
 # Regentmaker Decisions
 decision_regentmaker = {
-	icon = decision_mark_on
+	icon = decision_de_mark_on
 	owned_planets_only = yes
-	# prerequisites = {  }
+	# prerequisites = { }
 	resources = {
 		category = decisions
-		cost = {
-			influence = 0
-		}
+		cost = { influence = 0 }
 	}
 	potential = {
-		is_capital = no
-		owner = {
-			is_ai = no
-		}
-		not = {
+		NOR = {
+			is_capital = yes
 			has_planet_flag = regentmaker_handover
 		}
+		owner = { is_ai = no }
 	}
 	# allow = {}
-	effect = {
-		set_planet_flag = regentmaker_handover
-	}
-	ai_weight = {
-		weight = 0
-	}
+	effect = { set_planet_flag = regentmaker_handover }
+	ai_weight = { weight = 0 }
 }
 
-decision_remove_regentmaker = {
-	icon = decision_mark_off
+decision_rem_regentmaker = {
+	icon = decision_de_mark_off
 	owned_planets_only = yes
 	resources = {
 		category = decisions
-		cost = {
-			influence = 0
-		}
+		cost = { influence = 0 }
 	}
 	potential = {
-		owner = {
-			is_ai = no
-		}
 		has_planet_flag = regentmaker_handover
+		owner = { is_ai = no }
 	}
 	effect = {
 		# custom_tooltip = consecrated_worlds_unsuitable
@@ -54,9 +42,7 @@ decision_remove_regentmaker = {
 			}
 		}
 	}
-	ai_weight = {
-		weight = 0
-	}
+	ai_weight = { weight = 0 }
 }
 
 decision_release_regentmaker = {
@@ -66,16 +52,12 @@ decision_release_regentmaker = {
 	owned_planets_only = yes
 	resources = {
 		category = decisions
-		cost = {
-			influence = 25
-		}
+		cost = { influence = 25 }
 	}
 	potential = {
 		owner = {
 			is_ai = no
-			any_owned_planet = {
-				has_planet_flag = regentmaker_handover
-			}
+			any_owned_planet = { has_planet_flag = regentmaker_handover }
 		}
 	}
 	effect = {
@@ -90,13 +72,66 @@ decision_release_regentmaker = {
 					is_capital = no
 					is_occupied_flag = no
 				}
-				planet_event = {
-					id = regentmaker.1
-				}
+				planet_event = { id = regentmaker.1 }
 			}
 		}
 	}
-	ai_weight = {
-		weight = 0
+	ai_weight = { weight = 0 }
+}
+
+decision_excld_decentral = {
+	icon = decision_de_mark_off
+	owned_planets_only = no
+	resources = {
+		category = decisions
+		cost = { influence = 0 }
 	}
+	potential = {
+		is_star = yes
+		NOT = { solar_system = { has_star_flag = decentral_excluded } }
+		# NOR = {
+		# 	is_capital = yes
+		# 	has_planet_flag = decentral_excluded
+		# }
+		exists = space_owner
+		space_owner = {
+			is_ai = no
+			NOT = { has_country_flag = decentralizer }
+			has_ascension_perk = ap_decentralization
+			# has_special_project = "DECENTRALIZATION_PROJECT"
+		}
+		# OR = {
+		# 	is_star = yes
+		# 	has_owner = yes
+		# }
+	}
+
+	effect = { solar_system = { set_timed_star_flag = { flag = decentral_excluded days = 30 } } }
+	ai_weight = { weight = 0 }
+}
+
+decision_rem_excld_decentral = {
+	icon = decision_de_perk_mark_off
+	owned_planets_only = no
+	resources = {
+		category = decisions
+		cost = { influence = 0 }
+	}
+	potential = {
+		is_star = yes
+		solar_system = { has_star_flag = decentral_excluded }
+		exists = space_owner
+		space_owner = { is_ai = no }
+		# OR = {
+		# 	is_star = yes
+		# 	has_owner = yes
+		# }
+	}
+	effect = {
+		# custom_tooltip = consecrated_worlds_unsuitable
+		solar_system = {
+			remove_star_flag = decentral_excluded
+		}
+	}
+	ai_weight = { weight = 0 }
 }

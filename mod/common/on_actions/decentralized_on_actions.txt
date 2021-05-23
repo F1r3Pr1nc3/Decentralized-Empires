@@ -27,7 +27,7 @@ on_planet_transfer = {
 # No scope, like on_game_start
 # on_yearly_pulse = {
 # 	events = {
-# 		decentralized.6 # Event for converting vassals into member states
+# 		decentralized.6 # Event for converting vassals into Member States
 # 	}
 # }
 

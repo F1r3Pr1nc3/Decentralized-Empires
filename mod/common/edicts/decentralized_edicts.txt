@@ -8,6 +8,8 @@ request_resources = {
 	potential = {
 		is_overlord = yes
 		has_modifier = decentralized_leader
+	}
+	allow = {
 		has_resource = { type = influence amount > 120 }
 	}
 	effect = {
@@ -25,6 +27,8 @@ regentmaker_give_tech = {
 	}
 	potential = {
 		is_overlord = yes
+	}
+	allow = {
 		has_resource = { type = influence amount > 40 }
 	}
 	# modifier = { }
