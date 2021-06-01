@@ -3,18 +3,15 @@ cb_decentralized = {
 	show_notification = no
 	potential = {
 		has_modifier = decentralized_leader
+		is_subject = no
 	}
 	is_valid = {
-		NOT = {
-			is_overlord_to = FROM
-		}
-		OR = {
-			is_subject = no
-			overlord = {
-				NOT = {
-					is_same_value = from
-				}
-			}
-		}
+		has_total_war_cb = no
+		NOT = { is_overlord_to = FROM }
+		# OR = {
+		# 	is_subject = no
+		# 	overlord = { NOT = { is_same_empire = from } }
+		# }
+		from = { num_owned_planets > 4 }
 	}
 }
