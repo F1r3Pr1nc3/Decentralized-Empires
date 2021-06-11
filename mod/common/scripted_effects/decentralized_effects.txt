@@ -5,17 +5,11 @@
 # Prev = dissolved empire
 fully_commit_to_empire = {
 	PREV = {
-		every_owned_fleet = {
-			set_owner = PREVPREV
-		}
-		every_owned_army = {
-			set_owner = PREVPREV
-		}
+		every_owned_fleet = { set_owner = PREVPREV }
+		every_owned_army = { set_owner = PREVPREV }
 		every_system_within_border = {
 			limit = { exists = starbase }
-			starbase = {
-				set_owner = PREVPREVPREV
-			}
+			starbase = { set_owner = PREVPREVPREV }
 		}
 		every_owned_planet = {
 			limit = {

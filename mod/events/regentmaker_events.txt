@@ -253,20 +253,41 @@ planet_event = {
 					}
 				}
 				if = {
-					limit = {
-						NOT = { is_same_species = event_target:decentralizer }
+					limit = { is_same_species = event_target:decentralizer }
+					random = {
+						chance = 50
+						copy_ethos_and_authority = event_target:decentralizer
+						change_government = {
+							authority = auth_imperial
+							remove_invalid_civics = yes cooldown = no
+							civics = {
+								civic = random
+								civic = random
+								civic = random
+							}
+						}
 					}
-					# if = { limit = { is_homeworld = yes } }
-					set_name = "[This.owner_species.GetName]"
 				}
-				else = {
-					copy_ethos_and_authority = event_target:decentralizer
-					change_government = {
-						authority = auth_imperial
-						civics = random
-						remove_invalid_civics = yes cooldown = no
-					}
-				}
+				# else_if = { # name = random
+				# limit = { NOT = { is_same_species = event_target:decentralizer } }
+				# 	random_list = {
+				# 		1 = {
+				# 			set_name = "[This.GetStarName] $country$"
+				# 		}
+				# 		40 = {
+				# 			set_name = "[This.GetStarName]"
+				# 		}
+				# 		1 = {
+				# 			set_name = "[This.owner_species.GetName] $country$"
+				# 		}
+				# 		8 = {
+				# 			modifier = {
+				# 				factor = 0
+				# 				is_homeworld = yes
+				# 			}
+				# 		}
+				# 	}
+				# }
 				if = {
 					limit = {
 						FROM = { has_planet_flag = regentmaker_handover }

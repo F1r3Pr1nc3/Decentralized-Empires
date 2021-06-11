@@ -1,4 +1,4 @@
-version="2.9"
+version="3.0"
 name="Decentralized Empires 3.0 (Regentmaker)"
 tags={
 	"Gameplay"
