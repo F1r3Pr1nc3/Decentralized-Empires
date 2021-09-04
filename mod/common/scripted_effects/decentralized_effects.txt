@@ -3,7 +3,7 @@
 ## Fully commit empire (otherwise systems can relegate)
 # This = target empire (beneficiary)
 # Prev = dissolved empire
-fully_commit_to_empire = {
+fully_commit_prev_empire_to_this = {
 	PREV = {
 		every_owned_fleet = { set_owner = PREVPREV }
 		every_owned_army = { set_owner = PREVPREV }
@@ -41,6 +41,49 @@ fully_commit_to_empire = {
 		# destroy_country = yes
 	}
 }
+
+# Root = overlord
+# Prev = new owner
+commit_system_to = {
+	starbase = { set_owner = $EMPIRE|PREVPREV$ }
+	every_system_planet = {
+		limit = {
+			has_owner = yes
+			has_ground_combat = no
+			is_occupied_flag = no
+			OR = {
+				planet_owner = {
+					is_subject = yes
+					OR = {
+						is_country_type = default
+						is_subject_type = member_state
+					}
+					is_loyal_to = ROOT
+					ROOT = { is_overlord_to = PREV }
+				}
+				is_owned_by = ROOT
+			}
+		}
+		if = { limit = { is_capital = yes }
+			# fully commit empire (otherwise systems can relegate)
+			planet_owner = {
+				if = { limit = { exists = $EMPIRE$ $EMPIRE$ = { is_scope_type = country } }
+					$EMPIRE$ = { fully_commit_prev_empire_to_this = yes }
+				}
+				else_if = { limit = { exists = PREVPREV PREVPREV = { is_scope_type = country } }
+					PREVPREV = { fully_commit_prev_empire_to_this = yes }
+				}
+				else = { root = { fully_commit_prev_empire_to_this = yes } }
+			}
+		} else = {
+			set_owner = $EMPIRE|PREVPREV$
+		}
+		if = { limit = { is_owned_by = ROOT }
+			remove_modifier = planetary_nationalism
+		}
+	}
+}
+
 
 ## Save target species
 # This = planet

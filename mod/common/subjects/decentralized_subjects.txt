@@ -3,22 +3,22 @@
 
 member_state = {
 	can_expand = yes
-	can_be_integrated = no
+	can_be_integrated = yes
 
 	research_agreement = yes
 	research_sharing = yes	# for tech sharing modifier
 
-	joins_overlord_wars = yes
+	joins_overlord_wars = no
 	calls_overlord_to_war = no
 	can_do_diplomacy = yes
 	gets_sensor = yes
 	gets_access = yes
 
 	tech_cost_mult = -0.2
-	# diplo_threat = 0.8
+	diplo_threat = 1.0
 
-	intel_from_being_subject = 50
-	intel_from_being_overlord = 60
+	intel_from_being_subject = 60
+	intel_from_being_overlord = 70
 
 	subject_tax_rate = {
 		minerals = 0.15

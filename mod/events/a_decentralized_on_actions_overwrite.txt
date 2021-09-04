@@ -92,10 +92,7 @@ country_event = {
 			}
 			if = {
 				limit = {
-					OR = {
-						has_ethic = ethic_xenophile
-						has_ethic = ethic_fanatic_xenophile
-					}
+					is_ethics_aligned = { ARG1 = xenophile }
 				}
 				add_monthly_resource_mult = {
 					resource = influence
@@ -127,10 +124,7 @@ country_event = {
 					flag = AbandonedRefugees
 				}
 			}
-			NOR = {
-				has_ethic = ethic_fanatic_xenophobe
-				has_ethic = ethic_xenophobe
-			}
+			is_xenophobe = no
 		}
 		name = WORRYING
 		if = {
@@ -142,10 +136,7 @@ country_event = {
 			}
 			if = {
 				limit = {
-					OR = {
-						has_ethic = ethic_xenophile
-						has_ethic = ethic_fanatic_xenophile
-					}
+					is_ethics_aligned = { ARG1 = xenophile }
 				}
 				add_monthly_resource_mult = {
 					resource = influence
@@ -177,10 +168,7 @@ country_event = {
 					flag = AbandonedRefugees
 				}
 			}
-			OR = {
-				has_ethic = ethic_fanatic_xenophobe
-				has_ethic = ethic_xenophobe
-			}
+			is_ethics_aligned = { ARG1 = xenophobe }
 		}
 		name = OK
 		if = {
@@ -192,10 +180,7 @@ country_event = {
 			}
 			if = {
 				limit = {
-					OR = {
-						has_ethic = ethic_xenophile
-						has_ethic = ethic_fanatic_xenophile
-					}
+					is_ethics_aligned = { ARG1 = xenophile }
 				}
 				add_monthly_resource_mult = {
 					resource = influence

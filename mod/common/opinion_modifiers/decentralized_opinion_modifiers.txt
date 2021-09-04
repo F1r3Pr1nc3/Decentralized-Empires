@@ -3,10 +3,7 @@ opinion_requested_200_resources = {
 		base = -15
 		modifier = {
 			add = -7
-			OR = {
-				has_ethic = "ethic_fanatic_egalitarian"
-				has_ethic = "ethic_egalitarian"
-			}
+			is_ethics_aligned = { ARG1 = egalitarian }
 		}
 		modifier = {
 			add = 7
@@ -27,10 +24,7 @@ opinion_requested_500_resources = {
 		base = -30
 		modifier = {
 			add = -10
-			OR = {
-				has_ethic = "ethic_fanatic_egalitarian"
-				has_ethic = "ethic_egalitarian"
-			}
+			is_ethics_aligned = { ARG1 = egalitarian }
 		}
 		modifier = {
 			add = 13
@@ -51,10 +45,7 @@ opinion_requested_1000_resources = {
 		base = -40
 		modifier = {
 			add = -12
-			OR = {
-				has_ethic = "ethic_fanatic_egalitarian"
-				has_ethic = "ethic_egalitarian"
-			}
+			is_ethics_aligned = { ARG1 = egalitarian }
 		}
 		modifier = {
 			add = 20
@@ -75,17 +66,11 @@ opinion_refused_resource_request = {
 		base = -40
 		modifier = {
 			add = -12
-			OR = {
-				has_ethic = "ethic_fanatic_authoritarian"
-				has_ethic = "ethic_authoritarian"
-			}
+			is_ethics_aligned = { ARG1 = authoritarian }
 		}
 		modifier = {
 			add = 15
-			OR = {
-				has_ethic = "ethic_fanatic_egalitarian"
-				has_ethic = "ethic_egalitarian"
-			}
+			is_ethics_aligned = { ARG1 = egalitarian }
 		}
 	}
 	decay = {

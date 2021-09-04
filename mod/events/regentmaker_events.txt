@@ -156,6 +156,8 @@ planet_event = {
 			# auto_delete = yes
 			day_zero_contact = no
 			exclude_day_zero_contact = event_target:decentralizer
+			released_by_country = event_target:decentralizer
+			released_from_country = event_target:decentralizer
 			effect = {
 				set_country_flag = first_alien_life
 				set_country_flag = has_encountered_other_empire
@@ -176,9 +178,10 @@ planet_event = {
 				add_resource = {
 					minerals = 500
 					energy = 1000
-					unity = 10000
+					unity = 2000
 					influence = 500
 				}
+				add_100_unity_per_year_passed = yes
 				if = {
 					limit = {
 						ROOT = { has_planet_flag = regentmaker_tributary }
@@ -198,7 +201,7 @@ planet_event = {
 					}
 					add_intel = {
 						who = event_target:decentralizer
-						amount = 60
+						amount = 70
 					}
 				}
 				else = {
@@ -345,7 +348,7 @@ planet_event = {
 			# establish_contact = { who = last_created_country location = ROOT }
 			add_intel = {
 				who = last_created_country
-				amount = 50
+				amount = 60
 			}
 			if = {
 				limit = { has_country_flag = not_encountered_other_empire }
@@ -465,7 +468,7 @@ planet_event = {
 					limit = {
 						any_system_planet = {
 							# has_owner = yes
-							# owner = { is_same_empire = event_target:decentralizer }
+							# is_owned_by = event_target:decentralizer
 							is_owned_by = event_target:decentralizer
 							has_planet_flag = regentmaker_handover
 						}
@@ -474,7 +477,7 @@ planet_event = {
 					every_system_planet = {
 						limit = {
 							# has_owner = yes
-							# owner = { is_same_empire = event_target:decentralizer }
+							# is_owned_by = event_target:decentralizer
 							is_owned_by = event_target:decentralizer
 							NOT = { is_same_value = prevprev }
 						}
@@ -864,7 +867,7 @@ country_event = {
 			# count < 11
 			limit = {
 				is_country_type = default
-				NOT = { is_subject_type = devstate }				# comp. Civil Wars mod
+				NOT = { is_subject_type = devstate } # comp. Civil Wars mod
 			}
 			set_country_flag = subject_ethic_change
 			overlord = {
@@ -882,95 +885,95 @@ country_event = {
 				remove_country_flag = subject_ethic_change
 				save_event_target_as = subject_1
 			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 2 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_2
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 3 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_3
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 4 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_4
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 5 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_5
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 6 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_6
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 7 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_7
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 8 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_8
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 9 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_9
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 10 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_ethic_change }
-				remove_country_flag = subject_ethic_change
-				save_event_target_as = subject_10
+			if = {
+				limit = {
+					check_variable = { which = rm_total_subjects value >= 2 }
+				}
+				random_subject = {
+					limit = { has_country_flag = subject_ethic_change }
+					remove_country_flag = subject_ethic_change
+					save_event_target_as = subject_2
+				}
+				if = {
+					limit = {
+						check_variable = { which = rm_total_subjects value >= 3 }
+					}
+					random_subject = {
+						limit = { has_country_flag = subject_ethic_change }
+						remove_country_flag = subject_ethic_change
+						save_event_target_as = subject_3
+					}
+					if = {
+						limit = {
+							check_variable = { which = rm_total_subjects value >= 4 }
+						}
+						random_subject = {
+							limit = { has_country_flag = subject_ethic_change }
+							remove_country_flag = subject_ethic_change
+							save_event_target_as = subject_4
+						}
+						if = {
+							limit = {
+								check_variable = { which = rm_total_subjects value >= 5 }
+							}
+							random_subject = {
+								limit = { has_country_flag = subject_ethic_change }
+								remove_country_flag = subject_ethic_change
+								save_event_target_as = subject_5
+							}
+							if = {
+								limit = {
+									check_variable = { which = rm_total_subjects value >= 6 }
+								}
+								random_subject = {
+									limit = { has_country_flag = subject_ethic_change }
+									remove_country_flag = subject_ethic_change
+									save_event_target_as = subject_6
+								}
+								if = {
+									limit = {
+										check_variable = { which = rm_total_subjects value >= 7 }
+									}
+									random_subject = {
+										limit = { has_country_flag = subject_ethic_change }
+										remove_country_flag = subject_ethic_change
+										save_event_target_as = subject_7
+									}
+									if = {
+										limit = {
+											check_variable = { which = rm_total_subjects value >= 8 }
+										}
+										random_subject = {
+											limit = { has_country_flag = subject_ethic_change }
+											remove_country_flag = subject_ethic_change
+											save_event_target_as = subject_8
+										}
+										if = {
+											limit = {
+												check_variable = { which = rm_total_subjects value >= 9 }
+											}
+											random_subject = {
+												limit = { has_country_flag = subject_ethic_change }
+												remove_country_flag = subject_ethic_change
+												save_event_target_as = subject_9
+											}
+											if = {
+												limit = {
+													check_variable = { which = rm_total_subjects value >= 10 }
+												}
+												random_subject = {
+													limit = { has_country_flag = subject_ethic_change }
+													remove_country_flag = subject_ethic_change
+													save_event_target_as = subject_10
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -1124,6 +1127,7 @@ country_event = {
 	picture = GFX_evt_board_meeting
 	show_sound = event_laboratory_sound
 	location = ROOT
+	trigger = { is_variable_set = rm_total_subjects }
 	is_triggered_only = yes
 	# No valid target
 	option = {
@@ -1138,6 +1142,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_1.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 1 }
+			exists = event_target:subject_1
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1151,6 +1156,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_2.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 2 }
+			exists = event_target:subject_2
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1164,6 +1170,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_3.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 3 }
+			exists = event_target:subject_3
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1177,6 +1184,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_4.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 4 }
+			exists = event_target:subject_4
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1190,6 +1198,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_5.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 5 }
+			exists = event_target:subject_5
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1203,6 +1212,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_6.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 6 }
+			exists = event_target:subject_6
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1216,6 +1226,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_7.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 7 }
+			exists = event_target:subject_7
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1229,6 +1240,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_8.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 8 }
+			exists = event_target:subject_8
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1242,6 +1254,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_9.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 9 }
+			exists = event_target:subject_9
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1255,6 +1268,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_10.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 10 }
+			exists = event_target:subject_10
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1307,6 +1321,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_1.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 1 }
+			exists = event_target:subject_1
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1320,6 +1335,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_2.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 2 }
+			exists = event_target:subject_2
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1333,6 +1349,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_3.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 3 }
+			exists = event_target:subject_3
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1346,6 +1363,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_4.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 4 }
+			exists = event_target:subject_4
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1359,6 +1377,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_5.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 5 }
+			exists = event_target:subject_5
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1372,6 +1391,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_6.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 7 }
+			exists = event_target:subject_7
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1385,6 +1405,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_7.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 7 }
+			exists = event_target:subject_7
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1398,6 +1419,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_8.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 8 }
+			exists = event_target:subject_8
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1411,6 +1433,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_9.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 9 }
+			exists = event_target:subject_9
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1424,6 +1447,7 @@ country_event = {
 		custom_tooltip = rm.2.subject_10.tooltip
 		trigger = {
 			check_variable = { which = rm_total_subjects value >= 10 }
+			exists = event_target:subject_10
 		}
 		hidden_effect = {
 			ROOT = {
@@ -1451,6 +1475,7 @@ country_event = {
 	picture = GFX_evt_arguing_senate
 	show_sound = event_conversation
 	location = event_target:subject_selected
+	# trigger = {  }
 	is_triggered_only = yes
 	option = {
 		name = "ethic_fanatic_authoritarian"
@@ -1681,8 +1706,10 @@ country_event = {
 		name = rm.3.back # BACK
 	}
 	after = {
-		hidden_effect = {
-			country_event = { id = regentmaker.502 }
+		hidden_effect = { # BACK
+			if = { limit = { is_variable_set = rm_total_subjects }
+				country_event = { id = regentmaker.502 }
+			}
 		}
 	}
 }

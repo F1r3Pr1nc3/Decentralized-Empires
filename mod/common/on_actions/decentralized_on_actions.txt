@@ -15,10 +15,11 @@ on_single_player_save_game_load = {
 on_planet_transfer = {
 	events = {
 		decentralized.5 # Lose planetary_nationalism
+		decentralized.8 # Chance for overlord to make subject release planet
 	}
 }
 
-on_planet_transfer = {
+on_colony_3_years_old = {
 	events = {
 		decentralized.8 # Chance for overlord to make subject release planet
 	}
