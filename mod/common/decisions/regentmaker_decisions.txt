@@ -135,3 +135,33 @@ decision_rem_excld_decentral = {
 	}
 	ai_weight = { weight = 0 }
 }
+
+decision_true_emperor = {
+	icon = decision_emperor
+	owned_planets_only = yes
+	resources = {
+		category = decisions
+		cost = { influence = 0 }
+	}
+	potential = {
+		NOT = { has_global_flag = regentmaker_control_sel@owner }
+		owner = {
+			is_ai = no
+			OR = {
+				has_ascension_perk = ap_decentralization
+				AND = {
+					is_subject = yes
+					is_subject_type = member_state
+					overlord = { has_ascension_perk = ap_decentralization is_ai = yes }
+				}
+			}
+		}
+		is_capital = yes
+	}
+	effect = {
+		owner = {
+			country_event = { id = regentmaker.509 }
+		}
+	}
+	ai_weight = { weight = 0 }
+}

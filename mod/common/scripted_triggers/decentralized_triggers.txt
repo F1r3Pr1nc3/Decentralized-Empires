@@ -21,7 +21,7 @@ is_decent_majority_species = {
 			is_being_purged = no
 			is_robot_pop = no
 			is_being_assimilated = no
-			# pop_can_live_on_planet = yes
+			# can_live_on_planet = yes
 			# has_population_control = no CW262?
 			has_population_control = {
 				value = no
@@ -73,7 +73,7 @@ is_decent_majority_species = {
 				is_being_purged = no
 				is_robot_pop = no
 				happiness > 0.5
-				# pop_can_live_on_planet = yes
+				# can_live_on_planet = yes
 				is_same_species = PREVPREV.species
 			}
 			count > 4

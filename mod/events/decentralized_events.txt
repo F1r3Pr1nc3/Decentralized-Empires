@@ -2383,7 +2383,6 @@ country_event = {
 
 		capital_scope = { add_modifier = { modifier = "planetary_nationalism" days = -1 } }
 		add_modifier = { modifier = "SUBJECT_member_state" days = -1 }
-		establish_communications_no_message = event_target:decentralizer
 
 		add_resource = {
 			energy = 2000
@@ -2681,6 +2680,18 @@ country_event = {
 				}
 			}
 		}
+
+		# Establish Communications
+		if = { limit = { NOT = { has_communications = event_target:decentralizer } }
+			establish_communications_no_message = event_target:decentralizer
+		}
+		every_country = {
+			limit = {
+				has_communications = event_target:decentralizer
+				NOT = { has_communications = ROOT }
+			}
+			establish_communications_no_message = ROOT
+		}
 	}
 }
 
@@ -2905,7 +2916,6 @@ country_event = {
 
 		# Handover some old stuff
 		event_target:new_member_state = {
-			establish_communications_no_message = PREV
 			set_subject_of = {
 				who = event_target:decentralizer
 				subject_type = member_state
@@ -2913,11 +2923,6 @@ country_event = {
 			country_event = { id = decentralized.3 } # few more systems
 			PREV = { save_global_event_target_as = decentralizer }
 			country_event = { id = decentralized.209 days = 3 } # get it
-		}
-		# Establish Communications
-		every_country = {
-			limit = { has_communications = PREV }
-			establish_communications_no_message = event_target:new_member_state
 		}
 	}
 }

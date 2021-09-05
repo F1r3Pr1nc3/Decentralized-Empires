@@ -169,6 +169,15 @@
  regentmaker.8.a:0 "Gleiche die Regierung aller Mitgliedstaaten an."
  regentmaker.8.b:0 "Wähle die Regierung bestimmter Vasallen aus."
  regentmaker.8.desc:0 "Dies ermöglicht es uns, die Regierung unserer Vasallen zu wählen, um sie nützlich zu halten."
+
+ decision_true_emperor:0 "Regentmaker: Untertanen-Kontrolle"
+ decision_true_emperor_desc:0 "Dies ermöglicht es dir, die direkte Kontrolle über einen deiner Mitgliedstaaten zu übernehmen (für mindestens 1 Jahr)."
+ decision_true_emperor_effects_short:0 "Wechsle deine Herrschaft zu einer der Mitgliedstaaten."
+ regentmaker.510:0 "$decision_true_emperor$"
+ regentmaker.100:0 "$decision_true_emperor$"
+ regentmaker.100.a:0 "$decision_true_emperor_effects_short$"
+ regentmaker.100.desc:0 "$decision_true_emperor_desc$"
+
  regentmaker_auth_corporate:0 "£corporate£ - $auth_corporate$ -"
  regentmaker_auth_democratic:0 "£democratic£ - $auth_democratic$-"
  regentmaker_auth_dictatorial:0 "£dictatorial£ - $auth_dictatorial$ -"

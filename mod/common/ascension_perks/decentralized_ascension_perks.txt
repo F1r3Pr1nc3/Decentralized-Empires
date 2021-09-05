@@ -60,7 +60,7 @@ ap_decentralization = {
 		# 	OR = {
 		# 		has_authority = auth_machine_intelligence
 		# 		has_federation = yes
-		# 		has_non_swapped_tradition = tr_diplomacy_the_federation
+		# 		has_active_tradition = tr_diplomacy_the_federation
 		# 		NOT = { is_country_type = default }
 		# 	}
 		# }

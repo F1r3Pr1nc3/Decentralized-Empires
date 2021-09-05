@@ -750,10 +750,7 @@ wg_forced_decentralization = {
 		weight = 1
 		modifier = {
 			factor = 0
-			OR = {
-				has_ai_personality_behaviour = wants_tribute
-				NOT = { has_ascension_perk = ap_decentralization }
-			}
+			NOT = { has_ascension_perk = ap_decentralization }
 		}
 	}
 }
