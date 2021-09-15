@@ -7,7 +7,7 @@ cb_decentralized = {
 	}
 	is_valid = {
 		has_total_war_cb = no
-		NOT = { is_overlord_to = FROM }
+		NOT = { is_overlord_to = from }
 		# OR = {
 		# 	is_subject = no
 		# 	overlord = { NOT = { is_same_empire = from } }

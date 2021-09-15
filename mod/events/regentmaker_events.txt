@@ -6,7 +6,7 @@ planet_event = {
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
 	immediate = {
-		ROOT.owner = {
+		root.owner = {
 			save_global_event_target_as = decentralizer
 			if = {
 				limit = {
@@ -122,7 +122,7 @@ planet_event = {
 
 planet_event = {
 	id = regentmaker.3
-	location = ROOT
+	location = root
 	hide_window = yes
 	is_triggered_only = yes
 	# pre_triggers = {
@@ -184,7 +184,7 @@ planet_event = {
 				add_100_unity_per_year_passed = yes
 				if = {
 					limit = {
-						ROOT = { has_planet_flag = regentmaker_tributary }
+						root = { has_planet_flag = regentmaker_tributary }
 					}
 					set_subject_of = {
 						who = event_target:decentralizer
@@ -193,7 +193,7 @@ planet_event = {
 				}
 				else_if = {
 					limit = {
-						ROOT = { has_planet_flag = regentmaker_member_state }
+						root = { has_planet_flag = regentmaker_member_state }
 					}
 					set_subject_of = {
 						who = event_target:decentralizer
@@ -235,7 +235,7 @@ planet_event = {
 					every_federation_ally = { establish_communications = prevprev }
 					every_relation = {
 						establish_communications_no_message = last_created_country
-						# establish_contact = { who = last_created_country location = ROOT }
+						# establish_contact = { who = last_created_country location = root }
 					}
 					# action_open_borders
 					set_closed_borders = {
@@ -293,10 +293,10 @@ planet_event = {
 				# }
 				if = {
 					limit = {
-						FROM = { has_planet_flag = regentmaker_handover }
+						from = { has_planet_flag = regentmaker_handover }
 					}
 					log = "Release selected planet [From.GetName]!"
-					FROM = {
+					from = {
 						planet_event = { id = regentmaker.9 }
 					}
 				}
@@ -345,7 +345,7 @@ planet_event = {
 				planet_event = { id = regentmaker.9 }
 			}
 			establish_communications_no_message = last_created_country
-			# establish_contact = { who = last_created_country location = ROOT }
+			# establish_contact = { who = last_created_country location = root }
 			add_intel = {
 				who = last_created_country
 				amount = 60
@@ -1132,7 +1132,7 @@ country_event = {
 	}
 	picture = GFX_evt_board_meeting
 	show_sound = event_laboratory_sound
-	location = ROOT
+	location = root
 	trigger = { is_variable_set = rm_total_subjects }
 	is_triggered_only = yes
 	# No valid target
@@ -1293,7 +1293,7 @@ country_event = {
 	}
 	picture = GFX_evt_board_meeting
 	show_sound = event_laboratory_sound
-	location = ROOT
+	location = root
 	trigger = { is_variable_set = rm_total_subjects }
 	is_triggered_only = yes
 	# No valid target
@@ -1608,7 +1608,7 @@ country_event = {
 	}
 	picture = GFX_evt_board_meeting
 	show_sound = event_laboratory_sound
-	location = ROOT
+	location = root
 	trigger = { is_variable_set = rm_total_subjects }
 	is_triggered_only = yes
 	# No valid target

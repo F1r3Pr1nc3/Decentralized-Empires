@@ -32,7 +32,7 @@ on_colony_3_years_old = {
 # 	}
 # }
 
-# THIS = Country
+# this = Country
 on_ruler_set = {
 	events = {
 		decentralized.201 # Starts decentralized elections

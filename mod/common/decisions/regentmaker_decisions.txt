@@ -139,10 +139,15 @@ decision_rem_excld_decentral = {
 decision_true_emperor = {
 	icon = decision_emperor
 	owned_planets_only = yes
+	enactment_time = 10
 	resources = {
 		category = decisions
-		cost = { influence = 0 }
+		cost = {
+			# influence = 10
+			# energy = 50
+		}
 	}
+
 	potential = {
 		NOT = { has_global_flag = regentmaker_control_sel@owner }
 		owner = {

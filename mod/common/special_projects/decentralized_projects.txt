@@ -15,7 +15,7 @@ special_project = {
 			every_neighbor_system = {
 				limit = {
 					has_owner = yes
-					is_owned_by = ROOT
+					is_owned_by = root
 				}
 				set_timed_star_flag = { flag = decentral_excluded days = 30 }
 			}

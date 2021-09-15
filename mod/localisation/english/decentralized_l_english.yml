@@ -204,13 +204,13 @@
  regentmaker_colony: "Regentmaker Mark"
  regentmaker_colony_desc:0 "The planet has been marked for release."
 
- decision_true_emperor:0 "Regentmaker: Subject-Control"
+ decision_true_emperor:0 "Regentmaker: §YMember States§! Control"
  decision_true_emperor_desc:0 "This enables you to take direct control of one of your §YMember States§! (for at least 1 year)."
- decision_true_emperor_effects_short:0 "Switch your rule to one of the §YMember States§!."
+ decision_true_emperor_effects_short:0 "Switch your rule to one of your subjects."
  regentmaker.510:0 "$decision_true_emperor$"
  regentmaker.100:0 "$decision_true_emperor$"
- regentmaker.100.a:0 "$decision_true_emperor_effects_short$"
- regentmaker.100.desc:0 "$decision_true_emperor_desc$"
+ regentmaker.100.a:0 "Switch your rule to §Y[subject_selected.GetName]§! one of your subjects."
+ regentmaker.100.desc:0 "This enables you to take direct control of §Y[subject_selected.GetName]§! one of your §YMember States§! (for at least 1 year)."
 
 #########################
 

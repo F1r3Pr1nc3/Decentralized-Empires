@@ -8,13 +8,13 @@ is_decent_majority_species = {
 		NOT = { is_same_species = event_target:decentralizer.species }
 		species = {
 			exists = home_planet
-			home_planet = { is_planet = PREVPREVPREV }
+			home_planet = { is_planet = prevprevprev }
 		}
 	}
 	OR = {
 		species = {
 			exists = home_planet
-			home_planet = { is_planet = PREVPREVPREV }
+			home_planet = { is_planet = prevprevprev }
 		}
 		AND = {
 			is_enslaved = no
@@ -36,8 +36,8 @@ is_decent_majority_species = {
 				value = no
 				country = event_target:decentralizer # prev.owner
 			}
-			PREV = {
-				habitability = { who = PREV value > 0.65 }
+			prev = {
+				habitability = { who = prev value > 0.65 }
 			}
 			# species = {
 			# 	has_citizenship_type = {
@@ -49,9 +49,9 @@ is_decent_majority_species = {
 			# }
 		}
 		species = {
-			PREVPREV = { is_ideal_planet_class = { who = PREV status = yes } }
+			prevprev = { is_ideal_planet_class = { who = prev status = yes } }
 			OR = {
-				PREVPREV = { is_majority_species = PREV }
+				prevprev = { is_majority_species = prev }
 				species_has_happiness_with_owner = event_target:decentralizer
 				has_citizenship_type = {
 					type = citizenship_full
@@ -61,12 +61,12 @@ is_decent_majority_species = {
 			is_sapient = yes # NOT = { is_archetype = PRESAPIENT }
 		}
 		AND = {
-			PREV = { is_majority_species = PREV.species }
+			prev = { is_majority_species = prev.species }
 			NOT = { is_same_species = event_target:decentralizer.owner_species }
 		}
 	}
 	PREV = {
-		habitability = { who = PREV value > 0.65 }
+		habitability = { who = prev value > 0.65 }
 		count_owned_pop = {
 			limit = {
 				is_enslaved = no
@@ -74,7 +74,7 @@ is_decent_majority_species = {
 				is_robot_pop = no
 				happiness > 0.5
 				# can_live_on_planet = yes
-				is_same_species = PREVPREV.species
+				is_same_species = prevprev.species
 			}
 			count > 4
 		}
