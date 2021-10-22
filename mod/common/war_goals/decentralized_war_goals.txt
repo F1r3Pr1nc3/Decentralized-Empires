@@ -476,7 +476,7 @@ wg_member_trade_war = {
 			}
 		}
 	}
-	ai_weight = { weight = 0 } #TODO
+	ai_weight = { weight = 0 } # TODO
 }
 
 wg_demand_system = {
@@ -701,7 +701,7 @@ wg_forced_decentralization = {
 		if = {
 			limit = {
 				exists = last_created_country
-				last_created_country = { has_country_flag = released_empire }
+				last_created_country = { has_country_flag = released_empire } # vanilla
 			}
 			if = {
 				limit = {

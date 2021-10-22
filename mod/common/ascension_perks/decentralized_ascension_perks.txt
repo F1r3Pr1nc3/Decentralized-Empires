@@ -1,4 +1,4 @@
-#DECENTRALIZED
+# DECENTRALIZED
 ap_decentralization = {
 	potential = {
 		exists = capital_scope

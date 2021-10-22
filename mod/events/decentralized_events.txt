@@ -376,7 +376,7 @@ country_event = {
 							commit_system_to = { EMPIRE = prev.space_owner }
 						}
 					}
-					else = { #(Reduce members)
+					else = { # (Reduce members)
 						prev = { # subject
 							random_neighbor_country = {
 								limit = {

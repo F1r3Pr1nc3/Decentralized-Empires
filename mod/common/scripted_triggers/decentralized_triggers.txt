@@ -22,12 +22,12 @@ is_decent_majority_species = {
 			is_robot_pop = no
 			is_being_assimilated = no
 			# can_live_on_planet = yes
-			# has_population_control = no CW262?
+			# has_population_control = { value = no country = prev.owner } CW262?
 			has_population_control = {
 				value = no
 				country = event_target:decentralizer # prev.owner
 			}
-			# has_migration_control = no CW262?
+			# has_migration_control = { value = no country = prev.owner } CW262?
 			has_migration_control = {
 				value = no
 				country = event_target:decentralizer # prev.owner

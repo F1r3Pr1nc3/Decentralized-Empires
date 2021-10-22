@@ -852,8 +852,9 @@ country_event = {
 }
 
 # has_global_flag = gf_moreauthorities_activated
-# has_global_flag = cultural_overhaul_active
+# has_global_flag = cultural_overhaul_active (Ethics and Civics Classic)
 # has_global_flag = gf_veru_activated (Vassals Expanded and Reworked)
+# 2434790082
 ####################
 # Find Subjects - Ethics
 country_event = {
@@ -1470,8 +1471,12 @@ country_event = {
 	immediate = {
 		set_variable = { which = rm_total_subjects value = 0 }
 		# Count how many valid Subject States there are
-		every_subject = {
+		# every_subject = {
+		ordered_subject = {
 			limit = { is_subject_type = member_state }
+			position = 0
+			order_by = trigger:fleet_power
+			inverse = yes
 			if = {
 				limit = { check_variable = { which = rm_total_subjects value < 11 } }
 				set_country_flag = subject_sel_count
@@ -1481,8 +1486,7 @@ country_event = {
 			} # else = { break = yes }
 		}
 		# TODO can be removed with 3.1
-		# Next, we save each subject as an Event Target
-		# As the scripting language doesn't have proper loops, we use a lot of ifs and hope no one ever has more than 10 subjects.
+		# Next we save each subject as an event_target
 		if = {
 			limit = {
 				check_variable = { which = rm_total_subjects value >= 1 }
@@ -1956,7 +1960,7 @@ country_event = {
 			event_target:subject_selected = {
 				NOT = { has_ethic = ethic_socialism }
 			}
-			has_global_flag = gf_veru_activated
+			has_global_flag = cultural_overhaul_active
 		}
 		hidden_effect = {
 			event_target:subject_selected = { shift_ethic = ethic_socialism }
@@ -1968,7 +1972,7 @@ country_event = {
 			event_target:subject_selected = {
 				NOT = { has_ethic = ethic_fanatic_capitalism }
 			}
-			has_global_flag = gf_veru_activated
+			has_global_flag = cultural_overhaul_active
 		}
 		hidden_effect = {
 			event_target:subject_selected = { shift_ethic = ethic_fanatic_capitalism }
@@ -1980,7 +1984,7 @@ country_event = {
 			event_target:subject_selected = {
 				NOT = { has_ethic = ethic_capitalism }
 			}
-			has_global_flag = gf_veru_activated
+			has_global_flag = cultural_overhaul_active
 		}
 		hidden_effect = {
 			event_target:subject_selected = { shift_ethic = ethic_capitalism }
@@ -2058,7 +2062,7 @@ country_event = {
 			event_target:subject_selected = {
 				NOT = { has_authority = auth_direct_democratic }
 			}
-			has_global_flag = gf_veru_activated
+			has_global_flag = cultural_overhaul_active
 		}
 		event_target:subject_selected = {
 			clear_ethos = yes

@@ -113,7 +113,7 @@ country_event = {
 		# else = { 	 }
 		hidden_effect = {
 			country_event = { id = action.1 }
-			#fromfrom = { country_event = { id = action.100 } }
+			# fromfrom = { country_event = { id = action.100 } }
 		}
 	}
 	option = {
@@ -157,7 +157,7 @@ country_event = {
 		# else = { 	 }
 		hidden_effect = {
 			country_event = { id = action.1 }
-			#fromfrom = { country_event = { id = action.100 } }
+			# fromfrom = { country_event = { id = action.100 } }
 		}
 	}
 	option = {
@@ -200,7 +200,7 @@ country_event = {
 		}
 		hidden_effect = {
 			country_event = { id = action.1 }
-			#fromfrom = { country_event = { id = action.100 } }
+			# fromfrom = { country_event = { id = action.100 } }
 		}
 	}
 }
