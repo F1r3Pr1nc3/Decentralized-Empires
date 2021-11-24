@@ -84,7 +84,6 @@ commit_system_to = {
 	}
 }
 
-
 ## Save target species
 # This = planet
 # Root = country

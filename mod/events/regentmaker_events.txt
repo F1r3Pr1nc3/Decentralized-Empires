@@ -1,12 +1,129 @@
 namespace = regentmaker
+
+
+# "Regentmaker Control"
+country_event = {
+	id = regentmaker.0
+	title = "regentmaker.0"
+	desc = "regentmaker.0.desc"
+	picture = GFX_evt_salute
+	is_triggered_only = yes
+	trigger = {
+		is_ai = no
+		NOR = {
+			has_active_event = { regentmaker.0 }
+			has_country_flag = regentmaker_control_engaged
+		}
+		is_overlord = yes
+	}
+	immediate = {
+		set_timed_country_flag = { flag = regentmaker_control_engaged days = 7 }
+		switch = {
+			trigger = has_country_flag
+			regentmaker.502 = { remove_country_flag = "regentmaker.502" }
+			regentmaker.503 = { remove_country_flag = "regentmaker.503" }
+			regentmaker.504 = { remove_country_flag = "regentmaker.504" }
+			regentmaker.510 = { remove_country_flag = "regentmaker.510" }
+		}
+	}
+	# after = {}
+	# option = {
+	# 	name = "edict_request_resources"
+	# 	custom_tooltip = "edict_request_resources_desc"
+	# 	allow = {
+	# 		has_modifier = decentralized_leader
+	# 		NOT = { has_active_event = { decentralized.14 } }
+	# 	}
+	# 	hidden_effect = {
+	# 		country_event = { id = decentralized.14 }
+	# 	}
+	# }
+	# option = {
+	# 	name = "edict_regentmaker_give_tech"
+	# 	custom_tooltip = "edict_regentmaker_give_tech_desc"
+	# 	allow = {
+	# 		NOT = { has_active_event = { regentmaker.4 } }
+	# 	}
+	# 	hidden_effect = {
+	# 		country_event = { id = regentmaker.4 }
+	# 	}
+	# }
+	option = {
+		name = regentmaker.7 # "edict_regentmaker_choose_ethics"
+		custom_tooltip = regentmaker.7.desc # "edict_regentmaker_choose_ethics_desc"
+		allow = {
+			NOT = { has_active_event = { regentmaker.7 } }
+		}
+		hidden_effect = {
+			country_event = { id = regentmaker.7 }
+		}
+	}
+	option = {
+		name = regentmaker.8 # "edict_regentmaker_choose_gov"
+		custom_tooltip = regentmaker.8.desc # "edict_regentmaker_choose_gov_desc"
+		allow = {
+			NOT = { has_active_event = { regentmaker.8 } }
+		}
+		hidden_effect = {
+			country_event = { id = regentmaker.8 }
+		}
+	}
+	# Requires Dynamic Mod Menu
+	option = {	# Compatible with Decentralized Empires
+		name = regentmaker.501 # RENAME_EMPIRE_TITLE
+		custom_tooltip = regentmaker.501.desc
+		trigger = {
+			# has_global_flag = gf_regentmaker_active
+			any_subject = {
+				is_subject_type = member_state
+			}
+		}
+		allow = {
+			has_global_flag = dmm_installed
+			NOT = { has_active_event = { regentmaker.504 } }
+		}
+		hidden_effect = {
+			set_timed_country_flag = { flag = "regentmaker.504" days = 10 }
+			country_event = { id = regentmaker.500 }
+			# country_event = { id = regentmaker.501 }
+		}
+	}
+	# True Regent (subject control)
+	option = {
+		name = decision_true_emperor
+		custom_tooltip = decision_true_emperor_desc
+		trigger = {
+			NOT = { has_global_flag = regentmaker_control_sel@owner }
+			has_ascension_perk = ap_decentralization
+			any_subject = {
+				is_subject_type = member_state
+			}
+		}
+		allow = {
+			NOT = { has_active_event = { regentmaker.510 } }
+		}
+		hidden_effect = {
+			set_timed_country_flag = { flag = "regentmaker.510" days = 10 }
+			country_event = { id = regentmaker.500 }
+		}
+	}
+
+	option = {
+		name = "LEAVE"
+	}
+}
+
 planet_event = {
 	id = regentmaker.1
 	title = "regentmaker.1"
 	desc = "regentmaker.1.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
+	pre_triggers = {
+		has_owner = yes
+	}
 	immediate = {
-		root.owner = {
+		owner = {
 			save_global_event_target_as = decentralizer
 			if = {
 				limit = {
@@ -54,7 +171,7 @@ planet_event = {
 	option = {
 		name = "regentmaker.1.c"
 		trigger = {
-			event_target:decentralizer = { has_modifier = decentralized_leader }
+			owner = { has_modifier = decentralized_leader }
 		}
 		hidden_effect = {
 			set_timed_planet_flag = {
@@ -408,18 +525,26 @@ country_event = {
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
 	# hide_window = yes
-	# immediate = {
-	# }
+	immediate = { remove_country_flag = "regentmaker.502" }
 	option = {
-		name = "regentmaker.7.a"
+		name = "regentmaker.7.a" # Entire Coalition
 		country_event = { id = regentmaker.50 }
 	}
 	option = {
 		name = "regentmaker.7.b"
+		allow = {
+			NOT = { has_active_event = { regentmaker.502 } }
+		}
+		hidden_effect = {
+			set_country_flag = "regentmaker.502"
+		}
 		country_event = { id = regentmaker.500 }
 	}
 	option = {
 		name = leviathans.105.d		# "Nothing for now. Goodbye."
+		hidden_effect = {
+			country_event = { id = regentmaker.0 }
+		}
 	}
 }
 
@@ -431,17 +556,26 @@ country_event = {
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
 	# hide_window = yes
-	# immediate = {}
+	immediate = { remove_country_flag = "regentmaker.503" }
 	option = {
-		name = "regentmaker.8.a"
+		name = "regentmaker.8.a" # Entire Coalition
 		country_event = { id = regentmaker.51 }
 	}
 	option = {
 		name = "regentmaker.8.b"
-		country_event = { id = regentmaker.501 }
+		allow = {
+			NOT = { has_active_event = { regentmaker.503 } }
+		}
+		hidden_effect = {
+			set_country_flag = "regentmaker.503"
+		}
+		country_event = { id = regentmaker.500 }
 	}
 	option = {
 		name = leviathans.105.d		# "Nothing for now. Goodbye."
+		hidden_effect = {
+			country_event = { id = regentmaker.0 }
+		}
 	}
 }
 
@@ -856,30 +990,64 @@ country_event = {
 # has_global_flag = gf_veru_activated (Vassals Expanded and Reworked)
 # 2434790082
 ####################
-# Find Subjects - Ethics
+# Find Subjects - Ethics / Government Selection
 country_event = {
 	id = regentmaker.500
 	hide_window = yes
 	is_triggered_only = yes
 	immediate = {
 		set_variable = { which = rm_total_subjects value = 0 }
-		# Count how many valid Subject States there are
-		every_subject = {
-			# count < 11
-			limit = {
-				is_country_type = default
-				NOT = { is_subject_type = devstate } # comp. Civil Wars mod
+		# Count how many valid Subject States there are.
+		if = { # Find Subjects - Control
+			limit = { has_country_flag = "regentmaker.510" }
+			ordered_subject = {
+				limit = {
+					is_subject_type = member_state
+					NOT = { has_country_flag = subject_sel_count }
+				}
+				position = 0
+				order_by = trigger:fleet_power
+				inverse = yes
+				if = {
+					limit = { check_variable = { which = rm_total_subjects value < 11 } }
+					set_country_flag = subject_sel_count
+					prev = { change_variable = { which = rm_total_subjects value = 1 } }
+					# save_event_target_as = subject_@root.rm_total_subjects
+					# log="RM concat test [subject_1.GetName]"
+				} # else = { break = yes }
 			}
-			if = {
-				limit = { check_variable = { which = rm_total_subjects value < 11 } }
-				set_country_flag = subject_sel_count
-				overlord = {
-					change_variable = { which = rm_total_subjects value = 1 }
+		} else_if = { # comp. Civil Wars mod
+			limit = { has_global_flag = civil_wars_active }
+			every_subject = { # count < 11
+				limit = {
+					is_country_type = default
+					NOT = { is_subject_type = devstate }
+				}
+				if = {
+					limit = { check_variable = { which = rm_total_subjects value < 11 } }
+					set_country_flag = subject_sel_count
+					overlord = {
+						change_variable = { which = rm_total_subjects value = 1 }
+					}
+				}
+			}
+		} else = {
+			every_subject = { # count < 11
+				limit = {
+					is_country_type = default
+				}
+				if = {
+					limit = { check_variable = { which = rm_total_subjects value < 11 } }
+					set_country_flag = subject_sel_count
+					overlord = {
+						change_variable = { which = rm_total_subjects value = 1 }
+					}
 				}
 			}
 		}
-		# Next, we save each subject as an Event Target
+		# Next we save each subject as an event_target.
 		# As the scripting language doesn't have proper loops, we use a lot of ifs and hope no one ever has more than 10 subjects.
+		# TODO can be removed with 3.1?
 		if = {
 			limit = {
 				check_variable = { which = rm_total_subjects value >= 1 }
@@ -982,136 +1150,52 @@ country_event = {
 		}
 	}
 	after = {
-		country_event = { id = regentmaker.502 }
+		if = {
+			limit = { has_country_flag = "regentmaker.502" }
+			remove_country_flag = "regentmaker.502"
+			country_event = { id = regentmaker.502 } # Ethic
+		}
+		else_if = {
+			limit = { has_country_flag = "regentmaker.503" }
+			remove_country_flag = "regentmaker.503"
+			country_event = { id = regentmaker.503 } # Gov
+		}
+		else_if = {
+			limit = { has_country_flag = "regentmaker.504" }
+			remove_country_flag = "regentmaker.504"
+			country_event = { id = regentmaker.504 } # Name
+		}
+		else_if = {
+			limit = { has_country_flag = "regentmaker.510" }
+			remove_country_flag = "regentmaker.510"
+			country_event = { id = regentmaker.510 } # Control
+		}
 	}
 }
 
-# Find Subjects - Government Selection
+# TODO TEST (unused)
+# "Regentmaker Name Change"
 country_event = {
 	id = regentmaker.501
-	hide_window = yes
+	title = "regentmaker.501"
+	desc = "regentmaker.501.desc"
+	picture = GFX_evt_announcement
 	is_triggered_only = yes
-	immediate = {
-		set_variable = { which = rm_total_subjects value = 0 }
-		# Count how many valid Subject States there are
-		every_subject = {
-			limit = {
-				is_country_type = default
-				NOT = { is_subject_type = devstate }		# comp. Civil Wars mod
-			}
-			if = {
-				limit = { check_variable = { which = rm_total_subjects value < 11 } }
-				set_country_flag = subject_gov_change
-				overlord = {
-					change_variable = { which = rm_total_subjects value = 1 }
-				}
-			}
+	immediate = { remove_country_flag = "regentmaker.504" }
+
+	option = {
+		name = "regentmaker.501"
+		custom_tooltip = regentmaker.501.desc
+		hidden_effect = {
+			set_country_flag = "regentmaker.504"
 		}
-		# Next, we save each subject as an Event Target
-		# As the scripting language doesn't have proper loops, we use a lot of ifs and hope no one ever has more than 10 subjects.
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 1 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_1
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 2 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_2
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 3 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_3
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 4 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_4
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 5 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_5
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 6 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_6
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 7 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_7
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 8 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_8
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 9 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_9
-			}
-		}
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 10 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_gov_change }
-				remove_country_flag = subject_gov_change
-				save_event_target_as = subject_10
-			}
-		}
+		country_event = { id = regentmaker.500 }
 	}
-	after = {
-		country_event = { id = regentmaker.503 }
+	option = {
+		name = leviathans.105.d		# "Nothing for now. Goodbye."
+		hidden_effect = {
+			country_event = { id = regentmaker.0 }
+		}
 	}
 }
 
@@ -1144,7 +1228,7 @@ country_event = {
 			check_variable = { which = rm_total_subjects value = 0 }
 		}
 	}
-	# Now we show a list of the subject states to the player
+	# Now we show a list of the subject states to the player.
 	option = {
 		name = rm.2.subject_1
 		custom_tooltip = rm.2.subject_1.tooltip
@@ -1305,7 +1389,7 @@ country_event = {
 			check_variable = { which = rm_total_subjects value = 0 }
 		}
 	}
-	# Now we show a list of the subject states to the player
+	# Now we show a list of the subject states to the player.
 	option = {
 		name = rm.2.subject_1
 		custom_tooltip = rm.2.subject_1.tooltip
@@ -1437,6 +1521,186 @@ country_event = {
 	}
 }
 
+# List Subjects - Naming Selection
+country_event = {
+	id = regentmaker.504
+	title = regentmaker.504
+	desc = {
+		trigger = {
+			check_variable = { which = rm_total_subjects value > 0 }
+		}
+		text = rm.2.desc
+	}
+	desc = {
+		trigger = {
+			check_variable = { which = rm_total_subjects value = 0 }
+		}
+		text = rm.2.desc.fail
+	}
+	picture = GFX_evt_board_meeting
+	show_sound = event_laboratory_sound
+	location = root
+	trigger = {
+		is_variable_set = rm_total_subjects
+		has_global_flag = dmm_installed
+	}
+	is_triggered_only = yes
+	immediate = {
+		if = {
+			limit = { exists = event_target:subject_selected }
+			no_scope = { save_event_target_as = subject_selected }
+		}
+	}
+
+	after = {
+		if = {
+			limit = { exists = event_target:subject_selected }
+			dmm_keyboard_rename = {
+				TARGET = event_target:subject_selected
+			}
+		}
+	}
+
+	# No valid target
+	option = {
+		name = "UNFORTUNATE"
+		default_hide_option = yes
+		exclusive_trigger = {
+			check_variable = { which = rm_total_subjects value = 0 }
+		}
+	}
+	# Now we show a list of the subject states to the player.
+	option = {
+		name = rm.2.subject_1
+		custom_tooltip = rm.2.subject_1.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 1 }
+			exists = event_target:subject_1
+		}
+		hidden_effect = {
+			event_target:subject_1 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_2
+		custom_tooltip = rm.2.subject_2.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 2 }
+			exists = event_target:subject_2
+		}
+		hidden_effect = {
+			event_target:subject_2 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_3
+		custom_tooltip = rm.2.subject_3.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 3 }
+			exists = event_target:subject_3
+		}
+		hidden_effect = {
+			event_target:subject_3 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_4
+		custom_tooltip = rm.2.subject_4.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 4 }
+			exists = event_target:subject_4
+		}
+		hidden_effect = {
+			event_target:subject_4 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_5
+		custom_tooltip = rm.2.subject_5.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 5 }
+			exists = event_target:subject_5
+		}
+		hidden_effect = {
+			event_target:subject_5 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_6
+		custom_tooltip = rm.2.subject_6.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 6 }
+			exists = event_target:subject_6
+		}
+		hidden_effect = {
+			event_target:subject_6 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_7
+		custom_tooltip = rm.2.subject_7.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 7 }
+			exists = event_target:subject_7
+		}
+		hidden_effect = {
+			event_target:subject_7 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_8
+		custom_tooltip = rm.2.subject_8.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 8 }
+			exists = event_target:subject_8
+		}
+		hidden_effect = {
+			event_target:subject_8 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_9
+		custom_tooltip = rm.2.subject_9.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 9 }
+			exists = event_target:subject_9
+		}
+		hidden_effect = {
+			event_target:subject_9 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.subject_10
+		custom_tooltip = rm.2.subject_10.tooltip
+		trigger = {
+			check_variable = { which = rm_total_subjects value >= 10 }
+			exists = event_target:subject_10
+		}
+		hidden_effect = {
+			event_target:subject_10 = { save_event_target_as = subject_selected }
+			# country_event = { id = regentmaker.509 }
+		}
+	}
+	option = {
+		name = rm.2.back
+		trigger = {
+			check_variable = { which = rm_total_subjects value > 0 }
+		}
+		hidden_effect = {
+			country_event = { id = regentmaker.0 }
+		}
+	}
+}
+
 # "Regentmaker Control Selection"
 country_event = {
 	id = regentmaker.100
@@ -1445,7 +1709,10 @@ country_event = {
 	picture = GFX_evt_diplomatic_visit # GFX_evt_announcement
 	is_triggered_only = yes
 	trigger = {
-		NOT = { has_global_flag = regentmaker_control_sel@event_target:subject_selected }
+		exists = event_target:subject_selected
+		NOT = {
+			has_global_flag = regentmaker_control_sel@event_target:subject_selected
+		}
 	}
 	option = {
 		name = "regentmaker.100.a"
@@ -1460,139 +1727,11 @@ country_event = {
 	}
 	option = {
 		name = leviathans.105.d
-	}
-}
-
-# Find Subjects - Control
-country_event = {
-	id = regentmaker.509
-	hide_window = yes
-	is_triggered_only = yes
-	immediate = {
-		set_variable = { which = rm_total_subjects value = 0 }
-		# Count how many valid Subject States there are
-		# every_subject = {
-		ordered_subject = {
-			limit = { is_subject_type = member_state }
-			position = 0
-			order_by = trigger:fleet_power
-			inverse = yes
-			if = {
-				limit = { check_variable = { which = rm_total_subjects value < 11 } }
-				set_country_flag = subject_sel_count
-				prev = { change_variable = { which = rm_total_subjects value = 1 } }
-				# save_event_target_as = subject_@root.rm_total_subjects
-				# log="RM concat test [subject_1.GetName]"
-			} # else = { break = yes }
-		}
-		# TODO can be removed with 3.1
-		# Next we save each subject as an event_target
-		if = {
-			limit = {
-				check_variable = { which = rm_total_subjects value >= 1 }
-			}
-			random_subject = {
-				limit = { has_country_flag = subject_sel_count }
-				remove_country_flag = subject_sel_count
-				save_event_target_as = subject_1
-			}
-			if = {
-				limit = {
-					check_variable = { which = rm_total_subjects value >= 2 }
-				}
-				random_subject = {
-					limit = { has_country_flag = subject_sel_count }
-					remove_country_flag = subject_sel_count
-					save_event_target_as = subject_2
-				}
-				if = {
-					limit = {
-						check_variable = { which = rm_total_subjects value >= 3 }
-					}
-					random_subject = {
-						limit = { has_country_flag = subject_sel_count }
-						remove_country_flag = subject_sel_count
-						save_event_target_as = subject_3
-					}
-					if = {
-						limit = {
-							check_variable = { which = rm_total_subjects value >= 4 }
-						}
-						random_subject = {
-							limit = { has_country_flag = subject_sel_count }
-							remove_country_flag = subject_sel_count
-							save_event_target_as = subject_4
-						}
-						if = {
-							limit = {
-								check_variable = { which = rm_total_subjects value >= 5 }
-							}
-							random_subject = {
-								limit = { has_country_flag = subject_sel_count }
-								remove_country_flag = subject_sel_count
-								save_event_target_as = subject_5
-							}
-							if = {
-								limit = {
-									check_variable = { which = rm_total_subjects value >= 6 }
-								}
-								random_subject = {
-									limit = { has_country_flag = subject_sel_count }
-									remove_country_flag = subject_sel_count
-									save_event_target_as = subject_6
-								}
-								if = {
-									limit = {
-										check_variable = { which = rm_total_subjects value >= 7 }
-									}
-									random_subject = {
-										limit = { has_country_flag = subject_sel_count }
-										remove_country_flag = subject_sel_count
-										save_event_target_as = subject_7
-									}
-									if = {
-										limit = {
-											check_variable = { which = rm_total_subjects value >= 8 }
-										}
-										random_subject = {
-											limit = { has_country_flag = subject_sel_count }
-											remove_country_flag = subject_sel_count
-											save_event_target_as = subject_8
-										}
-										if = {
-											limit = {
-												check_variable = { which = rm_total_subjects value >= 9 }
-											}
-											random_subject = {
-												limit = { has_country_flag = subject_sel_count }
-												remove_country_flag = subject_sel_count
-												save_event_target_as = subject_9
-											}
-											if = {
-												limit = {
-													check_variable = { which = rm_total_subjects value >= 10 }
-												}
-												random_subject = {
-													limit = { has_country_flag = subject_sel_count }
-													remove_country_flag = subject_sel_count
-													save_event_target_as = subject_10
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		hidden_effect = {
+			country_event = { id = regentmaker.0 }
 		}
 	}
-	after = {
-		country_event = { id = regentmaker.510 }
-	}
 }
-
 
 # List Subjects - Control Selection
 country_event = {
@@ -1623,7 +1762,7 @@ country_event = {
 			check_variable = { which = rm_total_subjects value = 0 }
 		}
 	}
-	# Now we show a list of the subject states to the player
+	# Now we show a list of the subject states to the player.
 	option = {
 		name = rm.2.subject_1
 		custom_tooltip = rm.2.subject_1.tooltip
@@ -1749,9 +1888,9 @@ country_event = {
 		trigger = {
 			check_variable = { which = rm_total_subjects value > 0 }
 		}
-		# hidden_effect = {
-		# 	country_event = { id = regentmaker.7 }
-		# }
+		hidden_effect = {
+			country_event = { id = regentmaker.0 }
+		}
 	}
 }
 
@@ -2227,7 +2366,7 @@ country_event = {
 }
 
 # Ethic Randomizer (mainly taken from action.30)
-# Using gov authority country flag for weighting ethos
+# Using gov authority country flag for weighting ethos.
 country_event = {
 	id = regentmaker.30
 	hide_window = yes

@@ -146,7 +146,7 @@ country_event = {
 	option = { name = OK }
 }
 
-# Gives out systems around planets to new countries
+# Gives out systems around planets to new countries.
 # this = New Member State
 # from = decentralizer
 country_event = {
@@ -196,7 +196,7 @@ country_event = {
 			}
 			else_if = {
 				limit = { root = { has_country_flag = day_0 } }
-			# Merge way to small empires
+			# Merge way to small empires.
 			# if = { limit = { controlled_systems < 3 }
 				# from = { save_event_target_as = new_owner }
 				# capital_scope.solar_system = {
@@ -256,7 +256,7 @@ country_event = {
 	}
 }
 
-# MID PERK GENERATION - Distributes remaining systems
+# MID PERK GENERATION - Distributes remaining systems.
 # root = decentralizer
 country_event = {
 	id = decentralized.4
@@ -292,7 +292,7 @@ country_event = {
 				prev.starbase = { set_owner = prev.space_owner }
 			}
 		}
-		# Take direct neighbor systems back
+		# Take direct neighbor systems back.
 		capital_scope = {
 			solar_system = {
 				every_neighbor_system = {
@@ -527,7 +527,7 @@ country_event = {
 	option = { name = OK }
 	after = {
 		hidden_effect = {
-			# Opportunity to change vassals into Member States
+			# Opportunity to change vassals into Member States.
 			country_event = { id = decentralized.7 days = 60 random = 20 }
 			country_event = { id = decentralized.215 days = 5 random = 2 }
 		}
@@ -613,7 +613,7 @@ planet_event = {
 #####################################
 # Established Events
 #####################################
-# Opportunity to change vassals into Member States
+# Opportunity to change vassals into Member States.
 country_event = {
 	id = decentralized.7
 	title = "decentralized.7.name"
@@ -732,7 +732,7 @@ country_event = {
 	}
 }
 
-# Gives member_state an ultimatum for releasing a planet
+# Gives member_state an ultimatum for releasing a planet.
 country_event = {
 	id = decentralized.9
 	title = "decentralized.9.name"
@@ -766,7 +766,7 @@ country_event = {
 # 	option = { name = OK }
 # }
 
-# Ask Member States for resources. triggered by edict
+# Ask Member States for resources. triggered by edict.
 country_event = {
 	id = decentralized.14
 	title = "decentralized.14.name"
@@ -823,7 +823,7 @@ country_event = {
 	picture = GFX_evt_assembly_fight
 	is_triggered_only = yes
 	immediate = { }
-	# Make terrorizer pay a fine
+	# Make terrorizer pay a fine.
 	option = {
 		name = decentralized.23.a
 		event_target:terrorizer = {
@@ -859,7 +859,7 @@ country_event = {
 	}
 }
 
-# After harrasing a trade route one of the Member States declared war, you can intervene
+# After harrasing a trade route one of the Member States declared war, you can intervene.
 country_event = {
 	id = decentralized.24
 	title = "decentralized.24.name"
@@ -867,7 +867,7 @@ country_event = {
 	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = { }
-	# Intervene in favor of terrorized
+	# Intervene in favor of terrorized.
 	option = {
 		name = decentralized.24.a
 		join_war = event_target:terrorized
@@ -902,7 +902,7 @@ country_event = {
 			}
 		}
 	}
-	# Intervene in favor of terrorizer
+	# Intervene in favor of terrorizer.
 	option = {
 		name = decentralized.24.b
 		join_war = event_target:terrorizer
@@ -999,7 +999,7 @@ country_event = {
 ##############################
 # Events for member_states
 ##############################
-# Opportunity to Defy the Ultimatum and declare war on overlord
+# Opportunity to Defy the Ultimatum and declare war on overlord.
 # This = event_target:ultimatum_subject
 country_event = {
 	id = decentralized.10
@@ -1008,7 +1008,7 @@ country_event = {
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
 	immediate = { }
-	# Releases newly conquered system as new member_state
+	# Releases newly conquered system as new member_state.
 	option = {
 		name = decentralized.10.a
 		allow = {
@@ -1348,7 +1348,7 @@ country_event = {
 	}
 }
 
-# Associate of your Member State pirates in other Member State
+# Associate of your Member State pirates in other Member State.
 country_event = {
 	id = decentralized.21
 	title = "decentralized.21.name"
@@ -1356,7 +1356,7 @@ country_event = {
 	picture = GFX_evt_sentry_guns
 	is_triggered_only = yes
 	immediate = { }
-	# Give 2000 energy credits to victim
+	# Give 2000 energy credits to victim.
 	option = {
 		name = decentralized.21.a
 		add_resource = { influence = -40 }
@@ -1453,7 +1453,7 @@ country_event = {
 		}
 	}
 }
-# Response to another Member State sending pirates to harass your traders
+# Response to another Member State sending pirates to harass your traders.
 country_event = {
 	id = decentralized.22
 	title = "decentralized.22.name"
@@ -1557,7 +1557,7 @@ country_event = {
 	}
 }
 
-# Notification for getting system after demand
+# Notification for getting system after demand.
 country_event = {
 	id = decentralized.27
 	title = "decentralized.27.name"
@@ -1570,7 +1570,7 @@ country_event = {
 ######################
 # Random Events
 ######################
-# Quarrells between random leader and Member State
+# Quarrells between random leader and Member State.
 country_event = {
 	id = decentralized.18
 	title = "decentralized.18.name"
@@ -1626,7 +1626,7 @@ country_event = {
 	}
 }
 
-# Deserter Secret Agent Escapes to Member State with sensitive data
+# Deserter Secret Agent Escapes to Member State with sensitive data.
 country_event = {
 	id = decentralized.19
 	title = "decentralized.19.name"
@@ -1635,7 +1635,7 @@ country_event = {
 	trigger = { has_modifier = decentralized_leader }
 	mean_time_to_happen = { months = 100 }
 	# immediate = { }
-	# Pressure Member States into searching for the deserter
+	# Pressure Member States into searching for the deserter.
 	option = {
 		name = decentralized.19.a
 		add_resource = { influence = -30 }
@@ -1659,7 +1659,7 @@ country_event = {
 	}
 }
 
-# Member State terrorized another Member State
+# Member State terrorized another Member State.
 country_event = {
 	id = decentralized.20
 	# title = "decentralized.20"
@@ -1694,7 +1694,7 @@ country_event = {
 	}
 }
 
-# Member State choice to demands control of an uninhabited system
+# Member State choice to demands control of an uninhabited system.
 country_event = {
 	id = decentralized.25
 	title = "decentralized.25.name"
@@ -2269,7 +2269,7 @@ country_event = {
 	}
 }
 
-# Checks if election is over
+# Checks if election is over.
 country_event = {
 	id = decentralized.203
 	hide_window = yes
@@ -2316,7 +2316,7 @@ country_event = {
 			set_timed_country_flag = { flag = decentralized_lost days = 12 }
 			country_event = { id = decentralized.206 days = 1 } # Notify
 			every_subject = {
-				limit = { is_subject_type = member_state } # not absolute?
+				limit = { is_subject_type = member_state } # Not absolute?
 				set_subject_of = {
 					who = root
 					subject_type = member_state
@@ -2334,7 +2334,7 @@ country_event = {
 	option = { name = OK }
 }
 
-# Last Leader won, notification for them
+# Last Leader won, notification for them.
 country_event = {
 	id = decentralized.205
 	title = "decentralized.205.name"
@@ -2353,7 +2353,7 @@ country_event = {
 	option = { name = OK }
 }
 
-# Last leader lost, notification for them
+# Last leader lost, notification for them.
 country_event = {
 	id = decentralized.206
 	title = "decentralized.206.name"
@@ -2377,7 +2377,7 @@ country_event = {
 
 # This = subject
 # From = subject's overlord
-# Opportunity to join Overlord's vassals into Member States
+# Opportunity to join Overlord's vassals into Member States.
 country_event = {
 	id = decentralized.214
 	hide_window = yes
@@ -2484,7 +2484,7 @@ country_event = {
 				}
 			}
 		}
-		## Finally, give at least a few more systems to each subject
+		## Finally, give at least a few more systems to each subject.
 		every_subject = {
 			limit = { is_subject_type = member_state }
 			if = {
@@ -2567,7 +2567,7 @@ country_event = {
 
 		every_system_within_border = {
 			# limit = { has_owner = yes }
-			# Give lonley systems to subjects
+			# Give lonley systems to subjects.
 			if = {
 				limit = {
 					NOR = {

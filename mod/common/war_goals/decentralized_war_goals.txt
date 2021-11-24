@@ -743,7 +743,7 @@ wg_forced_decentralization = {
 					}
 					save_global_event_target_as = decentralizer
 				}
-				## Near identically to on_accept, except the subject size and target
+				## Near identically to on_accept, except the subject size and target.
 				country_event = { id = decentralized.111 days = 2 }
 			}
 		}

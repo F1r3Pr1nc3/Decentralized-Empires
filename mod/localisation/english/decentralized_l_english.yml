@@ -145,6 +145,8 @@
  # Casus Belli
  casus_belli_cb_decentralized: "Forced Decentralization"
  # Regentmaker
+ regentmaker.0: "Decentralized Empire Regentmaker Control"
+ regentmaker.0.desc: "This allows us to take influence on our vassals."
  regentmaker.1: "Regentmaker"
  regentmaker.1.desc: "We can now establish a $IMPERIALIST_UNDERLING$ to act in our stead on the worlds we selected. Should we continue?"
  regentmaker.1.a: "Establish a §YVassal State§!."
@@ -168,6 +170,11 @@
  regentmaker.8.desc: "This will allow us to choose our vassal's government to keep them helpful."
  regentmaker.8.a: "Equalize the government of all our $SUBJECT_member_state_plural$."
  regentmaker.8.b: "Select the government of specific vassals."
+
+ regentmaker.501: "$RENAME_EMPIRE_TITLE$: $SUBJECT_member_state$"
+ regentmaker.501.desc: "You can give one of your $SUBJECT_member_state_plural$ a new empire name."
+ regentmaker.504: "Alter Subject Name"
+
  regentmaker_auth_democratic: "£democratic£ - $auth_democratic$-"
  regentmaker_auth_dictatorial: "£dictatorial£ - $auth_dictatorial$  -"
  regentmaker_auth_imperial: "£imperial£ - $auth_imperial$      -"
@@ -183,6 +190,9 @@
  edict_regentmaker_choose_ethics_desc: "$regentmaker.7.desc$"
  edict_regentmaker_choose_gov: "$regentmaker.8$"
  edict_regentmaker_choose_gov_desc: "$regentmaker.8.desc$"
+ edict_regentmaker_control: "$regentmaker.0$"
+ edict_regentmaker_control_desc: "$regentmaker.0.desc$"
+
  # Decisions
  decision_regentmaker: "Mark Regentmaker World"
  decision_regentmaker_desc: "This world is set aside and marked for possible release as a vassal state."
@@ -205,7 +215,7 @@
  regentmaker_colony: "Regentmaker Mark"
  regentmaker_colony_desc: "The planet has been marked for release."
 
- decision_true_emperor: "Regentmaker: $SUBJECT_member_state_plural$ Control"
+ decision_true_emperor: "Regentmaker $SUBJECT_member_state_plural$ Control"
  decision_true_emperor_desc: "This enables you to take direct control of one of your $SUBJECT_member_state_plural$ (for at least 1 year)."
  decision_true_emperor_effects_short: "Switch your rule to one of your subjects."
  regentmaker.510: "$decision_true_emperor$"
@@ -240,6 +250,7 @@
  rm.2.subject_7.tooltip: "[subject_7.GetSpeciesAdj] [subject_7.GetGovernmentName] with [subject_7.GetRulerTitle] [subject_7.ruler.GetRegnalName] from [subject_7.GetHomeWorldName] on §Y[subject_7.Capital.GetName]§!"
  rm.2.subject_8.tooltip: "[subject_8.GetSpeciesAdj] [subject_8.GetGovernmentName] with [subject_8.GetRulerTitle] [subject_8.ruler.GetRegnalName] from [subject_8.GetHomeWorldName] on §Y[subject_8.Capital.GetName]§!"
  rm.2.subject_9.tooltip: "[subject_9.GetSpeciesAdj] [subject_9.GetGovernmentName] with [subject_9.GetRulerTitle] [subject_9.ruler.GetRegnalName] from [subject_9.GetHomeWorldName] on §Y[subject_9.Capital.GetName]§!"
+ # regentmaker.subject_selected.tooltip: "[subject_selected.GetSpeciesAdj] [subject_selected.GetGovernmentName] with [subject_selected.GetRulerTitle] [subject_selected.ruler.GetRegnalName] from [subject_selected.GetHomeWorldName] on §Y[subject_selected.Capital.GetName]§!"
  rm.2.back: "I've changed my mind."
  rm.3.back: "They shall remain as they are."
  rm.4.name: "£unknown_auth£ Alter Subject Government"

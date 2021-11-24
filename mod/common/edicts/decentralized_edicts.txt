@@ -11,6 +11,7 @@ request_resources = {
 	}
 	allow = {
 		has_resource = { type = influence amount > 120 }
+		NOT = { has_active_event = { decentralized.14 } }
 	}
 	effect = {
 		country_event = { id = decentralized.14 }
@@ -30,6 +31,7 @@ regentmaker_give_tech = {
 	}
 	allow = {
 		has_resource = { type = influence amount > 40 }
+		NOT = { has_active_event = { regentmaker.4 } }
 	}
 	# modifier = { }
 	# prerequisites = { }
@@ -39,34 +41,62 @@ regentmaker_give_tech = {
 	ai_weight = { weight = 0 }	# TODO
 }
 
-regentmaker_choose_ethics = {
-	length = 7
-	icon = "GFX_stability"	# 27px "GFX_topbar_traditions_button" # "GFX_species_right_citizenship"
-	resources = {
-		category = edicts
-		cost = { influence = 0 }
-	}
-	potential = { is_overlord = yes }
-	# modifier = { }
-	# prerequisites = { }
-	effect = {
-		country_event = { id = regentmaker.7 }
-	}
-	ai_weight = { weight = 0 }
-}
+# regentmaker_choose_ethics = {
+# 	length = 7
+# 	icon = "GFX_stability"	# 27px "GFX_topbar_traditions_button" # "GFX_species_right_citizenship"
+# 	resources = {
+# 		category = edicts
+# 		cost = { influence = 0 }
+# 	}
+# 	potential = { is_overlord = yes }
+# 	allow = {
+# 		NOT = { has_active_event = { regentmaker.7 } }
+# 	}
+# 	# modifier = { }
+# 	# prerequisites = { }
+# 	effect = {
+# 		country_event = { id = regentmaker.7 }
+# 	}
+# 	ai_weight = { weight = 0 }
+# }
 
-regentmaker_choose_gov = {
+# regentmaker_choose_gov = {
+# 	length = 7
+# 	icon = "GFX_embassy_their"	# "gfx/interface/icons/modifiers/mod_country_government_civic_points_add.dds" "GFX_empire_capital"
+# 	resources = {
+# 		category = edicts
+# 		cost = { influence = 0 }
+# 	}
+# 	potential = { is_overlord = yes }
+# 	allow = {
+# 		NOT = { has_active_event = { regentmaker.8 } }
+# 	}
+# 	# modifier = { }
+# 	# prerequisites = { }
+# 	effect = {
+# 		country_event = { id = regentmaker.8 }
+# 	}
+# 	ai_weight = { weight = 0 }
+# }
+
+regentmaker_control = {
 	length = 7
-	icon = "GFX_embassy_their"	# "gfx/interface/icons/modifiers/mod_country_government_civic_points_add.dds" "GFX_empire_capital"
+	icon = GFX_job_noble
 	resources = {
 		category = edicts
 		cost = { influence = 0 }
 	}
 	potential = { is_overlord = yes }
+	allow = {
+		NOR = {
+			has_active_event = { regentmaker.0 }
+			has_country_flag = regentmaker_control_engaged
+		}
+	}
 	# modifier = { }
 	# prerequisites = { }
 	effect = {
-		country_event = { id = regentmaker.8 }
+		country_event = { id = regentmaker.0 }
 	}
 	ai_weight = { weight = 0 }
 }

@@ -160,12 +160,15 @@ decision_true_emperor = {
 					overlord = { has_ascension_perk = ap_decentralization is_ai = yes }
 				}
 			}
+			NOT = { has_active_event = { regentmaker.510 } }
 		}
 		is_capital = yes
 	}
 	effect = {
+		# Find Subjects - Control
 		owner = {
-			country_event = { id = regentmaker.509 }
+			set_timed_country_flag = { flag = "regentmaker.510" days = 10 }
+			country_event = { id = regentmaker.500 }
 		}
 	}
 	ai_weight = { weight = 0 }
