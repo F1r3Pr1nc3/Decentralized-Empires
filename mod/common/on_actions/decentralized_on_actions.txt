@@ -46,3 +46,10 @@ on_becoming_subject = {
 		decentralized.214 # Join Overlord's decentralization
 	}
 }
+
+# on_five_year_pulse_country = {
+on_five_year_random_pulse_country = {
+	events = {
+		decentralized.201
+	}
+}

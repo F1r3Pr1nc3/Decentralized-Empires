@@ -143,15 +143,18 @@ decision_true_emperor = {
 	resources = {
 		category = decisions
 		cost = {
-			# influence = 10
-			# energy = 50
+			influence = 10
+			energy = 50
 		}
 	}
 
 	potential = {
-		NOT = { has_global_flag = regentmaker_control_sel@owner }
 		owner = {
 			is_ai = no
+			OR = {
+				NOT = { has_global_flag = regentmaker_control_sel@owner }
+				has_country_flag = regentmaker_control_sel
+			}
 			OR = {
 				has_ascension_perk = ap_decentralization
 				AND = {
@@ -167,8 +170,15 @@ decision_true_emperor = {
 	effect = {
 		# Find Subjects - Control
 		owner = {
-			set_timed_country_flag = { flag = "regentmaker.510" days = 10 }
-			country_event = { id = regentmaker.500 }
+			if = {
+				limit = { has_ascension_perk = ap_decentralization }
+				set_timed_country_flag = { flag = "regentmaker.510" days = 10 }
+				country_event = { id = regentmaker.500 }
+			} else = {
+				remove_country_flag = regentmaker_control_sel
+				remove_global_flag = regentmaker_control_sel@this
+				overlord = { set_player = prev }
+			}
 		}
 	}
 	ai_weight = { weight = 0 }

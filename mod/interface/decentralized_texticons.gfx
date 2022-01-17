@@ -24,4 +24,8 @@ spriteTypes = {
 		name = "GFX_text_unknown_auth"
 		texturefile = "gfx/interface/icons/governments/authorities/unknown_29x29.dds"
 	}
+	spriteType = {
+		name = "GFX_mod_job_noble_add"
+		texturefile = "gfx/interface/icons/modifiers/mod_job_noble_add.dds"
+	}
 }

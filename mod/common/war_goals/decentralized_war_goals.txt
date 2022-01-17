@@ -7,6 +7,8 @@ wg_expansion_ultimatum = {
 		surrender
 		demand_surrender
 	}
+	# threat_multiplier = 1.25
+	war_exhaustion = 1.25
 	potential = {
 		always = no # event only
 		# OR = {
@@ -49,7 +51,7 @@ wg_expansion_ultimatum = {
 	}
 	ai_weight = { weight = 100 }
 }
-
+# defender_wargoal only?
 wg_defy_ultimatum = {
 	casus_belli = cb_event
 	allowed_peace_offers = {
@@ -59,6 +61,8 @@ wg_defy_ultimatum = {
 	}
 	cede_claims = occupied_only
 	set_defender_wargoal = wg_defy_ultimatum
+	# threat_multiplier = 1.25
+	war_exhaustion = 1.25
 	potential = {
 		always = no # event only
 		# OR = {
@@ -89,7 +93,7 @@ wg_defy_ultimatum = {
 			}
 		}
 	}
-
+	# THIS = war goal country, FROM = war goal target country
 	on_accept = {
 		custom_tooltip = wg_revoke_claims_accept
 		hidden_effect = {
@@ -102,35 +106,26 @@ wg_defy_ultimatum = {
 				}
 			}
 			set_subject_of = { who = none }
+			if = { limit = { has_modifier = "satrapy_of_horde" }
+				remove_modifier = "satrapy_of_horde"
+			}
+			if = { limit = { has_modifier = "SUBJECT_member_state" }
+				remove_modifier = "SUBJECT_member_state"
+			}
 		}
-		if = {
-			limit = {
-				from = { has_modifier = electoral }
-			}
-			from = {
-				every_subject = {
-					limit = { is_subject_type = member_state }
-					set_subject_of = {
-						who = event_target:ultimatum_subject
-						subject_type = member_state
+		from = {
+			if = {
+				limit = {
+					OR = {
+						has_modifier = decentralized_leader
+						has_modifier = electoral
 					}
 				}
-			}
-			from = {
-				set_subject_of = {
-					who = event_target:ultimatum_subject
-					subject_type = member_state
+				save_event_target_as = current_leader
+				root = { # event_target:ultimatum_subject?
+					country_event = { id = decentralized.204 }
 				}
-			}
-			remove_modifier = electoral
-			else = {
-				from = {
-					add_modifier = {
-						modifier = electoral
-						days = -1
-					}
-				}
-			}
+			} # else = { }
 		}
 	}
 	ai_weight = { weight = 100 }
@@ -145,13 +140,17 @@ wg_member_trade_war = {
 	}
 	cede_claims = occupied_only
 	set_defender_wargoal = wg_member_trade_war
+	surrender_acceptance = -100
+	# threat_multiplier = 1.25
+	war_exhaustion = 1.25
 	potential = {
-		always = no # event only
+		# always = no # event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
 		# 	is_subject_type = member_state
 		# }
-		# from = { is_subject_type = member_state }
+		is_subject_type = member_state
+		from = { is_subject_type = member_state }
 	}
 	possible = {
 		custom_tooltip = {
@@ -184,8 +183,7 @@ wg_member_trade_war = {
 					minerals = 500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 2
@@ -199,8 +197,7 @@ wg_member_trade_war = {
 					minerals = 1000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 7
@@ -214,8 +211,7 @@ wg_member_trade_war = {
 					minerals = 1500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 10
@@ -229,8 +225,7 @@ wg_member_trade_war = {
 					minerals = 2000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 13
@@ -244,8 +239,7 @@ wg_member_trade_war = {
 					minerals = 2500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 16
@@ -259,8 +253,7 @@ wg_member_trade_war = {
 					minerals = 3000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 19
@@ -274,8 +267,7 @@ wg_member_trade_war = {
 					minerals = 3500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 22
@@ -289,8 +281,7 @@ wg_member_trade_war = {
 					minerals = 4000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 25
@@ -304,8 +295,7 @@ wg_member_trade_war = {
 					minerals = 4500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 28
@@ -319,8 +309,7 @@ wg_member_trade_war = {
 					minerals = 5000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 31
@@ -334,8 +323,7 @@ wg_member_trade_war = {
 					minerals = 5500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 34
@@ -349,8 +337,7 @@ wg_member_trade_war = {
 					minerals = 6000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 37
@@ -364,8 +351,7 @@ wg_member_trade_war = {
 					minerals = 6500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 40
@@ -379,8 +365,7 @@ wg_member_trade_war = {
 					minerals = 7000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 43
@@ -394,8 +379,7 @@ wg_member_trade_war = {
 					minerals = 7500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 46
@@ -409,8 +393,7 @@ wg_member_trade_war = {
 					minerals = 8000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 49
@@ -424,8 +407,7 @@ wg_member_trade_war = {
 					minerals = 8500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 52
@@ -439,8 +421,7 @@ wg_member_trade_war = {
 					minerals = 9000
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = {
 					num_owned_planets >= 55
@@ -454,8 +435,7 @@ wg_member_trade_war = {
 					minerals = 9500
 				}
 			}
-		}
-		if = {
+		} else_if = {
 			limit = {
 				from = { num_owned_planets >= 58 }
 			}
@@ -469,14 +449,61 @@ wg_member_trade_war = {
 		}
 		hidden_effect = {
 			from = {
-				add_modifier = {
-					modifier = raided
-					days = 3600
+				add_modifier = { modifier = raided days = 3600 }
+			}
+		}
+	}
+	# this = attacker
+	# from = defender
+	# fromfrom = war (unsure)
+	on_wargoal_set = {
+ 		# remove overlord as war_participant
+		if = {
+			limit = {
+				# exists = from
+				from = {
+					is_overlord = yes
+					OR = {
+						has_modifier = decentralized_leader
+						has_modifier = electoral
+					}
+				}
+			}
+			from = { save_event_target_as = decentralizer }
+		} else_if = {
+			limit = {
+				is_overlord = yes
+				OR = {
+					has_modifier = decentralized_leader
+					has_modifier = electoral
+				}
+			}
+			save_event_target_as = decentralizer
+		}
+		if = {
+			limit = {
+				exists = event_target:decentralizer
+			}
+			event_target:decentralizer = {
+				random_war = {
+					limit = {
+						is_war_participant = { who = root }
+						is_war_participant = { who = from }
+						any_war_participant = {
+							prev = {
+								using_war_goal = { type = wg_member_trade_war owner = prev }
+							}
+						}
+					}
+					random_defender = {
+						limit = { is_same_empire = prevprev }
+						prev = { remove_war_participant = prev }
+					}
 				}
 			}
 		}
 	}
-	ai_weight = { weight = 0 } # TODO
+	ai_weight = { weight = 100 } # TODO
 }
 
 wg_demand_system = {
@@ -488,13 +515,15 @@ wg_demand_system = {
 	}
 	cede_claims = occupied_only
 	set_defender_wargoal = wg_defend_system
+	# threat_multiplier = 1.25
 	potential = {
-		always = no # event only
+		# always = no # event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
 		# 	is_subject_type = member_state
 		# }
-		# from = { is_subject_type = member_state }
+		is_subject_type = member_state
+		from = { is_subject_type = member_state }
 	}
 	possible = {
 		custom_tooltip = {
@@ -530,6 +559,54 @@ wg_demand_system = {
 			}
 		}
 	}
+	# this = attacker
+	# from = defender
+	# fromfrom = war (unsure)
+	on_wargoal_set = {
+ 		# remove overlord as war_participant
+		if = {
+			limit = {
+				# exists = from
+				from = {
+					is_overlord = yes
+					OR = {
+						has_modifier = decentralized_leader
+						has_modifier = electoral
+					}
+				}
+			}
+			from = { save_event_target_as = decentralizer }
+		} else_if = {
+			limit = {
+				is_overlord = yes
+				OR = {
+					has_modifier = decentralized_leader
+					has_modifier = electoral
+				}
+			}
+			save_event_target_as = decentralizer
+		}
+		if = {
+			limit = { exists = event_target:decentralizer }
+			event_target:decentralizer = {
+				random_war = {
+					limit = {
+						is_war_participant = { who = root }
+						is_war_participant = { who = from }
+						any_war_participant = {
+							prev = {
+								using_war_goal = { type = wg_demand_system owner = prev }
+							}
+						}
+					}
+					random_defender = {
+						limit = { is_same_empire = prevprev }
+						prev = { remove_war_participant = prev }
+					}
+				}
+			}
+		}
+	}
 	ai_weight = { weight = 100 }
 }
 
@@ -542,18 +619,25 @@ wg_defend_system = {
 	}
 	cede_claims = occupied_only
 	set_defender_wargoal = wg_defend_system
+	# threat_multiplier = 1.25
+	war_exhaustion = 1.25
 	potential = {
-		always = no # event only
+		# always = no # event only
+		# has_ascension_perk = ap_decentralization
 		# OR = {
-		# 	has_ascension_perk = ap_decentralization
+		# 	has_modifier = decentralized_leader
+		# 	has_modifier = electoral
 		# 	is_subject_type = member_state
 		# }
 		# from = {
 		# 	OR = {
-		# 		has_ascension_perk = ap_decentralization
+		# 		has_modifier = decentralized_leader
+		# 		has_modifier = electoral
 		# 		is_subject_type = member_state
 		# 	}
 		# }
+		is_subject_type = member_state
+		from = { is_subject_type = member_state }
 	}
 	possible = {
 		custom_tooltip = {
@@ -588,9 +672,54 @@ wg_defend_system = {
 				add_resource = { influence = -1000 }
 			}
 			event_target:demander = {
-				add_modifier = {
-					modifier = humiliated
-					days = 3600
+				add_modifier = { modifier = humiliated days = 3600 }
+			}
+		}
+	}
+	# this = attacker
+	# from = defender
+	# fromfrom = war (unsure)
+	on_wargoal_set = {
+ 		# remove overlord as war_participant
+		if = {
+			limit = {
+				# exists = from
+				from = {
+					is_overlord = yes
+					OR = {
+						has_modifier = decentralized_leader
+						has_modifier = electoral
+					}
+				}
+			}
+			from = { save_event_target_as = decentralizer }
+		} else_if = {
+			limit = {
+				is_overlord = yes
+				OR = {
+					has_modifier = decentralized_leader
+					has_modifier = electoral
+				}
+			}
+			save_event_target_as = decentralizer
+		}
+		if = {
+			limit = { exists = event_target:decentralizer }
+			event_target:decentralizer = {
+				random_war = {
+					limit = {
+						is_war_participant = { who = root }
+						is_war_participant = { who = from }
+						any_war_participant = {
+							prev = {
+								using_war_goal = { type = wg_defend_system owner = prev }
+							}
+						}
+					}
+					random_defender = {
+						limit = { is_same_empire = prevprev }
+						prev = { remove_war_participant = prev }
+					}
 				}
 			}
 		}
@@ -664,11 +793,7 @@ wg_forced_decentralization = {
 			}
 		}
 	}
-	on_wargoal_set = {
-		if = { limit = { has_ascension_perk = ap_decentralization }
-			save_global_event_target_as = decentralizer
-		}
-	}
+
 	# this = attacker
 	# from = defender
 	# fromfrom = war (unsure)
@@ -677,12 +802,12 @@ wg_forced_decentralization = {
 		hidden_effect = {
 			if = {
 				limit = {
+					is_overlord = yes
 					has_ascension_perk = ap_decentralization
 					NOT = { exists = event_target:decentralizer }
 				}
-				save_global_event_target_as = decentralizer
+				save_event_target_as = decentralizer
 			}
-
 			from = {
 				every_system_within_border = {
 					limit = {
@@ -713,9 +838,12 @@ wg_forced_decentralization = {
 						has_ascension_perk = ap_decentralization
 					}
 				}
-				if = { limit = { exists = from }
-					from = { save_global_event_target_as = decentralizer }
-				} else = { save_global_event_target_as = decentralizer }
+				if = { limit = { exists = from from = { is_overlord = yes } }
+					from = { save_event_target_as = decentralizer }
+				} else_if = {
+					limit = { is_overlord = yes }
+					save_event_target_as = decentralizer
+				}
 				last_created_country = {
 					set_subject_of = {
 						who = root
@@ -736,12 +864,13 @@ wg_forced_decentralization = {
 			from = {
 				if = {
 					limit = {
+						is_overlord = yes
 						NAND = {
 							exists = event_target:decentralizer
 							is_same_empire = event_target:decentralizer
 						}
 					}
-					save_global_event_target_as = decentralizer
+					save_event_target_as = decentralizer
 				}
 				## Near identically to on_accept, except the subject size and target.
 				country_event = { id = decentralized.111 days = 2 }
@@ -749,6 +878,15 @@ wg_forced_decentralization = {
 		}
 
 	}
+	# this = attacker
+	# from = defender
+	# fromfrom = war (unsure)
+	on_wargoal_set = {
+		if = { limit = { has_ascension_perk = ap_decentralization is_overlord = yes }
+			save_event_target_as = decentralizer
+		}
+	}
+
 	#TODO
 	ai_weight = {
 		weight = 1
@@ -757,4 +895,212 @@ wg_forced_decentralization = {
 			NOT = { has_ascension_perk = ap_decentralization }
 		}
 	}
+}
+
+wg_independence = {
+	casus_belli = cb_subject
+
+	hide_if_no_cb = yes
+	set_defender_wargoal = wg_assert_overlordship
+
+	potential = { always = yes }
+	possible = {
+		custom_tooltip = {
+			fail_text = cannot_use_against_emperor
+			OR = {
+				from = { is_galactic_emperor = no }
+				is_galactic_community_member = no
+			}
+		}
+		custom_tooltip = {
+			fail_text = pax_galactica_active
+			NAND = {
+				is_active_resolution = resolution_emperor_pax_galactica
+				is_galactic_community_member = yes
+				from = { is_galactic_community_member = yes }
+			}
+		}
+	}
+
+	allowed_peace_offers = {
+		status_quo
+		surrender
+		demand_surrender
+	}
+
+	on_status_quo = {
+		custom_tooltip = wg_independence_status_quo
+		hidden_effect = {
+			set_subject_of = { who = none }
+			if = { limit = { has_modifier = "satrapy_of_horde" }
+				remove_modifier = "satrapy_of_horde"
+			}
+			if = { limit = { has_modifier = "SUBJECT_member_state" }
+				remove_modifier = "SUBJECT_member_state"
+			}
+		}
+	}
+
+	on_accept = {
+		custom_tooltip = wg_independence_accept
+		hidden_effect = {
+			set_subject_of = { who = none }
+			if = { limit = { has_modifier = "satrapy_of_horde" }
+				remove_modifier = "satrapy_of_horde"
+			}
+			if = { limit = { has_modifier = "SUBJECT_member_state" }
+				remove_modifier = "SUBJECT_member_state"
+			}
+			every_system_within_border = {
+				limit = { from = { has_claim = prev } }
+				remove_claims = { who = from }
+			}
+		}
+	}
+
+	on_wargoal_set = {
+		every_system_within_border = {
+			limit = {
+				NOT = { from = { has_claim = prev } }
+			}
+			add_claims = { who = from }
+		}
+
+		if = {
+			limit = {
+				has_global_flag = marauder_crisis_ongoing
+				# exists = from
+				from = { is_country_type = awakened_marauders }
+			}
+			country_event = { id = marauder.554 } # Rebel
+			# set_subject_of = { who = none }
+			# set_country_flag = rebelling_satrapy
+			# remove_modifier = "satrapy_of_horde"
+			# from = {
+			# 	set_faction_hostility = {
+			# 		target = root
+			# 		set_hostile = yes
+			# 		set_neutral = no
+			# 		set_friendly = no
+			# 	}
+			# }
+			# fromfrom = { # war scope seems only work for on_accept
+			if = {
+				limit = {
+					any_war = {
+						is_war_participant = { who = root side = attackers }
+						# any_war_participant = {
+						any_attacker = {
+							NOT = { is_same_empire = root }
+							prev = { using_war_goal = { type = "wg_independence" owner = prev } }
+						}
+					}
+				}
+				random_war = {
+					limit = {
+						is_war_participant = { who = root side = attackers }
+						# any_war_participant = {
+						any_attacker = {
+							prev = { using_war_goal = { type = "wg_independence" owner = prev } }
+						}
+						any_defender = { is_same_empire = from }
+					}
+					# every_war_participant = {
+					every_attacker = {
+						limit = {
+							is_subject = yes
+							# from = { is_overlord_to = prev } not working for Khan
+							overlord = { is_same_empire = from }
+							# prev = {
+							# 	is_war_participant = { who = prev side = attackers }
+							# 	# using_war_goal = { type = "wg_independence" owner = prev }
+							# }
+						}
+						if = {
+							limit = { has_modifier = "satrapy_of_horde" }
+							country_event = { id = marauder.554 } # Rebel
+						} else = {
+							set_subject_of = { who = none }
+						}
+					}
+					# Remove all non marauder related from war
+					every_defender = {
+						limit = {
+							NOR = {
+								is_same_empire = from
+								has_origin = "origin_khan_successor"
+								AND = {
+									has_global_flag = gf_great_khan_active
+									is_subject_type = war_satrapy
+								}
+							}
+							NOR = {
+								is_country_type = dormant_marauders
+								is_country_type = ruined_marauders
+								is_country_type = awakened_marauders
+								is_country_type = marauder_raiders
+							}
+						}
+						prev = { remove_war_participant = prev }
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = {
+				# exists = from
+				from = {
+					# is_overlord = yes
+					OR = {
+						has_modifier = decentralized_leader
+						has_modifier = electoral
+					}
+				}
+			}
+			from = { save_event_target_as = decentralizer }
+		} else_if = {
+			limit = {
+				# is_overlord = yes
+				OR = {
+					has_modifier = decentralized_leader
+					has_modifier = electoral
+				}
+			}
+			save_event_target_as = decentralizer
+		}
+		if = {
+			limit = {
+				exists = event_target:decentralizer
+			}
+			event_target:decentralizer = {
+				random_war = { # find right war
+					limit = {
+						is_war_participant = { who = root }
+						is_war_participant = { who = from }
+						any_war_participant = {
+							prev = {
+								using_war_goal = { type = wg_independence owner = prev }
+							}
+						}
+					}
+					# Probably too early
+					every_defender = {
+						limit = {
+							OR = {
+								is_subject = no
+								is_subject_type = member_state
+							}
+							NOR = {
+								is_same_empire = from
+								is_same_empire = event_target:decentralizer
+							}
+						}
+						prev = { remove_war_participant = prev }
+					}
+				}
+			}
+		}
+	}
+
+	ai_weight = { weight = 100 }
 }
