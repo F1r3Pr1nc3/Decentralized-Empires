@@ -35,8 +35,10 @@ regentmaker_give_tech = {
 	}
 	allow = {
 		has_resource = { type = influence amount > 50 }
-		NOT = { has_modifier = electoral }
-		NOT = { has_active_event = { regentmaker.4 } }
+		NOR = {
+			has_active_event = { regentmaker.4 }
+			has_modifier = electoral
+		}
 	}
 	# modifier = { }
 	# prerequisites = { }
@@ -97,6 +99,11 @@ regentmaker_control = {
 		NOR = {
 			has_active_event = { regentmaker.0 }
 			has_country_flag = regentmaker_control_engaged
+		}
+		OR = {
+			has_country_flag = decentralizer
+			has_ascension_perk = ap_decentralization
+			has_valid_civic = civic_feudal_realm
 		}
 	}
 	# modifier = { }

@@ -619,7 +619,7 @@ planet_event = {
 #####################################
 # Established Events
 #####################################
-# Opportunity to change vassals into Member States.
+# Opportunity to change vassals into Member States. (on_becoming_subject or MID PERK GENERATION)
 country_event = {
 	id = decentralized.7
 	title = "decentralized.7.name"
@@ -628,7 +628,11 @@ country_event = {
 	is_triggered_only = yes
 	trigger = {
 		is_scope_valid = yes
-		has_country_flag = decentralizer
+		OR = {
+			has_country_flag = decentralizer
+			has_ascension_perk = ap_decentralization
+			has_valid_civic = civic_feudal_realm
+		}
 		any_subject = {
 			OR = {
 				is_country_type = default
@@ -2109,7 +2113,7 @@ country_event = {
 	}
 }
 
-# Voting Event (from decentralized.201)
+# Voting Event (from decentralized.201 every subject)
 country_event = {
 	id = decentralized.202
 	title = "decentralized.202.name"
@@ -2117,10 +2121,23 @@ country_event = {
 	picture = GFX_evt_voting
 	is_triggered_only = yes
 	trigger = {
+		exists = event_target:current_leader
 		exists = event_target:election_target1
 	}
 	immediate = {
+		copy_techs_from = {
+			target = event_target:current_leader
+			except = { # Horizon Signal
+				tech_akx_worm_1
+				tech_akx_worm_2
+				tech_akx_worm_3
+			}
+		}
+		event_target:current_leader = {
+			copy_techs_from = { target = root }
+		}
 	}
+
 	option = {
 		# Vote for leader
 		name = decentralized.202.a
@@ -2582,17 +2599,20 @@ country_event = {
 	option = { name = OK }
 }
 
+# Opportunity to join Overlord's vassals into Member States (on_becoming_subject).
 # This = subject
 # From = subject's overlord
-# Opportunity to join Overlord's vassals into Member States (on_becoming_subject).
 country_event = {
 	id = decentralized.214
 	hide_window = yes
 	is_triggered_only = yes
 	trigger = {
 		from = {
-			has_country_flag = decentralizer
-			OR = { has_ascension_perk = ap_decentralization has_valid_civic = civic_feudal_realm }
+			OR = {
+				has_country_flag = decentralizer
+				has_ascension_perk = ap_decentralization
+				has_valid_civic = civic_feudal_realm
+			}
 		}
 		NOT = { is_subject_type = member_state }
 		OR = {
@@ -2608,7 +2628,7 @@ country_event = {
 	}
 }
 
-## FINAL Decrease Subjects
+## FINAL Decrease Subjects (decentralized.1)
 # This = Overlord
 country_event = {
 	id = decentralized.215
@@ -2822,8 +2842,6 @@ country_event = {
 	hide_window = yes
 	is_triggered_only = yes
 	trigger = {
-		# has_country_flag = decentralizer
-		# has_ascension_perk = ap_decentralization
 		is_scope_valid = yes
 		exists = event_target:decentralizer
 		event_target:decentralizer = {
@@ -2859,8 +2877,7 @@ country_event = {
 		create_starting_leaders = yes
 		copy_techs_from = {
 			target =  event_target:decentralizer
-			except = {
-				# Horizon Signal
+			except = { # Horizon Signal
 				tech_akx_worm_1
 				tech_akx_worm_2
 				tech_akx_worm_3

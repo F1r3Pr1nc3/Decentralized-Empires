@@ -1878,7 +1878,14 @@ country_event = {
 	trigger = {
 		is_subject = yes
 		is_subject_type = member_state
-		overlord = { has_ascension_perk = ap_decentralization is_ai = yes }
+		overlord = {
+			OR = {
+				has_country_flag = decentralizer
+				has_ascension_perk = ap_decentralization
+				has_valid_civic = civic_feudal_realm
+			}
+			is_ai = yes
+		}
 	}
 	immediate = {
 		remove_global_flag = regentmaker_control_sel@this
