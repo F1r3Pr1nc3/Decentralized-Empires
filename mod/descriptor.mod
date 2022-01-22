@@ -1,5 +1,5 @@
-version="3.2.2.6"
-name="Decentralized Empires 3.2 (Regentmaker)"
+version="3.3.b"
+name="Decentralized Empires 3.3 (Regentmaker)"
 tags={
 	"Gameplay"
 	"Diplomacy"
@@ -8,5 +8,5 @@ tags={
 	"Imperium"
 }
 picture="thumbnail.png"
-supported_version="3.2.*"
+supported_version="3.3.*"
 remote_file_id="2211461998"

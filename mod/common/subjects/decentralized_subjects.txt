@@ -93,7 +93,16 @@ member_state = {
 			}
 		}
 		else = {
-			add_modifier = { modifier = "SUBJECT_member_state" }
+			if = { limit = { NOT = { has_modifier =  "SUBJECT_member_state" } }
+				add_modifier = { modifier = "SUBJECT_member_state" }
+			}
+			if = {
+				limit = {
+					exists = capital_scope
+					capital_scope = { NOT = { has_modifier =  "planetary_nationalism" } }
+				}
+				capital_scope = { add_modifier = { modifier = "planetary_nationalism" } }
+			}
 		}
 	}
 }

@@ -703,8 +703,8 @@ event = {
 		# Own temp workaround fix
 		random_playable_country = {
 			limit = {
-				has_modifier = "SUBJECT_member_state"
 				is_subject = no
+				has_modifier = "SUBJECT_member_state"
 			}
 			remove_modifier = "SUBJECT_member_state"
 		}
