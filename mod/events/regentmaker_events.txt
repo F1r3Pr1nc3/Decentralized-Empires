@@ -564,6 +564,7 @@ country_event = {
 	option = {
 		name = leviathans.105.d		# "Nothing for now. Goodbye."
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -595,6 +596,7 @@ country_event = {
 	option = {
 		name = leviathans.105.d		# "Nothing for now. Goodbye."
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -759,6 +761,7 @@ country_event = {
 	option = {
 		name = leviathans.105.d		# "Nothing for now. Goodbye."
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -769,7 +772,13 @@ country_event = {
 	id = regentmaker.50
 	title = "regentmaker.7"
 	desc = "regentmaker.7.desc"
-	picture = GFX_evt_throne_room
+	# picture = GFX_evt_throne_room
+	diplomatic = yes
+	picture_event_data = {
+		portrait = root.owner_main_species
+		room = enclave_curator_room
+	}
+	custom_gui = sgm_ScrollbarEventWindow
 	is_triggered_only = yes
 	# immediate = {
 	#	random_subject = {
@@ -1296,6 +1305,7 @@ country_event = {
 	option = {
 		name = leviathans.105.d		# "Nothing for now. Goodbye."
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -1798,6 +1808,7 @@ country_event = {
 			check_variable = { which = rm_total_subjects value > 0 }
 		}
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -1863,6 +1874,7 @@ country_event = {
 	option = {
 		name = leviathans.105.d
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -2104,6 +2116,7 @@ country_event = {
 			check_variable = { which = rm_total_subjects value > 0 }
 		}
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -2265,6 +2278,7 @@ country_event = {
 			check_variable = { which = rm_total_subjects value > 0 }
 		}
 		hidden_effect = {
+			remove_country_flag = regentmaker_control_engaged
 			country_event = { id = regentmaker.0 }
 		}
 	}
@@ -2275,7 +2289,13 @@ country_event = {
 	id = regentmaker.60
 	title = regentmaker.60.name
 	desc = regentmaker.60.desc
-	picture = GFX_evt_arguing_senate
+	# picture = GFX_evt_arguing_senate
+	diplomatic = yes
+	picture_event_data = {
+		portrait = root.owner_main_species
+		room = enclave_curator_room
+	}
+	custom_gui = sgm_ScrollbarEventWindow
 	show_sound = event_conversation
 	location = event_target:subject_selected
 	# trigger = {  }

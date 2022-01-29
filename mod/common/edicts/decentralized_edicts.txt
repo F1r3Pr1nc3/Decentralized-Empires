@@ -94,8 +94,26 @@ regentmaker_control = {
 		category = edicts
 		cost = { influence = 0 }
 	}
-	potential = { is_overlord = yes }
+	potential = {
+		OR = {
+			is_overlord = yes
+			AND = {
+				is_subject = yes
+				is_subject_type = member_state
+				has_country_flag = regentmaker_control_sel
+				overlord = {
+					is_ai = yes
+					OR = {
+						has_country_flag = decentralizer
+						has_ascension_perk = ap_decentralization
+						has_valid_civic = civic_feudal_realm
+					}
+				}
+			}
+		}
+	}
 	allow = {
+		is_ai = no
 		NOR = {
 			has_active_event = { regentmaker.0 }
 			has_country_flag = regentmaker_control_engaged
@@ -104,12 +122,20 @@ regentmaker_control = {
 			has_country_flag = decentralizer
 			has_ascension_perk = ap_decentralization
 			has_valid_civic = civic_feudal_realm
+			has_global_flag = regentmaker_control_sel@this
 		}
 	}
 	# modifier = { }
 	# prerequisites = { }
 	effect = {
-		country_event = { id = regentmaker.0 }
+		if = {
+			limit = { is_overlord = yes }
+			country_event = { id = regentmaker.0 }
+		} else = {
+			remove_country_flag = regentmaker_control_sel
+			remove_global_flag = regentmaker_control_sel@this
+			overlord = { set_player = prev }
+		}
 	}
 	ai_weight = { weight = 0 }
 }

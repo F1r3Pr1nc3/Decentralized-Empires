@@ -2159,12 +2159,19 @@ country_event = {
 			every_subject = {
 				limit = { is_subject_type = member_state }
 				prev = { change_variable = { which = member_count value = 1 } }
-				set_country_flag = decentralized_electing
+				set_timed_country_flag = { flag = decentralized_electing days = 25 }
 				# copy_techs_from = { target = root } # bring everyone to one level
-				country_event = { id = decentralized.202 }
+				country_event = { id = decentralized.202 days = 3 random = 3 }
 			}
-			# Debug only
-			# country_event = { id = decentralized.202 } # leader does not vote
+			# Debug only / # leader does not vote!?
+			if = {
+				limit = { is_ai = yes }
+				change_variable = { which = member_count value = 1 }
+				change_variable = { which = election_count value = 0.5 }
+				country_event = { id = decentralized.202 days = 3 random = 3 }
+			}
+			# max time
+			country_event = { id = decentralized.203 days = 30 }
 		}
 	}
 }
@@ -2515,7 +2522,7 @@ country_event = {
 		event_target:current_leader = {
 			change_variable = { which = member_count value = -1 }
 			if = { limit = { check_variable = { which = member_count value < 1 } }
-				country_event = { id = decentralized.203 }
+				country_event = { id = decentralized.203 days = 6 random = 6 }
 			}
 		}
 	}
@@ -2545,10 +2552,42 @@ country_event = {
 				check_variable = { which = election_count value > root.election_count }
 			}
 			position = 0
-			order_by = election_count # trigger:fleet_power
-			country_event = { id = decentralized.204 }
+			order_by = election_count
+			save_event_target_as = decentralized_winner
 		}
-		country_event = { id = decentralized.205 days = 4 } # Notify
+
+		if = { limit = { exists = event_target:decentralized_winner }
+			set_country_flag = decentralized_lost
+			if = {
+				limit = {
+					any_subject = {
+						is_subject_type = member_state
+						is_variable_set = election_count
+						NOT = { is_same_empire = event_target:decentralized_winner }
+						check_variable = { which = election_count value >= event_target:decentralized_winner.election_count }
+						fleet_power > event_target:decentralized_winner.trigger:fleet_power
+					}
+				}
+				## runoff
+				random_subject = {
+					limit = {
+						is_subject_type = member_state
+						is_variable_set = election_count
+						NOT = { is_same_empire = event_target:decentralized_winner }
+						check_variable = { which = election_count value >= event_target:decentralized_winner.election_count }
+						fleet_power > event_target:decentralized_winner.trigger:fleet_power
+					}
+					save_event_target_as = decentralized_winner
+					country_event = { id = decentralized.204 days = 2 }
+				}
+			} else = {
+				event_target:decentralized_winner = {
+					country_event = { id = decentralized.204 days = 4 }
+				}
+			}
+		}
+		country_event = { id = decentralized.205 days = 8 } # Notify
+
 		clear_variable = election_count
 		clear_variable = member_count
 		event_target:election_target1 = { clear_variable = election_count }
@@ -2662,6 +2701,7 @@ country_event = {
 	# immediate = {}
 	option = { name = OK }
 }
+### END ELECTION ##########
 
 # Opportunity to join Overlord's vassals into Member States (on_becoming_subject).
 # This = subject
