@@ -10,7 +10,7 @@ wg_expansion_ultimatum = {
 	# threat_multiplier = 1.25
 	war_exhaustion = 1.25
 	potential = {
-		always = no # event only
+		always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
 		# 	is_subject_type = member_state
@@ -64,7 +64,7 @@ wg_defy_ultimatum = {
 	# threat_multiplier = 1.25
 	war_exhaustion = 1.25
 	potential = {
-		always = no # event only
+		always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
 		# 	is_subject_type = member_state
@@ -93,7 +93,7 @@ wg_defy_ultimatum = {
 			}
 		}
 	}
-	# THIS = war goal country, FROM = war goal target country
+	# this = war goal country, from = war goal target country
 	on_accept = {
 		custom_tooltip = wg_revoke_claims_accept
 		hidden_effect = {
@@ -144,7 +144,7 @@ wg_member_trade_war = {
 	# threat_multiplier = 1.25
 	war_exhaustion = 1.25
 	potential = {
-		# always = no # event only
+		# always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
 		# 	is_subject_type = member_state
@@ -457,7 +457,7 @@ wg_member_trade_war = {
 	# from = defender
 	# fromfrom = war (unsure)
 	on_wargoal_set = {
- 		# remove overlord as war_participant
+ 		# Remove overlord as war_participant
 		if = {
 			limit = {
 				# exists = from
@@ -517,7 +517,7 @@ wg_demand_system = {
 	set_defender_wargoal = wg_defend_system
 	# threat_multiplier = 1.25
 	potential = {
-		# always = no # event only
+		# always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
 		# 	is_subject_type = member_state
@@ -563,7 +563,7 @@ wg_demand_system = {
 	# from = defender
 	# fromfrom = war (unsure)
 	on_wargoal_set = {
- 		# remove overlord as war_participant
+ 		# Remove overlord as war_participant
 		if = {
 			limit = {
 				# exists = from
@@ -622,7 +622,7 @@ wg_defend_system = {
 	# threat_multiplier = 1.25
 	war_exhaustion = 1.25
 	potential = {
-		# always = no # event only
+		# always = no # Event only
 		# has_ascension_perk = ap_decentralization
 		# OR = {
 		# 	has_modifier = decentralized_leader
@@ -680,7 +680,7 @@ wg_defend_system = {
 	# from = defender
 	# fromfrom = war (unsure)
 	on_wargoal_set = {
- 		# remove overlord as war_participant
+ 		# Remove overlord as war_participant
 		if = {
 			limit = {
 				# exists = from
@@ -855,7 +855,7 @@ wg_forced_decentralization = {
 						save_event_target_as = new_member_state
 					}
 
-					country_event = { id = decentralized.209 } # get it
+					country_event = { id = decentralized.209 } # Get it
 				}
 			}
 		}
@@ -984,7 +984,7 @@ wg_independence = {
 			# 		set_friendly = no
 			# 	}
 			# }
-			# fromfrom = { # war scope seems only work for on_accept
+			# fromfrom = { # War scope seems only work for on_accept.
 			if = {
 				limit = {
 					any_war = {
@@ -1023,7 +1023,7 @@ wg_independence = {
 							set_subject_of = { who = none }
 						}
 					}
-					# Remove all non marauder related from war
+					# Remove all non marauder related from war.
 					every_defender = {
 						limit = {
 							NOR = {
@@ -1073,7 +1073,7 @@ wg_independence = {
 				exists = event_target:decentralizer
 			}
 			event_target:decentralizer = {
-				random_war = { # find right war
+				random_war = { # Find right war
 					limit = {
 						is_war_participant = { who = root }
 						is_war_participant = { who = from }

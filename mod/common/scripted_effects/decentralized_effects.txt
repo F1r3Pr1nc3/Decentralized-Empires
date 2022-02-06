@@ -65,7 +65,7 @@ commit_system_to = {
 			}
 		}
 		if = { limit = { is_capital = yes }
-			# fully commit empire (otherwise systems can relegate)
+			# Fully commit empire (otherwise systems can relegate)
 			owner = {
 				if = { limit = { exists = $EMPIRE$ $EMPIRE$ = { is_scope_type = country } }
 					$EMPIRE$ = { fully_commit_prev_empire_to_this = yes }

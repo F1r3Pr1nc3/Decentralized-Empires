@@ -52,14 +52,14 @@ country_event = {
 				get_vassal_species = yes # event_target:vassal_species
 
 				create_country = {
-					name = "[This.GetStarName]" # this is feature (as star names can be customized)
+					name = "[This.GetStarName]" # This is feature (as star names can be customized)
 					name_list = root
 					type = default
 					# ship_prefix = ""
 					authority = random # auth_imperial
 					civics = random
 					species = event_target:vassal_species
-					flag = random # separate color definition not possible!?
+					flag = random # Separate color definition not possible!?
 					randomize_ethos = yes
 					ethos = random
 					ignore_initial_colony_error = yes
@@ -117,7 +117,7 @@ country_event = {
 	}
 }
 
-# triggers special project for decentralization
+# Triggers special project for decentralization.
 country_event = {
 	id = decentralized.2
 	title = "decentralized.2.name"
@@ -406,7 +406,7 @@ country_event = {
 			# Increase subject size
 			if = {
 				limit = {
-					exists = this # without the game crashes
+					exists = this # Without the game crashes
 					controlled_systems > 2
 					controlled_systems < 6
 					root = { empire_sprawl_cap_fraction > 2.0 }
@@ -427,7 +427,7 @@ country_event = {
 						# 		is_same_empire = root
 						# 	}
 						# }
-						# concrete trigger
+						# Concrete trigger
 						any_neighbor_system = {
 							has_owner = yes
 							owner = { NOT = { is_same_empire = prevprevprev } }
@@ -474,7 +474,7 @@ country_event = {
 			}
 
 			if = {
-				limit = { exists = this } # without the game crashes
+				limit = { exists = this } # Without the game crashes
 				# action_open_borders
 				set_closed_borders = {
 					who = root
@@ -587,7 +587,7 @@ planet_event = {
 	}
 	immediate = {
 		add_modifier = { modifier = "planetary_nationalism" }
-		owner = { # secundary addition
+		owner = { # Secundary addition
 			if = { limit = { NOT = { has_modifier =  "SUBJECT_member_state" } }
 				add_modifier = { modifier = "SUBJECT_member_state" }
 			}
@@ -664,10 +664,12 @@ country_event = {
 	is_triggered_only = yes
 	trigger = {
 		is_scope_valid = yes
+		years_passed > 50
+		NOT = { has_active_event = { decentralized.7 } }
 		OR = {
 			has_country_flag = decentralizer
 			has_ascension_perk = ap_decentralization
-			has_valid_civic = civic_feudal_realm
+			# has_valid_civic = civic_feudal_realm
 		}
 		any_subject = {
 			OR = {
@@ -689,7 +691,6 @@ country_event = {
 	}
 	after = {
 		hidden_effect = {
-			add_resource = { influence = -10 }
 			clear_global_event_target = decentralizer
 		}
 	}
@@ -712,6 +713,9 @@ country_event = {
 			}
 			is_overlord_to = from
 		}
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 19 } }
+		}
 		hidden_effect = {
 			from = {
 				set_subject_of = {
@@ -720,15 +724,15 @@ country_event = {
 				}
 				# add_resource = { influence = 40 }
 			}
-			add_resource = { influence = -10 }
+			add_resource = { influence = -20 }
 			save_event_target_as = decentralizer
 			country_event = { id = decentralized.209 }
 		}
 	}
 
 	option = {
-		name = decentralized.7.b
-		exclusive_trigger = {
+		name = decentralized.7.c
+		trigger = {
 			exists = event_target:decentralizer
 			is_same_empire = event_target:decentralizer
 			count_subject = {
@@ -742,6 +746,9 @@ country_event = {
 					}
 				}
 			}
+		}
+		allow = {
+			hidden_trigger = { has_resource = { type = influence amount > 29 } }
 		}
 		every_subject = {
 			limit = {
@@ -760,11 +767,11 @@ country_event = {
 			set_timed_country_flag = { flag = day_0 days = 10 }
 		}
 		hidden_effect = {
-			add_resource = { influence = -20 }
+			add_resource = { influence = -30 }
 		}
 	}
 	option = {
-		name = decentralized.7.c
+		name = decentralized.7.b # No way
 		allow = {
 			hidden_trigger = { has_resource = { type = influence amount > 19 } }
 		}
@@ -780,6 +787,12 @@ country_event = {
 				}
 				set_timed_country_flag = { flag = day_0 days = 10 }
 			}
+		}
+	}
+	option = {
+		name = "colony_mod.5.b"
+		exclusive_trigger = {
+			hidden_trigger = { has_resource = { type = influence amount < 20 } }
 		}
 	}
 }
@@ -872,7 +885,7 @@ country_event = {
 			country_event = { id = decentralized.17 }
 		}
 	}
-	# option = { name = distar.1055.b } # needs reset edict counter?
+	# option = { name = distar.1055.b } # Needs reset edict counter?
 	option = { name = TRADE_OFFER_NOTHING }
 }
 
@@ -888,8 +901,7 @@ country_event = {
 	option = {
 		name = decentralized.23.a
 		event_target:terrorizer = {
-			add_resource = { influence = -50 }
-			add_resource = { energy = -1000 }
+			add_resource = { influence = -50 energy = -1000 }
 			add_opinion_modifier = {
 				modifier = opinion_falsely_punished
 				who = root
@@ -998,7 +1010,7 @@ country_event = {
 			}
 		}
 	}
-	# stay out of it
+	# Stay out of it
 	option = {
 		name = decentralized.24.c
 		add_resource = { influence = -150 }
@@ -1227,7 +1239,7 @@ country_event = {
 # 	}
 # }
 
-# give 200 energy
+# Give 200 energy
 country_event = {
 	id = decentralized.15
 	title = "decentralized.15.name"
@@ -1243,8 +1255,7 @@ country_event = {
 	# accept
 	option = {
 		name = decentralized.15.a
-		add_resource = { influence = 40 }
-		add_resource = { energy = -250 }
+		add_resource = { influence = 40 energy = -250 }
 		event_target:resource_asker = {
 			add_resource = { energy = 250 }
 		}
@@ -1289,7 +1300,7 @@ country_event = {
 	}
 }
 
-# give 500 energy
+# Give 500 energy
 country_event = {
 	id = decentralized.16
 	title = "decentralized.16.name"
@@ -1305,8 +1316,7 @@ country_event = {
 	# accept
 	option = {
 		name = decentralized.16.a
-		add_resource = { influence = 40 }
-		add_resource = { energy = -500 }
+		add_resource = { influence = 40 energy = -500 }
 		event_target:resource_asker = {
 			add_resource = { energy = 500 }
 		}
@@ -1351,7 +1361,7 @@ country_event = {
 	}
 }
 
-# give 1000 energy
+# Give 1000 energy
 country_event = {
 	id = decentralized.17
 	title = "decentralized.17.name"
@@ -1367,8 +1377,7 @@ country_event = {
 	# accept
 	option = {
 		name = decentralized.17.a
-		add_resource = { influence = 40 }
-		add_resource = { energy = -1000 }
+		add_resource = { influence = 40 energy = -1000 }
 		event_target:resource_asker = {
 			add_resource = { energy = 1000 }
 		}
@@ -1424,8 +1433,7 @@ country_event = {
 	# Give 2000 energy credits to victim.
 	option = {
 		name = decentralized.21.a
-		add_resource = { influence = -40 }
-		add_resource = { energy = -1000 }
+		add_resource = { influence = -40 energy = -1000 }
 		event_target:terrorized = {
 			add_resource = { energy = 1000 }
 		}
@@ -1456,8 +1464,7 @@ country_event = {
 	# Execute pirate
 	option = {
 		name = decentralized.21.b
-		add_resource = { influence = -150 }
-		add_resource = { energy = -1500 }
+		add_resource = { influence = -150 energy = -1500 }
 		event_target:terrorized = {
 			add_resource = { energy = 1500 }
 		}
@@ -1526,7 +1533,7 @@ country_event = {
 	picture = GFX_evt_voting
 	is_triggered_only = yes
 	immediate = { }
-	# report this to capital
+	# Report this to capital
 	option = {
 		name = decentralized.22.a
 		add_resource = { influence = 100 }
@@ -1563,7 +1570,7 @@ country_event = {
 			}
 		}
 	}
-	# do nothing
+	# Do nothing
 	option = {
 		name = decentralized.22.b
 		add_resource = { influence = -50 }
@@ -1585,7 +1592,7 @@ country_event = {
 			}
 		}
 	}
-	# declare war
+	# Declare war
 	option = {
 		name = decentralized.22.c
 		add_resource = { influence = 100 }
@@ -2030,9 +2037,9 @@ country_event = {
 				who = event_target:decentralizer
 				subject_type = member_state
 			}
-			country_event = { id = decentralized.3 } # few more systems
+			country_event = { id = decentralized.3 } # Few more systems
 			prev = { save_global_event_target_as = decentralizer }
-			country_event = { id = decentralized.209 days = 3 } # get it
+			country_event = { id = decentralized.209 days = 3 } # Get it
 		}
 	}
 }
@@ -2040,7 +2047,7 @@ country_event = {
 ######################
 # Election Events
 ######################
-# election on leader change
+# Election on leader change
 country_event = {
 	id = decentralized.201
 	title = "decentralized.201.name"
@@ -2058,7 +2065,7 @@ country_event = {
 		NOT = { has_modifier = electoral }
 		# is_at_war = no
 		# }
-		# NOT = { has_country_flag = de_election_won } # not to often
+		# NOT = { has_country_flag = de_election_won } # Not to often
 		count_subject = {
 			count > 2
 			limit = { is_subject_type = member_state }
@@ -2069,7 +2076,7 @@ country_event = {
 		if = { limit = { has_modifier = "SUBJECT_member_state" }
 			remove_modifier = "SUBJECT_member_state"
 		}
-		# Only one to be sure
+		# Only one to be sure.
 		random_playable_country = {
 			limit = {
 				is_subject = no
@@ -2160,17 +2167,17 @@ country_event = {
 				limit = { is_subject_type = member_state }
 				prev = { change_variable = { which = member_count value = 1 } }
 				set_timed_country_flag = { flag = decentralized_electing days = 25 }
-				# copy_techs_from = { target = root } # bring everyone to one level
+				# copy_techs_from = { target = root } # Bring everyone to one level.
 				country_event = { id = decentralized.202 days = 3 random = 3 }
 			}
-			# Debug only / # leader does not vote!?
+			# Debug only / # Leader does not vote!?
 			if = {
 				limit = { is_ai = yes }
 				change_variable = { which = member_count value = 1 }
 				change_variable = { which = election_count value = 0.5 }
 				country_event = { id = decentralized.202 days = 3 random = 3 }
 			}
-			# max time
+			# Max time
 			country_event = { id = decentralized.203 days = 30 }
 		}
 	}
@@ -2183,12 +2190,14 @@ country_event = {
 	desc = "decentralized.202.desc"
 	picture = GFX_evt_voting
 	is_triggered_only = yes
+	force_open = yes
+	auto_opens = yes
 	trigger = {
 		exists = event_target:current_leader
 		exists = event_target:election_target1
 	}
 	immediate = {
-		# bring everyone to one level
+		# Bring everyone to one level.
 		copy_techs_from = {
 			target = event_target:current_leader
 			except = { # Horizon Signal
@@ -2287,7 +2296,7 @@ country_event = {
 		# 	factor = 20
 		# 	modifier = {
 		# 		factor = 0
-		# 		is_same_empire = event_target:current_leader # be more changeable for ai
+		# 		is_same_empire = event_target:current_leader # Be more changeable for ai.
 		# 	}
 		# 	modifier = {
 		# 		factor = 0.9
@@ -2603,6 +2612,8 @@ country_event = {
 	desc = "decentralized.204.desc"
 	picture = GFX_evt_announcement
 	is_triggered_only = yes
+	force_open = yes
+	auto_opens = yes
 	# trigger = {	}
 	immediate = {
 		save_event_target_as = decentralized_winner
@@ -2649,6 +2660,8 @@ country_event = {
 	desc = "decentralized.205.desc"
 	picture = GFX_evt_announcement
 	is_triggered_only = yes
+	force_open = yes
+	auto_opens = yes
 	trigger = {
 		NOT = { has_country_flag = decentralized_lost }
 	}
@@ -2656,7 +2669,7 @@ country_event = {
 		save_event_target_as = decentralized_winner
 		add_modifier = { modifier = electoral years = 2 }
 		# set_timed_country_flag = { flag = de_election_won years = 1 }
-		every_subject = { # get reward
+		every_subject = { # Get reward
 			limit = { is_subject_type = member_state }
 			root = { copy_techs_from = { target = prev } }
 		}
@@ -2675,6 +2688,8 @@ country_event = {
 	desc = "decentralized.206.desc"
 	picture = GFX_evt_throne_room
 	is_triggered_only = yes
+	force_open = yes
+	auto_opens = yes
 	immediate = {
 		set_timed_global_flag = {
 			flag = regentmaker_control_sel@root
@@ -2711,14 +2726,19 @@ country_event = {
 	hide_window = yes
 	is_triggered_only = yes
 	trigger = {
+		years_passed > 50
+		exists = from
 		from = {
 			OR = {
 				has_country_flag = decentralizer
 				has_ascension_perk = ap_decentralization
-				has_valid_civic = civic_feudal_realm
+				# has_valid_civic = civic_feudal_realm
 			}
 		}
-		NOT = { is_subject_type = member_state }
+		NOR = {
+			is_subject_type = member_state
+			has_country_flag = day_0
+		}
 		OR = {
 			is_country_type = default
 			is_subject_type = vassal
@@ -2727,7 +2747,7 @@ country_event = {
 	}
 	immediate = {
 		from = {
-			country_event = { id = decentralized.7 days = 20 random = 10 }
+			country_event = { id = decentralized.7 days = 30 random = 20 }
 			if = { limit = { has_modifier = "SUBJECT_member_state" }
 				remove_modifier = "SUBJECT_member_state"
 			}
@@ -2837,7 +2857,7 @@ country_event = {
 					closest_system = {
 						min_steps = 1
 						max_steps = 3
-						# use_bypasses = yes # to much performance?
+						# use_bypasses = yes # To much performance?
 						limit = {
 							NOT = { has_star_flag = decentral_excluded }
 							has_owner = yes
@@ -2852,7 +2872,7 @@ country_event = {
 			}
 			if = {
 				limit = {
-					exists = this # without the game crashes
+					exists = this # Without the game crashes
 					has_country_flag = day_0
 				}
 				country_event = { id = decentralized.209 days = 3 random = 3 } # create_starting_fleets = yes # TODO later ?
@@ -2871,7 +2891,7 @@ country_event = {
 								has_owner = no
 								is_capital_system = yes
 								has_star_flag = decentral_excluded
-								# any_bordering_country = { is_same_empire = root } # seems to include always own empire
+								# any_bordering_country = { is_same_empire = root } # Seems to include always own empire.
 							}
 						}
 						weights = {
@@ -2923,7 +2943,7 @@ country_event = {
 					}
 					min_steps = 1
 					max_steps = 3
-					# use_bypasses = yes # to much performance?
+					# use_bypasses = yes # To much performance?
 					prev = { commit_system_to = { EMPIRE = prev.space_owner } }
 				}
 			}
@@ -3016,7 +3036,7 @@ country_event = {
 				else_if = {
 					limit = { is_ship_class = shipclass_transport }
 					# TODO: replace scope workaround for ship.army bug !?
-					# give armies (general)
+					# Give armies (general)
 					event_target:decentralizer = {
 						every_owned_army = {
 							limit = {
@@ -3027,7 +3047,7 @@ country_event = {
 							set_owner = fleet.owner
 						}
 					}
-					# set leader
+					# Set leader
 					if = {
 						limit = { exists = leader }
 						prevprevprev = {
@@ -3222,10 +3242,10 @@ country_event = {
 		country_event = { id = game_start.8 days = 9 random = 3 } # +tech +resources
 		country_event = { id = game_start.9 days = 12 random = 4 } # empire_init_create_ships
 		capital_scope = {
-			planet_event = { id = game_start.20 days = 80 random = 30 } # remove blockers on capital
-			planet_event = { id = game_start.21 days = 120 random = 40 } # upgrade colony shelter on additional colonies
-			planet_event = { id = game_start.22 days = 180 random = 60 } # set up additional buildings (mines, farms, power plants)
-			planet_event = { id = game_start.23 days = 360 random = 90 } # add additional pops
+			planet_event = { id = game_start.20 days = 80 random = 30 } # Remove blockers on capital
+			planet_event = { id = game_start.21 days = 120 random = 40 } # Upgrade colony shelter on additional colonies.
+			planet_event = { id = game_start.22 days = 180 random = 60 } # Set up additional buildings (mines, farms, power plants)
+			planet_event = { id = game_start.23 days = 360 random = 90 } # Add additional pops
 
 			solar_system = {
 				if = {

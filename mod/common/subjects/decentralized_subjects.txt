@@ -24,7 +24,7 @@ member_state = {
 	can_be_integrated = yes
 
 	research_agreement = yes
-	research_sharing = yes	# for tech sharing modifier
+	research_sharing = yes	# For tech sharing modifier
 
 	joins_overlord_wars = no # yes
 	calls_overlord_to_war = yes
