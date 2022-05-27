@@ -86,8 +86,8 @@ country_event = {
 		if = {
 			limit = {
 				NOR = {
-					root = { is_subject_type = member_state }
-					fromfrom = { is_subject_type = member_state }
+					root = { any_agreement = { agreement_preset = preset_member_state } }
+					fromfrom = { any_agreement = { agreement_preset = preset_member_state } }
 				}
 			}
 			if = {
@@ -130,8 +130,8 @@ country_event = {
 		if = {
 			limit = {
 				NOR = {
-					root = { is_subject_type = member_state }
-					fromfrom = { is_subject_type = member_state }
+					root = { any_agreement = { agreement_preset = preset_member_state } }
+					fromfrom = { any_agreement = { agreement_preset = preset_member_state } }
 				}
 			}
 			if = {
@@ -174,8 +174,8 @@ country_event = {
 		if = {
 			limit = {
 				NOR = {
-					root = { is_subject_type = member_state }
-					fromfrom = { is_subject_type = member_state }
+					root = { any_agreement = { agreement_preset = preset_member_state } }
+					fromfrom = { any_agreement = { agreement_preset = preset_member_state } }
 				}
 			}
 			if = {

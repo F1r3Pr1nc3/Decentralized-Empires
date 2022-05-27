@@ -1,4 +1,4 @@
-﻿l_english:
+﻿l_japanese:
  # Decentralization events
  decentralized.1.name: "The Reforms have Begun"
  decentralized.1.desc: "The colonies have been granted greater autonomy. The next few weeks will be spent distributing territory between them, with an eye toward ensuring they have the resources to support themselves. This is surely the beginning of something truly revolutionary."
@@ -180,17 +180,14 @@
  regentmaker.11.a: "All fleets in territory of member states"
  regentmaker.11.b: "Choose a specific vassal"
  regentmaker.11.desc: "This allows us to give starfleets to our most loyal vassals."
-
  regentmaker.501: "$RENAME_EMPIRE_TITLE$: $SUBJECT_member_state$"
  regentmaker.501.desc: "You can give one of your $SUBJECT_member_state_plural$ a new empire name."
  regentmaker.504: "Alter Subject Name"
-
  regentmaker_auth_democratic: "£democratic£ - $auth_democratic$-"
  regentmaker_auth_dictatorial: "£dictatorial£ - $auth_dictatorial$  -"
  regentmaker_auth_imperial: "£imperial£ - $auth_imperial$      -"
  regentmaker_auth_oligarchic: "£oligarchic£ - $auth_oligarchic$  -"
  regentmaker_auth_corporate: "£corporate£ - $auth_corporate$   -"
-
  #Edicts
  edict_regentmaker: "Regentmaker Mark for Release"
  edict_regentmaker_desc: "This edict allows one to mark the selected worlds for release as a vassal state."
@@ -202,7 +199,6 @@
  edict_regentmaker_choose_gov_desc: "$regentmaker.8.desc$"
  edict_regentmaker_control: "$regentmaker.0$"
  edict_regentmaker_control_desc: "$regentmaker.0.desc$"
-
  # Decisions
  decision_regentmaker: "Mark Regentmaker World"
  decision_regentmaker_desc: "This world is set aside and marked for possible release as a vassal state."
@@ -210,7 +206,6 @@
  decision_rem_regentmaker: "Remove Mark on World"
  decision_rem_regentmaker_desc: "This world will no longer be considered for release as a vassal state."
  decision_rem_regentmaker_effects_short: "Remove 'Release Mark'"
-
  decision_excld_decentral: "Exclude World from $ap_decentralization$"
  decision_excld_decentral_desc: "This world will be marked ineligible for possible release as an autonomous $SUBJECT_member_state$."
  decision_excld_decentral_effects_short: "Excludes planet for release as a $SUBJECT_member_state$."
@@ -224,7 +219,6 @@
  # Modifiers
  regentmaker_colony: "Regentmaker Mark"
  regentmaker_colony_desc: "The planet has been marked for release."
-
  decision_true_emperor: "Regentmaker $SUBJECT_member_state_plural$ Control"
  decision_true_emperor_desc: "This enables you to take direct control of one of your $SUBJECT_member_state_plural$ (for at least 1 year)."
  decision_true_emperor_effects_short: "Switch your rule to one of your subjects."
@@ -238,11 +232,8 @@
  regentmaker.101.a: "$akx.9610.b$ $akx.9610.c$"
  regentmaker.101.b: "$OK$ $fedel.899.a$"
  regentmaker.101.desc: "$STELLARITE_STAR_PROJECT$.\nIt is time to make a decision."
-
 #########################
-
  # Change Subject Ethics
-
  rm.2.name: "Alter Subject Ethics"
  rm.2.desc: "Due to the ever-evolving political environment of our galaxy, it will sometimes be in our best interest to alter the values and ideals of our subjects."
  rm.2.desc.fail: "We have no subject states at the moment."
@@ -271,7 +262,6 @@
  rm.3.back: "They shall remain as they are."
  rm.4.name: "£unknown_auth£ Alter Subject Government"
  rm.4.desc: "Due to the ever-evolving political environment of our galaxy, it will sometimes be in our best interest to change the structure of our subjects' governments."
-
  regentmaker.60.name: "£political_power£ Alter Ethics"
  regentmaker.60.desc: "What values should §Y[subject_selected.GetName]§! society embrace?"
  regentmaker.70.name: "£unknown_auth£ Restructure Government"

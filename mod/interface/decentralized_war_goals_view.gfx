@@ -39,4 +39,13 @@ spriteTypes = {
 		# texturefile = "gfx/interface/icons/modifiers/mod_country_subject_power_penalty.dds"
 		# texturefile = "gfx/interface/icons/modifiers/mod_country_subject_acceptance_add.dds"
 	}
+	spriteType = {
+		name = "GFX_diplomacy_specialist_subject_member_state"
+		texturefile = "gfx/interface/icons/diplomacy/diplomacy_specialist_subject_member_state.dds"
+	}
+	spriteType = {
+		name = "GFX_diplomacy_specialist_subject_member_state_large"
+		texturefile = "gfx/interface/subjugation/specialists_icons/specialist_subject_member_state_icon.dds"
+	}
+
 }

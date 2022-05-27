@@ -1,0 +1,30 @@
+preset_member_state = {
+	icon = "GFX_diplomacy_status_is_member_state"
+	specialist_type = specialist_member_state
+	term_data = {
+		discrete_terms = {
+			{ key = specialist_type			value = specialist_member_state }
+			{ key = subject_integration		value = subject_can_be_integrated }
+			{ key = subject_diplomacy		value = subject_can_do_diplomacy }
+			{ key = subject_expand			value = subject_can_expand }
+			{ key = joins_overlord_wars		value = joins_overlord_wars_offensive }
+			{ key = joins_subject_wars		value = joins_subject_wars_offensive }
+			{ key = naval_capacity			value = naval_cap_unmodified }
+			{ key = has_access				value = yes_access }
+			{ key = subject_sensors			value = subject_gets_sensors }
+			{ key = subject_holdings_limit	value = subject_holdings_limit_1 }
+			{ key = protectorate			value = subject_is_protectorate }
+			{ key = subject_loyalty			value = subject_loyalty_effects }
+		}
+		resource_terms = {
+			{ key = resource_subsidies_basic	value = 0.15 }
+			{ key = resource_subsidies_advanced	value = 0.2 }
+			{ key = resource_subsidies_research	value = -0.2 }
+		}
+	}
+	potential = {
+		from = { is_country_type = default }
+		# tech_unlocked_ratio = { who = from ratio >= 0.4 }
+		has_been_declared_crisis = no
+	}
+}

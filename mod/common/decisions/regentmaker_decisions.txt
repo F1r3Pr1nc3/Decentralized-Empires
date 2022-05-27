@@ -106,7 +106,7 @@ decision_excld_decentral = {
 		# }
 	}
 
-	effect = { solar_system = { set_timed_star_flag = { flag = decentral_excluded days = 30 } } }
+	effect = { solar_system = { set_timed_star_flag = { flag = decentral_excluded months = 1 } } }
 	ai_weight = { weight = 0 }
 }
 
@@ -160,7 +160,7 @@ decision_true_emperor = {
 				has_ascension_perk = ap_decentralization
 				AND = {
 					is_subject = yes
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					overlord = {
 						is_ai = yes
 						OR = {

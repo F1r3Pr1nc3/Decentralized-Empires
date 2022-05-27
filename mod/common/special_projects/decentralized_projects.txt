@@ -11,13 +11,13 @@ special_project = {
 	on_start = {
 		# Pre-exclude near capital systems!? (from decentralized.2)
 		solar_system = {
-			set_timed_star_flag = { flag = decentral_excluded days = 30 }
+			set_timed_star_flag = { flag = decentral_excluded months = 1 }
 			every_neighbor_system = {
 				limit = {
 					has_owner = yes
 					is_owned_by = root
 				}
-				set_timed_star_flag = { flag = decentral_excluded days = 30 }
+				set_timed_star_flag = { flag = decentral_excluded months = 1 }
 			}
 		}
 	}

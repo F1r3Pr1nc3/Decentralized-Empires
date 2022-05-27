@@ -56,7 +56,7 @@ commit_system_to = {
 					is_subject = yes
 					OR = {
 						is_country_type = default
-						is_subject_type = member_state
+						any_agreement = { agreement_preset = preset_member_state }
 					}
 					is_loyal_to = root
 					root = { is_overlord_to = prev }

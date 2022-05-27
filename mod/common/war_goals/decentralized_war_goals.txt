@@ -13,9 +13,9 @@ wg_expansion_ultimatum = {
 		always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
-		# 	is_subject_type = member_state
+		# 	any_agreement = { agreement_preset = preset_member_state }
 		# }
-		# from = { is_subject_type = member_state }
+		# from = { any_agreement = { agreement_preset = preset_member_state } }
 	}
 	possible = {
 		custom_tooltip = {
@@ -67,12 +67,12 @@ wg_defy_ultimatum = {
 		always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
-		# 	is_subject_type = member_state
+		# 	any_agreement = { agreement_preset = preset_member_state }
 		# }
 		# from = {
 	 	# 	OR = {
 		# 		has_ascension_perk = ap_decentralization
-		# 		is_subject_type = member_state
+		# 		any_agreement = { agreement_preset = preset_member_state }
 		# 	}
 		# }
 	}
@@ -109,8 +109,8 @@ wg_defy_ultimatum = {
 			if = { limit = { has_modifier = "satrapy_of_horde" }
 				remove_modifier = "satrapy_of_horde"
 			}
-			if = { limit = { has_modifier = "SUBJECT_member_state" }
-				remove_modifier = "SUBJECT_member_state"
+			if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+				remove_modifier = specialist_member_state_subject_modifier
 			}
 		}
 		from = {
@@ -147,10 +147,10 @@ wg_member_trade_war = {
 		# always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
-		# 	is_subject_type = member_state
+		# 	any_agreement = { agreement_preset = preset_member_state }
 		# }
-		is_subject_type = member_state
-		from = { is_subject_type = member_state }
+		any_agreement = { agreement_preset = preset_member_state }
+		from = { any_agreement = { agreement_preset = preset_member_state } }
 	}
 	possible = {
 		custom_tooltip = {
@@ -449,7 +449,7 @@ wg_member_trade_war = {
 		}
 		hidden_effect = {
 			from = {
-				add_modifier = { modifier = raided days = 3600 }
+				add_modifier = { modifier = raided years = 10 }
 			}
 		}
 	}
@@ -520,10 +520,10 @@ wg_demand_system = {
 		# always = no # Event only
 		# OR = {
 		# 	has_ascension_perk = ap_decentralization
-		# 	is_subject_type = member_state
+		# 	any_agreement = { agreement_preset = preset_member_state }
 		# }
-		is_subject_type = member_state
-		from = { is_subject_type = member_state }
+		any_agreement = { agreement_preset = preset_member_state }
+		from = { any_agreement = { agreement_preset = preset_member_state } }
 	}
 	possible = {
 		custom_tooltip = {
@@ -627,17 +627,17 @@ wg_defend_system = {
 		# OR = {
 		# 	has_modifier = decentralized_leader
 		# 	has_modifier = electoral
-		# 	is_subject_type = member_state
+		# 	any_agreement = { agreement_preset = preset_member_state }
 		# }
 		# from = {
 		# 	OR = {
 		# 		has_modifier = decentralized_leader
 		# 		has_modifier = electoral
-		# 		is_subject_type = member_state
+		# 		any_agreement = { agreement_preset = preset_member_state }
 		# 	}
 		# }
-		is_subject_type = member_state
-		from = { is_subject_type = member_state }
+		any_agreement = { agreement_preset = preset_member_state }
+		from = { any_agreement = { agreement_preset = preset_member_state } }
 	}
 	possible = {
 		custom_tooltip = {
@@ -672,7 +672,7 @@ wg_defend_system = {
 				add_resource = { influence = -1000 }
 			}
 			event_target:demander = {
-				add_modifier = { modifier = humiliated days = 3600 }
+				add_modifier = { modifier = humiliated years = 10 }
 			}
 		}
 	}
@@ -847,7 +847,7 @@ wg_forced_decentralization = {
 				last_created_country = {
 					set_subject_of = {
 						who = root
-						subject_type = member_state
+						preset = preset_member_state
 					}
 
 					if = { # For decentralized.111
@@ -935,8 +935,8 @@ wg_independence = {
 			if = { limit = { has_modifier = "satrapy_of_horde" }
 				remove_modifier = "satrapy_of_horde"
 			}
-			if = { limit = { has_modifier = "SUBJECT_member_state" }
-				remove_modifier = "SUBJECT_member_state"
+			if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+				remove_modifier = specialist_member_state_subject_modifier
 			}
 		}
 	}
@@ -948,8 +948,8 @@ wg_independence = {
 			if = { limit = { has_modifier = "satrapy_of_horde" }
 				remove_modifier = "satrapy_of_horde"
 			}
-			if = { limit = { has_modifier = "SUBJECT_member_state" }
-				remove_modifier = "SUBJECT_member_state"
+			if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+				remove_modifier = specialist_member_state_subject_modifier
 			}
 			every_system_within_border = {
 				limit = { from = { has_claim = prev } }
@@ -1031,7 +1031,7 @@ wg_independence = {
 								has_origin = "origin_khan_successor"
 								AND = {
 									has_global_flag = gf_great_khan_active
-									is_subject_type = war_satrapy
+									any_agreement = { agreement_preset = preset_war_satrapy }
 								}
 							}
 							NOR = {
@@ -1088,7 +1088,7 @@ wg_independence = {
 						limit = {
 							OR = {
 								is_subject = no
-								is_subject_type = member_state
+								any_agreement = { agreement_preset = preset_member_state }
 							}
 							NOR = {
 								is_same_empire = from

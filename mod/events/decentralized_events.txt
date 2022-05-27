@@ -76,12 +76,12 @@ country_event = {
 						copy_ethos_and_authority = root
 						set_subject_of = {
 							who = root
-							subject_type = member_state
+							preset = preset_member_state
 						}
-						set_timed_country_flag = { flag = day_0 days = 30 }
+						set_timed_country_flag = { flag = day_0 months = 1 }
 						root = {
 							set_country_flag = has_communications@prev
-							set_timed_country_flag = { flag = day_0 days = 30 }
+							set_timed_country_flag = { flag = day_0 months = 1 }
 							establish_communications_no_message = prev
 							# establish_contact = { who = prev location = root.capital_scope }
 						}
@@ -135,13 +135,13 @@ country_event = {
 			}
 			# Pre-exclude near capital systems!?
 			solar_system = {
-				set_timed_star_flag = { flag = decentral_excluded days = 30 }
+				set_timed_star_flag = { flag = decentral_excluded months = 1 }
 				every_neighbor_system = {
 					limit = {
 						has_owner = yes
 						is_owned_by = root
 					}
-					set_timed_star_flag = { flag = decentral_excluded days = 30 }
+					set_timed_star_flag = { flag = decentral_excluded months = 1 }
 				}
 			}
 		}
@@ -196,8 +196,7 @@ country_event = {
 						set_owner = root
 					}
 				}
-			}
-			else_if = {
+			} else_if = {
 				limit = { root = { has_country_flag = day_0 } }
 			# Merge way to small empires.
 			# if = { limit = { controlled_systems < 3 }
@@ -219,7 +218,7 @@ country_event = {
 				# 		}
 				# 		weights = {
 				# 			base = 1
-				# 			modifier = { add = 2 space_owner = { is_subject_type = member_state } }
+				# 			modifier = { add = 2 space_owner = { any_agreement = { agreement_preset = preset_member_state } } }
 				# 			modifier = { add = 1 space_owner = { is_loyal_to = from } }
 				# 			modifier = { add = 1 any_system_planet = { is_colony = yes } }
 				# 		}
@@ -235,7 +234,7 @@ country_event = {
 						has_owner = yes
 						owner = {
 							is_subject = yes
-							is_subject_type = member_state
+							any_agreement = { agreement_preset = preset_member_state }
 							from = { is_overlord_to = prev }
 						}
 					}
@@ -254,7 +253,7 @@ country_event = {
 		# 	capital_scope = { add_modifier = { modifier = "planetary_nationalism" } }
 		# 	establish_communications_no_message = from
 		# 	# establish_contact = { who = from location = from.capital_scope }
-		# 	add_modifier = { modifier = "SUBJECT_member_state" }
+		# 	add_modifier = { modifier = specialist_member_state_subject_modifier }
 		# }
 	}
 }
@@ -305,7 +304,7 @@ country_event = {
 							is_subject = yes
 							OR = {
 								is_country_type = default
-								is_subject_type = member_state
+								any_agreement = { agreement_preset = preset_member_state }
 							}
 							is_loyal_to = root
 							root = { is_overlord_to = prev }
@@ -331,14 +330,14 @@ country_event = {
 								is_subject = yes
 								OR = {
 									is_country_type = default
-									is_subject_type = member_state
+									any_agreement = { agreement_preset = preset_member_state }
 								}
 								root = { is_overlord_to = prev }
 							}
 						}
 						weights = {
 							base = 1
-							modifier = { add = 2 space_owner = { is_subject_type = member_state } }
+							modifier = { add = 2 space_owner = { any_agreement = { agreement_preset = preset_member_state } } }
 							modifier = { add = 1 space_owner = { is_loyal_to = root } }
 							modifier = { add = 1 any_system_planet = { is_colony = yes } }
 						}
@@ -353,7 +352,7 @@ country_event = {
 		# Last check (try to give at least one extra system)
 		# log = "subject member [Root.subject_member]"
 		every_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			if = { limit = { controlled_systems < 4 }
 				capital_scope.solar_system = {
 					if = { limit = { root = { check_variable = { which = subject_member value < 9 } } }
@@ -366,7 +365,7 @@ country_event = {
 									space_owner = {
 										is_subject = yes
 										is_country_type = default
-										is_subject_type = member_state
+										any_agreement = { agreement_preset = preset_member_state }
 										root = { is_overlord_to = prev }
 									}
 									NOR = {
@@ -378,8 +377,7 @@ country_event = {
 							}
 							commit_system_to = { EMPIRE = prev.space_owner }
 						}
-					}
-					else = { # (Reduce members)
+					} else = { # (Reduce members)
 						prev = { # subject
 							random_neighbor_country = {
 								limit = {
@@ -394,7 +392,7 @@ country_event = {
 								}
 								weights = {
 									base = 1
-									modifier = { add = 2 is_subject_type = member_state }
+									modifier = { add = 2 any_agreement = { agreement_preset = preset_member_state } }
 									modifier = { add = 1 is_loyal_to = root }
 								}
 								fully_commit_prev_empire_to_this = yes
@@ -420,7 +418,7 @@ country_event = {
 						# 	OR = {
 						# 		AND = {
 						# 			is_subject = yes
-						# 			is_subject_type = member_state
+						# 			any_agreement = { agreement_preset = preset_member_state }
 						# 			is_loyal_to = root
 						# 			root = { is_overlord_to = prev }
 						# 		}
@@ -434,7 +432,7 @@ country_event = {
 							OR = {
 								space_owner = {
 									is_subject = yes
-									is_subject_type = member_state
+									any_agreement = { agreement_preset = preset_member_state }
 									is_loyal_to = root
 									root = { is_overlord_to = prev }
 								}
@@ -455,7 +453,7 @@ country_event = {
 							OR = {
 								space_owner = {
 									is_subject = yes
-									is_subject_type = member_state
+									any_agreement = { agreement_preset = preset_member_state }
 									is_loyal_to = root
 									root = { is_overlord_to = prev }
 								}
@@ -514,13 +512,13 @@ country_event = {
 				# root = { has_federation = yes }
 			}
 			every_subject = {
-				limit = { is_subject_type = member_state is_galactic_community_member = no }
+				limit = { any_agreement = { agreement_preset = preset_member_state } is_galactic_community_member = no }
 				add_to_galactic_community_no_message = yes
 				add_intel = { amount = 80 who = root }
 				root = {
 					add_intel = { amount = 80 who = prev }
 					every_subject = {
-						limit = { is_subject_type = member_state NOT = { is_same_empire = prevprev } }
+						limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { is_same_empire = prevprev } }
 						add_intel = { amount = 60 who = prevprev }
 					}
 				}
@@ -550,7 +548,7 @@ planet_event = {
 	trigger = {
 		has_modifier = planetary_nationalism
 		from = {
-			NOT = { is_subject_type = member_state }
+			NOT = { any_agreement = { agreement_preset = preset_member_state } }
 		}
 	}
 	immediate = {
@@ -571,13 +569,11 @@ planet_event = {
 	id = decentralized.6
 	hide_window = yes
 	is_triggered_only = yes
-	pre_triggers = {
-		has_owner = yes
-	}
+	pre_triggers = { has_owner = yes }
 	trigger = {
 		owner = {
 			is_subject = yes
-			is_subject_type = member_state
+			any_agreement = { agreement_preset = preset_member_state }
 			overlord = {
 				has_country_flag = decentralizer
 				# has_ascension_perk = ap_decentralization
@@ -588,12 +584,12 @@ planet_event = {
 	immediate = {
 		add_modifier = { modifier = "planetary_nationalism" }
 		owner = { # Secundary addition
-			if = { limit = { NOT = { has_modifier =  "SUBJECT_member_state" } }
-				add_modifier = { modifier = "SUBJECT_member_state" }
+			if = { limit = { NOT = { has_modifier =  specialist_member_state_subject_modifier } }
+				add_modifier = { modifier = specialist_member_state_subject_modifier }
 			}
 			overlord = {
-				if = { limit = { has_modifier = "SUBJECT_member_state" }
-					remove_modifier = "SUBJECT_member_state"
+				if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+					remove_modifier = specialist_member_state_subject_modifier
 				}
 			}
 		}
@@ -610,7 +606,7 @@ planet_event = {
 	trigger = {
 		owner = {
 			NOT = { has_country_flag = day_0 }
-			is_subject_type = member_state
+			any_agreement = { agreement_preset = preset_member_state }
 			count_owned_starbase = { count > 6 }
 			num_owned_planets > 2
 		}
@@ -636,7 +632,7 @@ planet_event = {
 # 	is_triggered_only = yes
 # 	trigger = {
 # 		any_playable_country = {
-# 			is_subject_type = vassal
+# 			is_subject = yes
 # 			overlord = { has_country_flag = decentralizer }
 # 		}
 # 	}
@@ -674,8 +670,8 @@ country_event = {
 		any_subject = {
 			OR = {
 				is_country_type = default
-				is_subject_type = vassal
-				is_subject_type = subsidiary
+				is_subject = yes
+				any_agreement = { agreement_preset = preset_subsidiary }
 			}
 			NOT = { has_country_flag = day_0 }
 		}
@@ -690,9 +686,7 @@ country_event = {
 		}
 	}
 	after = {
-		hidden_effect = {
-			clear_global_event_target = decentralizer
-		}
+		hidden_effect = { clear_global_event_target = decentralizer }
 	}
 	option = {
 		name = decentralized.7.a
@@ -702,13 +696,13 @@ country_event = {
 				is_scope_type = country
 				is_subject = yes
 				NOR = {
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					has_country_flag = day_0
 				}
 				OR = {
 					is_country_type = default
-					is_subject_type = vassal
-					is_subject_type = subsidiary
+					is_subject = yes
+					any_agreement = { agreement_preset = preset_subsidiary }
 				}
 			}
 			is_overlord_to = from
@@ -720,7 +714,7 @@ country_event = {
 			from = {
 				set_subject_of = {
 					who = root
-					subject_type = member_state
+					preset = preset_member_state
 				}
 				# add_resource = { influence = 40 }
 			}
@@ -738,11 +732,11 @@ country_event = {
 			count_subject = {
 				count > 1
 				limit = {
-					NOT = { is_subject_type = member_state }
+					NOT = { any_agreement = { agreement_preset = preset_member_state } }
 					OR = {
 						is_country_type = default
-						is_subject_type = vassal
-						is_subject_type = subsidiary
+						is_subject = yes
+						any_agreement = { agreement_preset = preset_subsidiary }
 					}
 				}
 			}
@@ -752,16 +746,16 @@ country_event = {
 		}
 		every_subject = {
 			limit = {
-				NOT = { is_subject_type = member_state }
+				NOT = { any_agreement = { agreement_preset = preset_member_state } }
 				OR = {
 					is_country_type = default
-					is_subject_type = vassal
-					is_subject_type = subsidiary
+					is_subject = yes
+					any_agreement = { agreement_preset = preset_subsidiary }
 				}
 			}
 			set_subject_of = {
 				who = root
-				subject_type = member_state
+				preset = preset_member_state
 			}
 			add_resource = { influence = 100 }
 			set_timed_country_flag = { flag = day_0 days = 10 }
@@ -778,11 +772,11 @@ country_event = {
 		hidden_effect = {
 			random_subject = {
 				limit = {
-					NOT = { is_subject_type = member_state }
+					NOT = { any_agreement = { agreement_preset = preset_member_state } }
 					OR = {
 						is_country_type = default
-						is_subject_type = vassal
-						is_subject_type = subsidiary
+						is_subject = yes
+						any_agreement = { agreement_preset = preset_subsidiary }
 					}
 				}
 				set_timed_country_flag = { flag = day_0 days = 10 }
@@ -813,9 +807,9 @@ country_event = {
 		if = {
 			limit = {
 				is_subject = no
-				has_modifier = "SUBJECT_member_state"
+				has_modifier = specialist_member_state_subject_modifier
 			}
-			remove_modifier = "SUBJECT_member_state"
+			remove_modifier = specialist_member_state_subject_modifier
 		}
 	}
 	option = {
@@ -856,7 +850,7 @@ country_event = {
 		}
 		add_resource = { influence = -45 }
 		every_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			country_event = { id = decentralized.15 }
 		}
 	}
@@ -868,7 +862,7 @@ country_event = {
 		}
 		add_resource = { influence = -90 }
 		every_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			country_event = { id = decentralized.16 }
 		}
 	}
@@ -878,10 +872,10 @@ country_event = {
 		allow = {
 			hidden_trigger = { has_resource = { type = influence amount > 179 } }
 		}
-		trigger = {  }
+		trigger = { }
 		add_resource = { influence = -180 }
 		every_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			country_event = { id = decentralized.17 }
 		}
 	}
@@ -902,32 +896,20 @@ country_event = {
 		name = decentralized.23.a
 		event_target:terrorizer = {
 			add_resource = { influence = -50 energy = -1000 }
-			add_opinion_modifier = {
-				modifier = opinion_falsely_punished
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_falsely_punished who = root }
 		}
 		event_target:terrorized = {
 			add_resource = { energy = 1000 }
-			add_opinion_modifier = {
-				modifier = opinion_capital_helped
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_capital_helped who = root }
 		}
 	}
 	option = {
 		name = decentralized.23.b
 		event_target:terrorizer = {
-			add_opinion_modifier = {
-				modifier = opinion_overlooked_mistake
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_overlooked_mistake who = root }
 		}
 		event_target:terrorized = {
-			add_opinion_modifier = {
-				modifier = opinion_refused_justice
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_refused_justice who = root }
 		}
 	}
 }
@@ -945,10 +927,7 @@ country_event = {
 		name = decentralized.24.a
 		join_war = event_target:terrorized
 		event_target:terrorized = {
-			add_opinion_modifier = {
-				modifier = opinion_capital_helped
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_capital_helped who = root }
 		}
 		ai_chance = {
 			factor = 100
@@ -980,10 +959,7 @@ country_event = {
 		name = decentralized.24.b
 		join_war = event_target:terrorizer
 		event_target:terrorizer = {
-			add_opinion_modifier = {
-				modifier = opinion_capital_helped
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_capital_helped who = root }
 		}
 		ai_chance = {
 			factor = 100
@@ -1100,14 +1076,8 @@ country_event = {
 					value < -60
 				}
 			}
-			modifier = {
-				factor = 0.3
-				is_disloyal_to = event_target:decentralizer
-			}
-			modifier = {
-				factor = 0.5
-				is_militarist = yes
-			}
+			modifier = { factor = 0.3 is_disloyal_to = event_target:decentralizer }
+			modifier = { factor = 0.5 is_militarist = yes }
 		}
 		add_resource = { influence = -50 }
 		country_event = { id = decentralized.111 }
@@ -1116,10 +1086,7 @@ country_event = {
 		name = decentralized.10.b
 		ai_chance = {
 			factor = 90
-			modifier = {
-				factor = 0.2
-				is_loyal_to = event_target:decentralizer
-			}
+			modifier = { factor = 0.2 is_loyal_to = event_target:decentralizer }
 			modifier = {
 				factor = 0.2
 				opinion = {
@@ -1127,10 +1094,7 @@ country_event = {
 					value > 60
 				}
 			}
-			modifier = {
-				factor = 0.5
-				is_pacifist = yes
-			}
+			modifier = { factor = 0.5 is_pacifist = yes }
 		}
 		declare_war = {
 			target = event_target:decentralizer
@@ -1150,7 +1114,7 @@ country_event = {
 # 	trigger = {
 # 		# has_modifier = planetary_nationalism
 # 		# from = {
-# 		# 	NOT = { is_subject_type = member_state }
+# 		# 	NOT = { any_agreement = { agreement_preset = preset_member_state } }
 # 		# }
 # 		exists = event_target:liberation_origin
 # 		exists = event_target:decentralizer
@@ -1189,16 +1153,16 @@ country_event = {
 # 					}
 # 					set_subject_of = {
 # 						who = root
-# 						subject_type = member_state
+# 						preset = preset_member_state
 # 					}
-# 					# add_modifier = { modifier = "SUBJECT_member_state" }
+# 					# add_modifier = { modifier = specialist_member_state_subject_modifier }
 # 					# add_resource = {
 # 					# 	minerals = 500
 # 					# 	energy = 1000
 # 					# 	unity = 2000
 # 					# 	influence = 500
 # 					# }
-# 					# add_100_unity_per_year_passed = yes
+# 					# add_500_unity_per_year_passed = yes
 # 					# copy_techs_from = {
 # 					# 	target = event_target:ultimatum_subject
 # 					# 	except = {
@@ -1220,7 +1184,7 @@ country_event = {
 # 					# }
 
 # 					if = {
-# 						limit = {  is_same_species = event_target:decentralizer }
+# 						limit = { is_same_species = event_target:decentralizer }
 # 						copy_ethos_and_authority = event_target:decentralizer
 # 						change_government = {
 # 							authority = auth_imperial
@@ -1247,10 +1211,7 @@ country_event = {
 	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
-		add_opinion_modifier = {
-			modifier = opinion_requested_200_resources
-			who = event_target:resource_asker
-		}
+		add_opinion_modifier = { modifier = opinion_requested_200_resources who = event_target:resource_asker }
 	}
 	# accept
 	option = {
@@ -1261,10 +1222,7 @@ country_event = {
 		}
 		ai_chance = {
 			factor = 100
-			modifier = {
-				factor = 0.5
-				is_disloyal_to = event_target:resource_asker
-			}
+			modifier = { factor = 0.5 is_disloyal_to = event_target:resource_asker }
 			modifier = {
 				factor = 0.5
 				opinion = {
@@ -1279,10 +1237,7 @@ country_event = {
 		name = decentralized.15.b
 		ai_chance = {
 			factor = 100
-			modifier = {
-				factor = 0.3
-				is_loyal_to = event_target:resource_asker
-			}
+			modifier = { factor = 0.3 is_loyal_to = event_target:resource_asker }
 			modifier = {
 				factor = 0.5
 				opinion = {
@@ -1292,10 +1247,7 @@ country_event = {
 			}
 		}
 		event_target:resource_asker = {
-			add_opinion_modifier = {
-				modifier = opinion_refused_resource_request
-				who = prev
-			}
+			add_opinion_modifier = { modifier = opinion_refused_resource_request who = prev }
 		}
 	}
 }
@@ -1308,10 +1260,7 @@ country_event = {
 	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
-		add_opinion_modifier = {
-			modifier = opinion_requested_500_resources
-			who = event_target:resource_asker
-		}
+		add_opinion_modifier = { modifier = opinion_requested_500_resources who = event_target:resource_asker }
 	}
 	# accept
 	option = {
@@ -1322,10 +1271,7 @@ country_event = {
 		}
 		ai_chance = {
 			factor = 100
-			modifier = {
-				factor = 0.4
-				is_disloyal_to = event_target:resource_asker
-			}
+			modifier = { factor = 0.4 is_disloyal_to = event_target:resource_asker }
 			modifier = {
 				factor = 0.5
 				opinion = {
@@ -1340,10 +1286,7 @@ country_event = {
 		name = decentralized.16.b
 		ai_chance = {
 			factor = 100
-			modifier = {
-				factor = 0.5
-				is_loyal_to = event_target:resource_asker
-			}
+			modifier = { factor = 0.5 is_loyal_to = event_target:resource_asker }
 			modifier = {
 				factor = 0.5
 				opinion = {
@@ -1353,10 +1296,7 @@ country_event = {
 			}
 		}
 		event_target:resource_asker = {
-			add_opinion_modifier = {
-				modifier = opinion_refused_resource_request
-				who = prev
-			}
+			add_opinion_modifier = { modifier = opinion_refused_resource_request who = prev }
 		}
 	}
 }
@@ -1369,10 +1309,7 @@ country_event = {
 	picture = GFX_evt_board_meeting
 	is_triggered_only = yes
 	immediate = {
-		add_opinion_modifier = {
-			modifier = opinion_requested_1000_resources
-			who = event_target:resource_asker
-		}
+		add_opinion_modifier = { modifier = opinion_requested_1000_resources who = event_target:resource_asker }
 	}
 	# accept
 	option = {
@@ -1383,10 +1320,7 @@ country_event = {
 		}
 		ai_chance = {
 			factor = 100
-			modifier = {
-				factor = 0.3
-				is_disloyal_to = event_target:resource_asker
-			}
+			modifier = { factor = 0.3 is_disloyal_to = event_target:resource_asker }
 			modifier = {
 				factor = 0.4
 				opinion = {
@@ -1401,10 +1335,7 @@ country_event = {
 		name = decentralized.17.b
 		ai_chance = {
 			factor = 100
-			modifier = {
-				factor = 0.6
-				is_loyal_to = event_target:resource_asker
-			}
+			modifier = { factor = 0.6 is_loyal_to = event_target:resource_asker }
 			modifier = {
 				factor = 0.5
 				opinion = {
@@ -1414,10 +1345,7 @@ country_event = {
 			}
 		}
 		event_target:resource_asker = {
-			add_opinion_modifier = {
-				modifier = opinion_refused_resource_request
-				who = prev
-			}
+			add_opinion_modifier = { modifier = opinion_refused_resource_request who = prev }
 		}
 	}
 }
@@ -1438,10 +1366,7 @@ country_event = {
 			add_resource = { energy = 1000 }
 		}
 		event_target:terrorized = {
-			add_opinion_modifier = {
-				modifier = opinion_refused_justice
-				who = event_target:terrorizer
-			}
+			add_opinion_modifier = { modifier = opinion_refused_justice who = event_target:terrorizer }
 		}
 		ai_chance = {
 			factor = 100
@@ -1469,10 +1394,7 @@ country_event = {
 			add_resource = { energy = 1500 }
 		}
 		event_target:terrorized = {
-			add_opinion_modifier = {
-				modifier = opinion_slight_insult
-				who = event_target:terrorizer
-			}
+			add_opinion_modifier = { modifier = opinion_slight_insult who = event_target:terrorizer }
 		}
 		ai_chance = {
 			factor = 100
@@ -1496,10 +1418,7 @@ country_event = {
 	option = {
 		name = decentralized.21.c
 		event_target:terrorized = {
-			add_opinion_modifier = {
-				modifier = opinion_support_pirates
-				who = event_target:terrorizer
-			}
+			add_opinion_modifier = { modifier = opinion_support_pirates who = event_target:terrorizer }
 		}
 		ai_chance = {
 			factor = 110
@@ -1538,16 +1457,10 @@ country_event = {
 		name = decentralized.22.a
 		add_resource = { influence = 100 }
 		event_target:terrorizer = {
-			add_opinion_modifier = {
-				modifier = opinion_member_reported
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_member_reported who = root }
 		}
 		overlord = {
-			add_opinion_modifier = {
-				modifier = opinion_breaking_laws
-				who = event_target:terrorizer
-			}
+			add_opinion_modifier = { modifier = opinion_breaking_laws who = event_target:terrorizer }
 		}
 		overlord = {
 			country_event = { id = decentralized.23 }
@@ -1597,10 +1510,7 @@ country_event = {
 		name = decentralized.22.c
 		add_resource = { influence = 100 }
 		overlord = {
-			add_opinion_modifier = {
-				modifier = opinion_breaking_laws
-				who = event_target:terrorized
-			}
+			add_opinion_modifier = { modifier = opinion_breaking_laws who = event_target:terrorized }
 		}
 		overlord = {
 			country_event = { id = decentralized.24 }
@@ -1655,7 +1565,7 @@ country_event = {
 		random_subject = {
 			limit = {
 				OR = {
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					is_country_type	= default
 				}
 			}
@@ -1668,28 +1578,19 @@ country_event = {
 			kill_leader = { show_notification = no }
 		}
 		event_target:insulted_state = {
-			add_opinion_modifier = {
-				modifier = opinion_slight_insult
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_slight_insult who = root }
 		}
 	}
 	option = {
 		name = decentralized.18.b
 		event_target:insulted_state = {
-			add_opinion_modifier = {
-				modifier = opinion_refused_justice
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_refused_justice who = root }
 		}
 	}
 	option = {
 		name = decentralized.18.c
 		event_target:insulted_state = {
-			add_opinion_modifier = {
-				modifier = opinion_falsely_punished
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_falsely_punished who = root }
 		}
 		event_target:insulted_state = {
 			add_resource = { energy = -1500 }
@@ -1714,14 +1615,11 @@ country_event = {
 		every_subject = {
 			limit = {
 				OR = {
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					is_country_type	= default
 				}
 			}
-			add_opinion_modifier = {
-				modifier = opinion_slight_insult
-				who = root
-			}
+			add_opinion_modifier = { modifier = opinion_slight_insult who = root }
 		}
 	}
 	# Let him be
@@ -1741,13 +1639,13 @@ country_event = {
 	mean_time_to_happen = { months = 120 }
 	immediate = {
 		random_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			save_event_target_as = terrorizer
 		}
 		random_subject = {
 			limit = {
 				OR = {
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					is_country_type	= default
 				}
 				NOT = { is_same_empire = event_target:terrorizer }
@@ -1773,7 +1671,7 @@ country_event = {
 	desc = "decentralized.25.desc"
 	picture = GFX_evt_partition
 	trigger = {
-		is_subject_type = member_state
+		any_agreement = { agreement_preset = preset_member_state }
 		OR = {
 			opinion = {
 				who = overlord
@@ -1983,9 +1881,7 @@ country_event = {
 						starbase = { is_owned_by = prevprev.owner }
 					}
 				}
-				effect = {
-					set_star_flag = liberation_system
-				}
+				effect = { set_star_flag = liberation_system }
 			}
 		} else = {
 			effect_on_blob = {
@@ -2025,9 +1921,7 @@ country_event = {
 				has_star_flag = liberation_system
 				exists = starbase
 			}
-			starbase = {
-				set_owner = event_target:new_member_state
-			}
+			starbase = { set_owner = event_target:new_member_state }
 			remove_star_flag = liberation_system
 		}
 
@@ -2035,7 +1929,7 @@ country_event = {
 		event_target:new_member_state = {
 			set_subject_of = {
 				who = event_target:decentralizer
-				subject_type = member_state
+				preset = preset_member_state
 			}
 			country_event = { id = decentralized.3 } # Few more systems
 			prev = { save_global_event_target_as = decentralizer }
@@ -2068,21 +1962,21 @@ country_event = {
 		# NOT = { has_country_flag = de_election_won } # Not to often
 		count_subject = {
 			count > 2
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 		}
 	}
 	immediate = {
 		save_event_target_as = current_leader
-		if = { limit = { has_modifier = "SUBJECT_member_state" }
-			remove_modifier = "SUBJECT_member_state"
+		if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+			remove_modifier = specialist_member_state_subject_modifier
 		}
 		# Only one to be sure.
 		random_playable_country = {
 			limit = {
 				is_subject = no
-				has_modifier = "SUBJECT_member_state"
+				has_modifier = specialist_member_state_subject_modifier
 			}
-			remove_modifier = "SUBJECT_member_state"
+			remove_modifier = specialist_member_state_subject_modifier
 		}
 
 		no_scope = { # For whatever reason there was an alien empire saved!?!
@@ -2096,7 +1990,7 @@ country_event = {
 			position = 0
 			order_by = trigger:fleet_power
 			limit = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 				NAND = {
 					exists = event_target:election_target3
 					is_same_empire = event_target:election_target3
@@ -2112,7 +2006,7 @@ country_event = {
 			position = 1
 			order_by = trigger:fleet_power
 			limit = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 				exists = event_target:election_target1
 				NOR = {
 					is_same_empire = from
@@ -2129,7 +2023,7 @@ country_event = {
 			position = 2
 			order_by = trigger:fleet_power
 			limit = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 				exists = event_target:election_target1
 				exists = event_target:election_target2
 				NOR = {
@@ -2164,7 +2058,7 @@ country_event = {
 		default_hide_option = yes
 		hidden_effect = {
 			every_subject = {
-				limit = { is_subject_type = member_state }
+				limit = { any_agreement = { agreement_preset = preset_member_state } }
 				prev = { change_variable = { which = member_count value = 1 } }
 				set_timed_country_flag = { flag = decentralized_electing days = 25 }
 				# copy_techs_from = { target = root } # Bring everyone to one level.
@@ -2225,14 +2119,8 @@ country_event = {
 		}
 		ai_chance = { # max: 21*1.25*1.5*2 = ~78.75
 			factor = 21
-			modifier = {
-				factor = 1.25
-				is_loyal_to = event_target:current_leader
-			}
-			modifier = {
-				factor = 0.25
-				is_disloyal_to = event_target:current_leader
-			}
+			modifier = { factor = 1.25 is_loyal_to = event_target:current_leader }
+			modifier = { factor = 0.25 is_disloyal_to = event_target:current_leader }
 			modifier = {
 				factor = 1.25
 				event_target:current_leader = {
@@ -2546,7 +2434,7 @@ country_event = {
 	trigger = {
 		NOT = {
 			any_subject = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 				has_country_flag = decentralized_electing
 			}
 		}
@@ -2556,7 +2444,7 @@ country_event = {
 		# every_subject = {
 		ordered_subject = {
 			limit = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 				is_variable_set = election_count
 				check_variable = { which = election_count value > root.election_count }
 			}
@@ -2570,7 +2458,7 @@ country_event = {
 			if = {
 				limit = {
 					any_subject = {
-						is_subject_type = member_state
+						any_agreement = { agreement_preset = preset_member_state }
 						is_variable_set = election_count
 						NOT = { is_same_empire = event_target:decentralized_winner }
 						check_variable = { which = election_count value >= event_target:decentralized_winner.election_count }
@@ -2580,7 +2468,7 @@ country_event = {
 				## runoff
 				random_subject = {
 					limit = {
-						is_subject_type = member_state
+						any_agreement = { agreement_preset = preset_member_state }
 						is_variable_set = election_count
 						NOT = { is_same_empire = event_target:decentralized_winner }
 						check_variable = { which = election_count value >= event_target:decentralized_winner.election_count }
@@ -2614,7 +2502,7 @@ country_event = {
 	is_triggered_only = yes
 	force_open = yes
 	auto_opens = yes
-	# trigger = {	}
+	# trigger = {  }
 	immediate = {
 		save_event_target_as = decentralized_winner
 		save_global_event_target_as = decentralizer
@@ -2622,15 +2510,15 @@ country_event = {
 		add_modifier = { modifier = electoral years = 2 }
 		# set_timed_country_flag = { flag = de_election_won years = 1 }
 		set_subject_of = { who = none }
-		remove_modifier = "SUBJECT_member_state"
+		remove_modifier = specialist_member_state_subject_modifier
 
 		event_target:current_leader = {
 			set_timed_country_flag = { flag = decentralized_lost months = 1 }
 			every_subject = {
-				limit = { is_subject_type = member_state } # Not absolute?
+				limit = { any_agreement = { agreement_preset = preset_member_state } } # Not absolute?
 				set_subject_of = {
 					who = root
-					subject_type = member_state
+					preset = preset_member_state
 				}
 				root = {
 					copy_techs_from = { target = prev }
@@ -2642,11 +2530,11 @@ country_event = {
 			}
 			set_subject_of = {
 				who = root
-				subject_type = member_state
+				preset = preset_member_state
 			}
 			remove_modifier = decentralized_leader
 			remove_modifier = electoral
-			# add_modifier = { modifier = "SUBJECT_member_state" }
+			# add_modifier = { modifier = specialist_member_state_subject_modifier }
 			country_event = { id = decentralized.206 days = 1 } # Notify
 		}
 	}
@@ -2670,7 +2558,7 @@ country_event = {
 		add_modifier = { modifier = electoral years = 2 }
 		# set_timed_country_flag = { flag = de_election_won years = 1 }
 		every_subject = { # Get reward
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			root = { copy_techs_from = { target = prev } }
 		}
 		every_subject = {
@@ -2691,10 +2579,7 @@ country_event = {
 	force_open = yes
 	auto_opens = yes
 	immediate = {
-		set_timed_global_flag = {
-			flag = regentmaker_control_sel@root
-			days = 360
-		}
+		set_timed_global_flag = { flag = regentmaker_control_sel@root days = 360 }
 		if = {
 			limit = {
 				exists = capital_scope
@@ -2736,20 +2621,20 @@ country_event = {
 			}
 		}
 		NOR = {
-			is_subject_type = member_state
+			any_agreement = { agreement_preset = preset_member_state }
 			has_country_flag = day_0
 		}
 		OR = {
 			is_country_type = default
-			is_subject_type = vassal
-			is_subject_type = subsidiary
+			is_subject = yes
+			any_agreement = { agreement_preset = preset_subsidiary }
 		}
 	}
 	immediate = {
 		from = {
 			country_event = { id = decentralized.7 days = 30 random = 20 }
-			if = { limit = { has_modifier = "SUBJECT_member_state" }
-				remove_modifier = "SUBJECT_member_state"
+			if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+				remove_modifier = specialist_member_state_subject_modifier
 			}
 		}
 	}
@@ -2773,7 +2658,7 @@ country_event = {
 			# Reduce members
 			every_subject = {
 				limit = {
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					controlled_systems < 5
 					num_owned_planets < 2
 				}
@@ -2787,14 +2672,14 @@ country_event = {
 							is_same_empire = root
 						}
 						OR = {
-							is_subject_type = member_state
+							any_agreement = { agreement_preset = preset_member_state }
 							is_country_type	= default
 						}
 					}
 					weights = {
 						base = 1
 						modifier = { add = 3 is_subject = yes }
-						modifier = { add = 2 is_subject_type = member_state }
+						modifier = { add = 2 any_agreement = { agreement_preset = preset_member_state } }
 						modifier = { add = 1 is_loyal_to = root }
 						modifier = { add = 1 num_owned_planets < 2 }
 						modifier = { add = 1 controlled_systems < 6 }
@@ -2806,7 +2691,7 @@ country_event = {
 			if = { limit = { check_variable = { which = subject_member value > 10 } }
 				every_subject = {
 					limit = {
-						is_subject_type = member_state
+						any_agreement = { agreement_preset = preset_member_state }
 						controlled_systems < 6
 						num_owned_planets < 3
 					}
@@ -2820,14 +2705,14 @@ country_event = {
 								is_same_empire = root
 							}
 							OR = {
-								is_subject_type = member_state
+								any_agreement = { agreement_preset = preset_member_state }
 								is_country_type	= default
 							}
 						}
 						weights = {
 							base = 1
 							modifier = { add = 3 is_subject = yes }
-							modifier = { add = 2 is_subject_type = member_state }
+							modifier = { add = 2 any_agreement = { agreement_preset = preset_member_state } }
 							modifier = { add = 1 is_loyal_to = root }
 							modifier = { add = 1 num_owned_planets < 3 }
 							modifier = { add = 1 controlled_systems < 7 }
@@ -2840,7 +2725,7 @@ country_event = {
 		}
 		## Finally, give at least a few more systems to each subject.
 		every_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			if = {
 				limit = {
 					empire_sprawl_cap_fraction < 1.5
@@ -2883,7 +2768,7 @@ country_event = {
 			limit = { empire_sprawl_cap_fraction > 2.0 }
 			# Give one more system to each subject!?
 			every_subject = {
-				limit = { is_subject_type = member_state }
+				limit = { any_agreement = { agreement_preset = preset_member_state } }
 				root = {
 					random_system_within_border = {
 						limit = {
@@ -2908,7 +2793,7 @@ country_event = {
 								has_owner = yes
 								owner = {
 									is_subject = yes
-									is_subject_type = member_state
+									any_agreement = { agreement_preset = preset_member_state }
 									root = { is_overlord_to = prev }
 								}
 							}
@@ -2937,7 +2822,7 @@ country_event = {
 						has_owner = yes
 						owner = {
 							is_subject = yes
-							is_subject_type = member_state
+							any_agreement = { agreement_preset = preset_member_state }
 							root = { is_overlord_to = prev }
 						}
 					}
@@ -2983,8 +2868,8 @@ country_event = {
 				add_modifier = { modifier = "planetary_nationalism" }
 			}
 		}
-		if = { limit = { NOT = { has_modifier =  "SUBJECT_member_state" } }
-			add_modifier = { modifier = "SUBJECT_member_state" }
+		if = { limit = { NOT = { has_modifier =  specialist_member_state_subject_modifier } }
+			add_modifier = { modifier = specialist_member_state_subject_modifier }
 		}
 
 		add_resource = {
@@ -2993,7 +2878,7 @@ country_event = {
 			unity = 20000
 			influence = 400
 		}
-		add_100_unity_per_year_passed = yes
+		add_500_unity_per_year_passed = yes
 		# if = {
 		# 	limit = { NOT = { exists = event_target:decentralizer } }
 		# 	if = {
@@ -3032,8 +2917,7 @@ country_event = {
 					}
 					leader = { set_owner = prevprevprevprev }
 					assign_leader = leader
-				}
-				else_if = {
+				} else_if = {
 					limit = { is_ship_class = shipclass_transport }
 					# TODO: replace scope workaround for ship.army bug !?
 					# Give armies (general)
@@ -3135,8 +3019,7 @@ country_event = {
 					}
 				}
 			}
-		}
-		else_if = {
+		} else_if = {
 			limit = {
 				event_target:decentralizer = { used_naval_capacity_percent > 0.6 }
 				used_naval_capacity_percent < 0.5
@@ -3222,7 +3105,7 @@ country_event = {
 				}
 			}
 		}
-		# add_modifier = { modifier = "midas_stigma" days = 1800 } # triggered_opinion_federation_midas
+		# add_modifier = { modifier = "midas_stigma" years = 5 } # triggered_opinion_federation_midas
 		event_target:decentralizer = {
 			every_subject = {
 				limit = {
@@ -3230,7 +3113,7 @@ country_event = {
 					NOT = { is_same_empire = root }
 				}
 				if = {
-					limit = { is_subject_type = member_state }
+					limit = { any_agreement = { agreement_preset = preset_member_state } }
 					add_opinion_modifier = { who = root modifier = triggered_opinion_diplo_stance_supremacy }
 					add_opinion_modifier = { who = root modifier = opinion_discarded }
 				}
@@ -3263,8 +3146,7 @@ country_event = {
 						module = missile_battery
 						building = defense_grid
 					}
-				}
-				else_if = {
+				} else_if = {
 					limit = {
 						NOT = { event_target:decentralizer = { has_technology = tech_starbase_5 } }
 						NAND = {

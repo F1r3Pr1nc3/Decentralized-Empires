@@ -99,7 +99,7 @@ regentmaker_control = {
 			is_overlord = yes
 			AND = {
 				is_subject = yes
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 				has_country_flag = regentmaker_control_sel
 				overlord = {
 					is_ai = yes

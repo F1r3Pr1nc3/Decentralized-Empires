@@ -75,7 +75,7 @@ country_event = {
 		trigger = {
 			# has_global_flag = gf_regentmaker_active
 			any_subject = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 		}
 		allow = {
@@ -96,7 +96,7 @@ country_event = {
 			NOT = { has_global_flag = regentmaker_control_sel@owner }
 			has_ascension_perk = ap_decentralization
 			any_subject = {
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 		}
 		allow = {
@@ -146,9 +146,7 @@ planet_event = {
 				}
 				set_country_flag = first_alien_life
 				set_timed_country_flag = {
-					flag = not_alien_life
-					days = 10
-				}
+					flag = not_alien_life days = 10 }
 			}
 			if = {
 				limit = {
@@ -156,9 +154,7 @@ planet_event = {
 				}
 				set_country_flag = has_encountered_other_empire
 				set_timed_country_flag = {
-					flag = not_encountered_other_empire
-					days = 10
-				}
+					flag = not_encountered_other_empire days = 10 }
 			}
 		}
 	}
@@ -317,14 +313,14 @@ planet_event = {
 					unity = 2000
 					influence = 500
 				}
-				add_100_unity_per_year_passed = yes
+				add_500_unity_per_year_passed = yes
 				if = {
 					limit = {
 						root = { has_planet_flag = regentmaker_tributary }
 					}
 					set_subject_of = {
 						who = event_target:decentralizer
-						subject_type = tributary
+						preset = preset_tributary
 					}
 				}
 				else_if = {
@@ -333,7 +329,7 @@ planet_event = {
 					}
 					set_subject_of = {
 						who = event_target:decentralizer
-						subject_type = member_state
+						preset = preset_member_state
 					}
 					add_intel = {
 						who = event_target:decentralizer
@@ -343,7 +339,7 @@ planet_event = {
 				else = {
 					set_subject_of = {
 						who = event_target:decentralizer
-						subject_type = vassal
+						preset = preset_vassal
 					}
 				}
 				set_faction_hostility = {
@@ -706,9 +702,9 @@ event = {
 		random_playable_country = {
 			limit = {
 				is_subject = no
-				has_modifier = "SUBJECT_member_state"
+				has_modifier = specialist_member_state_subject_modifier
 			}
-			remove_modifier = "SUBJECT_member_state"
+			remove_modifier = specialist_member_state_subject_modifier
 		}
 	}
 }
@@ -735,7 +731,7 @@ country_event = {
 					exists = space_owner
 					space_owner = {
 						is_subject = yes
-						is_subject_type = member_state
+						any_agreement = { agreement_preset = preset_member_state }
 						overlord = { is_same_empire = root }
 					}
 				}
@@ -788,119 +784,119 @@ country_event = {
 	option = {
 		name = "regentmaker.50.a"
 		every_subject = {
-			limit = { is_subject_type = member_state }
+			limit = { any_agreement = { agreement_preset = preset_member_state } }
 			clear_ethos = yes
 		}
 	}
 	option = {
 		name = "ethic_fanatic_authoritarian"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_authoritarian } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_authoritarian } }
 			shift_ethic = ethic_fanatic_authoritarian
 		}
 	}
 	option = {
 		name = "ethic_authoritarian"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_authoritarian } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_authoritarian } }
 			shift_ethic = ethic_authoritarian
 		}
 	}
 	option = {
 		name = "ethic_fanatic_egalitarian"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_egalitarian } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_egalitarian } }
 			shift_ethic = ethic_fanatic_egalitarian
 		}
 	}
 	option = {
 		name = "ethic_egalitarian"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_egalitarian } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_egalitarian } }
 			shift_ethic = ethic_egalitarian
 		}
 	}
 	option = {
 		name = "ethic_fanatic_xenophobe"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_xenophobe } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_xenophobe } }
 			shift_ethic = ethic_fanatic_xenophobe
 		}
 	}
 	option = {
 		name = "ethic_xenophobe"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_xenophobe } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_xenophobe } }
 			shift_ethic = ethic_xenophobe
 		}
 	}
 	option = {
 		name = "ethic_fanatic_xenophile"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_xenophile } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_xenophile } }
 			shift_ethic = ethic_fanatic_xenophile
 		}
 	}
 	option = {
 		name = "ethic_xenophile"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_xenophile } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_xenophile } }
 			shift_ethic = ethic_xenophile
 		}
 	}
 	option = {
 		name = "ethic_fanatic_militarist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_militarist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_militarist } }
 			shift_ethic = ethic_fanatic_militarist
 		}
 	}
 	option = {
 		name = "ethic_militarist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_militarist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_militarist } }
 			shift_ethic = ethic_militarist
 		}
 	}
 	option = {
 		name = "ethic_fanatic_pacifist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_pacifist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_pacifist } }
 			shift_ethic = ethic_fanatic_pacifist
 		}
 	}
 	option = {
 		name = "ethic_pacifist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_pacifist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_pacifist } }
 			shift_ethic = ethic_pacifist
 		}
 	}
 	option = {
 		name = "ethic_fanatic_spiritualist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_spiritualist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_spiritualist } }
 			shift_ethic = ethic_fanatic_spiritualist
 		}
 	}
 	option = {
 		name = "ethic_spiritualist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_spiritualist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_spiritualist } }
 			shift_ethic = ethic_spiritualist
 		}
 	}
 	option = {
 		name = "ethic_fanatic_materialist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_fanatic_materialist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_fanatic_materialist } }
 			shift_ethic = ethic_fanatic_materialist
 		}
 	}
 	option = {
 		name = "ethic_materialist"
 		every_subject = {
-			limit = { is_subject_type = member_state NOT = { has_ethic = ethic_materialist } }
+			limit = { any_agreement = { agreement_preset = preset_member_state } NOT = { has_ethic = ethic_materialist } }
 			shift_ethic = ethic_materialist
 		}
 	}
@@ -950,7 +946,7 @@ country_event = {
 	is_triggered_only = yes
 	# immediate = {
 	#	random_subject = {
-	#		limit = { is_subject_type = member_state }
+	#		limit = { any_agreement = { agreement_preset = preset_member_state } }
 	#		save_event_target_as = vassal_empire
 	#	}
 	# }
@@ -959,7 +955,7 @@ country_event = {
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_democratic }
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 			set_timed_country_flag = { flag = auth_democratic days = 2 }
 			country_event = { id = regentmaker.30 }
@@ -975,7 +971,7 @@ country_event = {
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_oligarchic }
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 			set_timed_country_flag = { flag = auth_oligarchic days = 2 }
 			country_event = { id = regentmaker.30 }
@@ -991,7 +987,7 @@ country_event = {
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_dictatorial }
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 			set_timed_country_flag = { flag = auth_dictatorial days = 2 }
 			country_event = { id = regentmaker.30 }
@@ -1007,7 +1003,7 @@ country_event = {
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_imperial }
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 			set_timed_country_flag = { flag = auth_imperial days = 2 }
 			country_event = { id = regentmaker.30 }
@@ -1023,7 +1019,7 @@ country_event = {
 		every_subject = {
 			limit = {
 				NOT = { has_authority = auth_corporate }
-				is_subject_type = member_state
+				any_agreement = { agreement_preset = preset_member_state }
 			}
 			set_timed_country_flag = { flag = auth_corporate days = 2 }
 			country_event = { id = regentmaker.30 }
@@ -1104,7 +1100,7 @@ country_event = {
 			# 	inverse = yes
 			every_subject= {
 				limit = {
-					is_subject_type = member_state
+					any_agreement = { agreement_preset = preset_member_state }
 					NOT = { has_country_flag = subject_sel_count }
 				}
 				if = {
@@ -1127,7 +1123,7 @@ country_event = {
 			every_subject = { # count < 11
 				limit = {
 					is_country_type = default
-					NOT = { is_subject_type = devstate }
+					NOT = { any_agreement = { agreement_preset = preset_devstate } }
 				}
 				if = {
 					limit = { check_variable = { which = rm_total_subjects value < 11 } }
@@ -1889,7 +1885,7 @@ country_event = {
 	is_triggered_only = yes
 	trigger = {
 		is_subject = yes
-		is_subject_type = member_state
+		any_agreement = { agreement_preset = preset_member_state }
 		overlord = {
 			OR = {
 				has_country_flag = decentralizer
@@ -1939,7 +1935,7 @@ country_event = {
 					exists = space_owner
 					space_owner = {
 						is_subject = yes
-						is_subject_type = member_state
+						any_agreement = { agreement_preset = preset_member_state }
 						# overlord = { is_same_empire = root }
 						is_same_empire = event_target:subject_selected
 					}

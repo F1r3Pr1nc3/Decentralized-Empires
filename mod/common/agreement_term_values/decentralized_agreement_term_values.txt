@@ -1,0 +1,113 @@
+# Defines the different values available for given Agreement terms. The terms are defined in agreement_terms scripts.
+# The term values contain the main logic of Agreement terms, including the modifiers and effects.
+# For Subject Agreements, the owner is the overlord and the target is the subject.
+
+# Example:
+#
+# name_of_term_value = {
+# 	term = name_of_term 					# References the term in agreement_terms that this value applies to
+#
+# 	owner_modifier = {						# A modifier that applies to the Agreement owner country. Can stack multiple times.
+# 		my_owner_modifier = 1
+# 	}
+# 	target_modifier = {						# A modifier that applies to the Agreement target country. Can stack multiple times.
+# 		my_target_modifier = 1
+# 	}
+# 	unique_owner_modifier = {				# A modifier that applies to the Agreement owner country. Only applies once.
+# 		my_unique_owner_modifier = 1
+# 	}
+# 	unique_target_modifier = {				# A modifier that applies to the Agreement target country. Only applies once.
+# 		my_unique_target_modifier = 1
+# 	}
+# 	loyalty_change = value					# How much the subject's loyalty will change when a new agreement with this term starts
+# 	triggered_loyalty_change = {			# How much the subject's loyalty will additionally change when a new agreement with this term starts, if "trigger" is true
+# 		trigger = {
+# 			agreement_scope_trigger
+# 		}
+# 		loyalty_change = value
+# 	}
+# 	extra_term_text_subject = <LOC_KEY> 	# What should be shown in the "extra terms" panel for the subject if this term value is active (default is to not show it)
+# 											# This loc key can use $SUBJECT$ and $OVERLORD$ to show the name of the relevant empire, and $MODIFIER$ to show the modifiers applying to the subject
+# 	extra_term_text_overlord = <LOC_KEY>	# What should be shown in the "extra terms" panel for the overlord if this term value is active (default is to not show it)
+# 											# Loc key can use $SUBJECT$ and $OVERLORD$ to show the name of the relevant empire, $MODIFIER$ for the overlord's modifiers, and $RESOURCES$ for the net resources it gains
+# }
+#
+# name_of_resource_term_value = {
+# 	term = name_of_resource_term
+#	resource = <resource> (food/alloys/...)
+# }
+
+#######################
+# SPECIALIST SUBJECTS #
+#######################
+# similar specialist_prospectorium
+specialist_member_state = {
+	term = specialist_type
+	triggered_loyalty_change = {
+		trigger = {
+			target = { is_militarist = yes }
+		}
+		loyalty_change = -10
+	}
+	triggered_loyalty_change = {
+		trigger = {
+			target = { is_pacifist = yes }
+		}
+		loyalty_change = 10
+	}
+	activate_effect = {
+		convert_to_specialist = specialist_member_state
+		target = {
+			if = {
+				limit = { from = { is_country_type_with_subjects = no } }
+				set_subject_of = { who = none }
+			} else_if = {
+				limit = { from = { has_valid_civic = civic_inwards_perfection } }
+				set_subject_of = { who = from preset = preset_tributary }
+			} else_if = {
+				limit = { from = { has_valid_civic = civic_hive_devouring_swarm } }
+				set_subject_of = { who = none }
+			} else_if = {
+				limit = { NOT = { is_same_species = from } from = { has_valid_civic = civic_fanatic_purifiers } }
+				set_subject_of = { who = none }
+			} else_if = {
+				limit = { from = { is_country_type = awakened_fallen_empire } }
+				switch = {
+					trigger = has_ethic
+					ethic_fanatic_materialist	= { set_subject_of = { who = from preset = preset_satellite } }
+					ethic_fanatic_spiritualist	= { set_subject_of = { who = from preset = preset_dominion } }
+					ethic_fanatic_xenophile		= { set_subject_of = { who = from preset = preset_signatory } }
+					ethic_fanatic_xenophobe		= { set_subject_of = { who = from preset = preset_thrall } }
+				}
+			} else = {
+				if = { limit = { NOT = { has_modifier =  "specialist_member_state_subject_modifier" } }
+					add_modifier = { modifier = "specialist_member_state_subject_modifier" }
+				}
+				if = {
+					limit = {
+						exists = capital_scope
+						capital_scope = { NOT = { has_modifier =  "planetary_nationalism" } }
+					}
+					capital_scope = { add_modifier = { modifier = "planetary_nationalism" } }
+				}
+			}
+		}
+	}
+	deactivate_effect = {
+		target = {
+			if = { limit = { has_modifier = specialist_member_state_subject_modifier }
+				remove_modifier = specialist_member_state_subject_modifier
+			}
+			if = {
+				limit = {
+					exists = capital_scope
+					capital_scope = { has_modifier =  "planetary_nationalism" }
+				}
+				capital_scope = { remove_modifier = { modifier = "planetary_nationalism" } }
+			}
+		}
+	}
+	potential = {
+		agreement_preset = preset_member_state
+	}
+}
